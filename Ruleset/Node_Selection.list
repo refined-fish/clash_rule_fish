@@ -1,5 +1,4 @@
 #🚀 节点选择
-
 ############### - DOMAIN-SUFFIX,google.com,Proxy #匹配域名后缀(交由Proxy代理服务器组)
 DOMAIN-SUFFIX,ea.com
 #必须-EA登录
