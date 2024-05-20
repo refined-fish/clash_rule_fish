@@ -1,1 +1,4 @@
-
+#🇺🇲 美国节点
+############### - DOMAIN,google.com,Proxy #匹配域名(交由Proxy代理服务器组) ###########################
+DOMAIN,www.annualreviews.org
+#必须-该文献网站仅允许美国IP访问
