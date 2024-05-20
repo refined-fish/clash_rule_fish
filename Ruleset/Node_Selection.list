@@ -1,1 +1,15 @@
+#🚀 节点选择
 
+############### - DOMAIN-SUFFIX,google.com,Proxy #匹配域名后缀(交由Proxy代理服务器组)
+DOMAIN-SUFFIX,ea.com
+#必须-EA登录
+DOMAIN-SUFFIX,docker.com
+#必须-加速docker镜像的拉取（本质上是cloudflare镜像）
+
+############### - DOMAIN,google.com,Proxy #匹配域名(交由Proxy代理服务器组) ###########################
+DOMAIN,prodkeys.net
+#必须-NS密钥下载
+DOMAIN,steamcommunity.com
+#必须-Steam社区/创意工坊
+DOMAIN,huodroid-my.sharepoint.com
+#必须-大侠阿木木的商业版onedrive代理加速下载手机Rom，不影响其他商业版onedrive
