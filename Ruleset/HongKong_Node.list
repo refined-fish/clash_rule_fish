@@ -1,0 +1,8 @@
+#🇭🇰 香港节点
+############### - DOMAIN-SUFFIX,google.com,Proxy #匹配域名后缀(交由Proxy代理服务器组)
+DOMAIN-SUFFIX,asmrbbs.com
+#必须-AMSR网站（有防共享机制，IP大变动会封号）
+
+############### - DOMAIN,google.com,Proxy #匹配域名(交由Proxy代理服务器组) ###########################
+DOMAIN,portal.office.com
+#必须-HK全局管理员防止黑号
