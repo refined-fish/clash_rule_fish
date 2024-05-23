@@ -97,11 +97,12 @@ dns:
       - 223.5.5.5  #阿里DNS
       - 119.29.29.29  #腾讯主DNS
       - 114.114.114.114  #三大运营商的DNS
-    geosite:geolocation-!cn:
+    geosite:geolocation-!cn:  #匹配非中国域名
       - https://1.1.1.1/dns-query  #Cloudflare的主DNS
       - https://1.0.0.1/dns-query  #Cloudflare的次DNS
       - https://8.8.8.8/dns-query  #谷歌的DNS
-    geosite:category-ads-all: rcode://success
+    geosite:category-ads-all:  #匹配广告域名
+      - rcode://success  #直接返回一个success也就是空结果
   nameserver:  #默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
     - 223.5.5.5  #阿里DNS
     - 119.29.29.29  #腾讯主DNS
