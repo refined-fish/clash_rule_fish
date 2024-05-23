@@ -1,8 +1,8 @@
-### 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
+### clash运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
 mode: rule
 
 ### 混合端口 HTTP和SOCKS5用一个端口
-mixed-port: 7890
+mixed-port: 7893
 
 ### SOCKS5 代理端口
 socks-port: 7891
@@ -16,15 +16,11 @@ port: 7890
 ### 允许局域网的连接（可用来共享代理）
 allow-lan: false
 
-### 地址绑定，仅允许特定地址，仅在将allow-lan设置为true时适用
-### "*": 绑定所有IP地址
-### 192.168.122.11: 绑定单个IPv4地址
-### "[aaaa::a8aa:ff:fe09:57d8]": 绑定单个IPv6地址
-#bind-address: "*"
+### 仅允许特定地址，仅在将allow-lan设置为true时适用
+#bind-address: "*"  #"*": 绑定所有IP地址，### 192.168.122.11: 绑定单个IPv4地址，"[aaaa::a8aa:ff:fe09:57d8]": 绑定单个IPv6地址
 
 ### 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
-### 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
-log-level: info
+log-level: info  #5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 
 ### 启用ipv6代理
 ipv6: true
@@ -32,64 +28,45 @@ ipv6: true
 ### RESTful API 网页控制端的口令 (可选)
 secret: "12345677"
 
-### Clash 的 RESTful API，网页控制端
+### Clash 的 RESTful API，网页控制端地址和端口
 external-controller: '127.0.0.1:9090'
-# 您可以将静态网页资源（如 clash-dashboard）放置在一个目录中，clash 将会服务于 `RESTful API/ui`
-# 参数应填写配置目录的相对路径或绝对路径。
-# http://127.0.0.1:9090/ui/#/
-# external-ui: folder
-# yacd面板：  https://github.com/haishanh/yacd
-# Razord面板：http://clash.razord.top/#/proxies
-# external-ui: dashboard
 
 ### 实验性功能
 experimental:
-  ### 忽略 DNS 解析失败，默认值为 true
-  ignore-resolve-fail: true
-  ### 绑定接口
-  #interface-name: en0 
+  ignore-resolve-fail: true  #忽略 DNS 解析失败，默认值为 true
+  #interface-name: en0  #绑定接口，一般不要配置
 
 ### 实验性功能 hosts, 支持通配符 *.clash.dev 甚至 *.foo.*.example.com，静态的域名比通配域名具有更高的优先级
 ### 注意: hosts 在 fake-ip 模式下不生效
 #hosts:
-# '*.clash.dev': 127.0.0.1
-# 'alpha.clash.dev': '::1'
+#  '*.clash.dev': 127.0.0.1
+#  'alpha.clash.dev': '::1'
 
 ### 本地 SOCKS5 / HTTP(S) 服务认证
 #authentication:
-# - "user1:pass1"
+#  - "user1:pass1"
 
 ### DNS设置
 dns:
-  ### 是否启用dns
-  enable: true
-  ### 是否启用ipv6
-  ipv6: true
-  ### 监听端口
-  #listen: 0.0.0.0:7874
-  ### 模式：redir-host或fake-ip
-  enhanced-mode: redir-host
+  enable: true  #是否启用dns
+  ipv6: true  #是否启用ipv6
+  #listen: 0.0.0.0:7874  #监听端口，启用后会导致非路由器透明代理出现问题
+  enhanced-mode: redir-host  #DNS模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
   nameserver:
-     # 阿里 DoH DNS
-     - https://223.5.5.5/dns-query
-     # 阿里 DoH DNS
-     - https://dns.alidns.com/dns-query
-     # 腾讯 DoH DNS
-     - https://doh.pub/dns-query
+    - https://223.5.5.5/dns-query  # 阿里 DoH DNS
+    - https://dns.alidns.com/dns-query  # 阿里 DoH DNS
+    - https://doh.pub/dns-query  # 腾讯 DoH DNS
   fallback:
-     - tls://dns.rubyfish.cn:853
-     - tls://1.0.0.1:853
-     - tls://dns.google:853
-     #- https://dns.rubyfish.cn/dns-query
-     #- https://cloudflare-dns.com/dns-query
-     #- https://dns.google/dns-query
+    - tls://dns.rubyfish.cn:853
+    - tls://1.0.0.1:853
+    - tls://dns.google:853
   fallback-filter:
-     geoip: true
-     geoip-code: CN
-     geosite:
-      - gfw
-      - "!cn"
-     ipcidr: # 在这个网段内的 IP 地址会被考虑为被污染的 IP
+    geoip: true  #启用geoip库
+    geoip-code: CN  #
+    geosite:  #应用geosite库
+      - gfw  #匹配GFW域名
+      - "!cn"  #匹配非cn域名
+    ipcidr: #在这个网段内的 IP 地址会被考虑为被污染的 IP
       - 240.0.0.0/4
       - 0.0.0.0/8
       - 10.0.0.0/8
@@ -107,12 +84,25 @@ dns:
       - 224.0.0.0/4
       - 240.0.0.0/4
       - 255.255.255.255/32
-  ### fake-ip配置字段，fakeip的IP段
-  #fake-ip-range: 198.18.0.1/16
-  ### fake-ip白名单列表，包含域名返回真实IP而非fakeip
-  #fake-ip-filter:
+    domain:  #在这个列表内的域名采用fallback结果
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+      - "+.githubusercontent.com"
+      - "+.googlevideo.com"
+      - "+.msftconnecttest.com"
+      - "+.msftncsi.com"
+  #fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
+  #fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
      #- '*.lan'
      #- localhost.ptlogin2.qq.com
+
+### 默认DNS服务器，用于解析DNS服务器中的非IP服务器，需要为纯IP服务器
+default-nameserver:
+
+### 节点域名DNS服务器，用于解析节点域名的IP
+proxy-server-nameserver:
+
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
