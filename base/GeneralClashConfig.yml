@@ -4,11 +4,11 @@ mode: rule
 ### 混合端口 HTTP和SOCKS5用一个端口
 mixed-port: 7890
 
+### SOCKS5 代理端口
+socks-port: 7891
+
 ### HTTP 代理端口
 port: 7890
-
-### SOCKS5 代理端口
-#socks-port: 7891
 
 ### Linux 和 macOS 的 redir 代理端口 (如需使用此功能，请取消注释)
 #redir-port: 7892
@@ -26,8 +26,11 @@ allow-lan: false
 ### 5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 log-level: info
 
+### 启用ipv6代理
+ipv6: true
+
 ### RESTful API 网页控制端的口令 (可选)
-#secret: ""
+secret: "12345677"
 
 ### Clash 的 RESTful API，网页控制端
 external-controller: '127.0.0.1:9090'
@@ -38,9 +41,6 @@ external-controller: '127.0.0.1:9090'
 # yacd面板：  https://github.com/haishanh/yacd
 # Razord面板：http://clash.razord.top/#/proxies
 # external-ui: dashboard
-
-### 启用ipv6代理
-ipv6: true
 
 ### 实验性功能
 experimental:
@@ -66,15 +66,9 @@ dns:
   ### 是否启用ipv6
   ipv6: true
   ### 监听端口
-  listen: 0.0.0.0:7874
+  #listen: 0.0.0.0:7874
   ### 模式：redir-host或fake-ip
   enhanced-mode: redir-host
-  ### fake-ip分配的IP段
-  #fake-ip-range: 198.18.0.1/16
-  ### fake ip 白名单列表，以下内容返回真实IP
-  #fake-ip-filter:
-     #- '*.lan'
-     #- localhost.ptlogin2.qq.com
   nameserver:
      # 阿里 DoH DNS
      - https://223.5.5.5/dns-query
@@ -113,6 +107,12 @@ dns:
       - 224.0.0.0/4
       - 240.0.0.0/4
       - 255.255.255.255/32
+  ### fake-ip配置字段，fakeip的IP段
+  #fake-ip-range: 198.18.0.1/16
+  ### fake-ip白名单列表，包含域名返回真实IP而非fakeip
+  #fake-ip-filter:
+     #- '*.lan'
+     #- localhost.ptlogin2.qq.com
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
