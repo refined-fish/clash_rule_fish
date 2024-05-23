@@ -150,6 +150,26 @@ dns:
   #fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
      #- '*.lan'
      #- localhost.ptlogin2.qq.com
+  sniffer:  #meta嗅探相关参数
+    enable: true  #启用流量（域名）探测
+    force-dns-mapping: true
+    parse-pure-ip: true  #强制嗅探所有的纯IP连接
+    force-domain:  #列表内的域名强制嗅探
+      - "+.netflix.com"
+      - "+.nflxvideo.net"
+      - "+.amazonaws.com"
+      - "+.media.dssott.com"
+    skip-domain:  #列表内的域名跳过嗅探
+      - "+.apple.com"
+      - Mijia Cloud
+      - dlg.io.mi.com
+    sniff:  #嗅探规则
+      TLS:
+      HTTP:
+        ports:
+          - 80
+          - 8080-8880
+        override-destination: true  #是否用嗅探结果作为实际访问
 
 ########################################################################## hosts设置 ###########################################################################
 hosts:
