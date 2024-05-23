@@ -51,7 +51,7 @@ ipv6: true
 keep-alive-interval: 1800
 
 ### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
-find-process-mode: false
+#find-process-mode: false/off  #很怪，在openclash中需要false，客户端需要off，否则就内核启动失败，索性停用配置
 
 ### 外部控制（API）RESTful API 网页控制端的口令 (可选)
 secret: "12345677"
