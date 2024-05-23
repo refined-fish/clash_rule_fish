@@ -16,20 +16,53 @@ port: 7890
 ### 允许局域网的连接（可用来共享代理）
 allow-lan: false
 
-### 仅允许特定地址，仅在将allow-lan设置为true时适用
-#bind-address: "*"  #"*": 绑定所有IP地址，### 192.168.122.11: 绑定单个IPv4地址，"[aaaa::a8aa:ff:fe09:57d8]": 绑定单个IPv6地址
+### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此地址访问
+#bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
+
+### 允许连接的IP地址段，默认为全部
+#lan-allowed-ips:
+  #- 0.0.0.0/0
+  #- ::/0
+
+### 禁止链接的IP段，优先级高于白名单
+#lan-disallowed-ips:
+  #- 192.168.0.3/32
 
 ### 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
 log-level: info  #5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 
-### 启用ipv6代理
+### 启用ipv6代理，内核是否接受ipv6流量
 ipv6: true
+
+### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施
+keep-alive-interval: 1800
+
+### 进程匹配模式，在路由器上最好关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则
+find-process-mode: off
 
 ### RESTful API 网页控制端的口令 (可选)
 secret: "12345677"
 
 ### Clash 的 RESTful API，网页控制端地址和端口
 external-controller: '127.0.0.1:9090'
+
+### 统一延迟计算方式，去除TCP握手等额外的延迟
+unified-delay: true
+
+### TCP并发
+tcp-concurrent: true
+
+### clash流量出站接口，即接口绑定
+#interface-name: en0
+
+### Linux下的路由标记，为流量提供标记
+#routing-mark: 6666
+
+### 使用GEOIP.dat文件，默认是mmdb
+geodata-mode: true
+
+### Geo文件加载模式，默认为memconservative，小内存设备适用
+geodata-loader: standard
 
 ### 实验性功能
 experimental:
