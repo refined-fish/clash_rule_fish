@@ -1,3 +1,4 @@
+########################################################################## 全局配置 ##############################################################################
 ### clash运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
 mode: rule
 
@@ -79,24 +80,41 @@ experimental:
 #authentication:
 #  - "user1:pass1"
 
-### DNS设置
+############################################################################## DNS设置 ###########################################################################
 dns:
   enable: true  #是否启用dns
-  ipv6: true  #是否启用ipv6
-  #listen: 0.0.0.0:7874  #监听端口，启用后会导致非路由器透明代理出现问题
-  enhanced-mode: redir-host  #DNS模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
-  nameserver:
+  prefer-h3: true  #优先使用HTTP/3
+  ipv6: true  #是否解析ipv6地址，否则返回空结果
+  #listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
+  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
+  default-nameserver:  #默认 DNS, 用于解析 DNS 服务器 的域名
+    - https://223.5.5.5/dns-query
+    - tls://1.0.0.1:853
+  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名
+    - https://223.5.5.5/dns-query
+    - tls://1.0.0.1:853
+  nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
+    geosite:cn,private,apple:
+      - https://223.5.5.5/dns-query
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    geosite:geolocation-!cn:
+      - https://1.1.1.1/dns-query
+      - https://8.8.8.8/dns-query
+      - https://public.dns.iij.jp/dns-query
+    geosite:category-ads-all: rcode://success
+  nameserver:  #默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
     - https://223.5.5.5/dns-query  # 阿里 DoH DNS
     - https://dns.alidns.com/dns-query  # 阿里 DoH DNS
     - https://doh.pub/dns-query  # 腾讯 DoH DNS
-  fallback:
+  fallback:  #后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
     - tls://dns.rubyfish.cn:853
     - tls://1.0.0.1:853
     - tls://dns.google:853
-  fallback-filter:
+  fallback-filter:  #后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
     geoip: true  #启用geoip库
-    geoip-code: CN  #
-    geosite:  #应用geosite库
+    geoip-code: CN  #除了geoip-code 配置的国家 IP, 其他的 IP 结果会被视为污染，也就是说要采用fallback结果
+    geosite:  #geosite 列表的内容被视为已污染，匹配到 geosite 的域名，将只使用 fallback解析，不去使用 nameserver
       - gfw  #匹配GFW域名
       - "!cn"  #匹配非cn域名
     ipcidr: #在这个网段内的 IP 地址会被考虑为被污染的 IP
@@ -130,25 +148,12 @@ dns:
      #- '*.lan'
      #- localhost.ptlogin2.qq.com
 
-### 默认DNS服务器，用于解析DNS服务器中的非IP服务器，需要为纯IP服务器
-default-nameserver:
-  - https://223.5.5.5/dns-query
-  - tls://1.0.0.1:853
-### 节点域名DNS服务器，用于解析节点域名的IP
-proxy-server-nameserver:
-  - https://223.5.5.5/dns-query
-  - tls://1.0.0.1:853
-### DNS策略，可以指定域名使用的DNS与返回的结果，优先级高于fallback，低于hosts
-nameserver-policy:
-  geosite:cn,private,apple:
-    - https://223.5.5.5/dns-query
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
-  geosite:geolocation-!cn:
-    - https://1.1.1.1/dns-query
-    - https://8.8.8.8/dns-query
-    - https://public.dns.iij.jp/dns-query
-  geosite:category-ads-all: rcode://success
+########################################################################## TUN设置 #############################################################################
+tun:
+  stack: mixed  #tun 模式堆栈，如无使用问题，建议使用 mixed栈
+  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
+    - any:53
+    - tcp://any:53
 
 
 # 1. clash DNS 请求逻辑：
