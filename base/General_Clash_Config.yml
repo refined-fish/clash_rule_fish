@@ -50,8 +50,8 @@ ipv6: true
 ### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施
 keep-alive-interval: 1800
 
-### 进程匹配模式，在路由器上最好关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则
-find-process-mode: off
+### 进程匹配模式，在此处配置会导致内核启动失败，在路由器上最好关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则
+#find-process-mode: off
 
 ### 外部控制（API）RESTful API 网页控制端的口令 (可选)
 secret: "12345677"
