@@ -90,10 +90,12 @@ dns:
   default-nameserver:  #仅用于解析使用域名的DNS服务器，可填写加密DNS但是必须为纯IP
     - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
     - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
+
   proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
     - https://1.1.1.1/dns-query  #Cloudflare主DNS
     - https://1.0.0.1/dns-query  #Cloudflare次DNS
     - https://8.8.8.8/dns-query  #谷歌主DNS
+
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
     geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
       - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
@@ -105,50 +107,33 @@ dns:
       - https://8.8.8.8/dns-query  #谷歌主DNS
     geosite:category-ads-all:  #匹配广告域名
       - rcode://success  #直接返回一个success也就是空结果
+
   nameserver:  #默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
     - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
     - 223.5.5.5  #阿里主DNS
     - 119.29.29.29  #腾讯主DNS
+
   fallback:  #后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信无污染
     - https://1.1.1.1/dns-query  #Cloudflare主DNS
     - https://1.0.0.1/dns-query  #Cloudflare次DNS
     - https://8.8.8.8/dns-query  #谷歌主DNS
+
   fallback-filter:  #后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
     geoip: true  #启用geoip库
     geoip-code: CN  #解析结果除了geoip-code 配置的国家IP, 其他的IP结果会被视为污染，也就是说要采用fallback组的结果
     geosite:  #geosite指定内容被视为污染，将只使用fallback组解析，不使用nameserver组
       - gfw  #匹配GFW域名
       - "!cn"  #匹配非cn域名
-    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果
-      - 240.0.0.0/4
-      - 0.0.0.0/8
-      - 10.0.0.0/8
-      - 100.64.0.0/10
-      - 127.0.0.0/8
-      - 169.254.0.0/16
-      - 172.16.0.0/12
-      - 192.0.0.0/24
-      - 192.0.2.0/24
-      - 192.88.99.0/24
-      - 192.168.0.0/16
-      - 198.18.0.0/15
-      - 198.51.100.0/24
-      - 203.0.113.0/24
-      - 224.0.0.0/4
-      - 240.0.0.0/4
-      - 255.255.255.255/32
-    domain:  #下列域名采用fallback组解析
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
-      - "+.githubusercontent.com"
-      - "+.googlevideo.com"
-      - "+.msftconnecttest.com"
-      - "+.msftncsi.com"
+#    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果，理论上有geoip-code就够了
+#      - 240.0.0.0/4
+#    domain:  #下列域名采用fallback组解析，理论上有geosite就够了
+#      - "+.google.com"
+
 #  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
 #     - '*.lan'
 #     - localhost.ptlogin2.qq.com
+
 #  sniffer:  #meta嗅探相关参数，嗅探的作用为当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
 #    enable: true  #启用sniffer
 #    force-dns-mapping: true  #对redir-host类型识别的流量进行强制嗅探
