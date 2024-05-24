@@ -20,7 +20,7 @@ mode: rule
 ### 允许局域网的连接（可用来共享代理）
 allow-lan: true
 
-### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此地址访问
+### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此地址访问共享代理
 bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
 
 ### 允许连接的IP地址段，默认为全部
@@ -87,40 +87,39 @@ dns:
   ipv6: true  #是否解析ipv6地址，否则返回空结果
   #listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
   enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
-  default-nameserver:  #仅用于解析DNS服务器的IP，可为加密DNS但是必须为纯IP地址
-    - 223.5.5.5  #阿里主DNS
-    - 114.114.114.114  #三大运营商的DNS
-    - 1.1.1.1  #Cloudflare的主DNS
-  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名
-    - https://1.1.1.1/dns-query  #Cloudflare的主DNS
-    - https://1.0.0.1/dns-query  #Cloudflare的次DNS
-    - https://8.8.8.8/dns-query  #谷歌的DNS
+  default-nameserver:  #仅用于解析使用域名的DNS服务器，可填写加密DNS但是必须为纯IP
+    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+    - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
+  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
+    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+    - https://8.8.8.8/dns-query  #谷歌主DNS
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
-    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名
-      - 223.5.5.5  #阿里DNS
+    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
+      - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+      - 223.5.5.5  #阿里主DNS
       - 119.29.29.29  #腾讯主DNS
-      - 114.114.114.114  #三大运营商的DNS
-    geosite:geolocation-!cn:  #匹配非中国域名
-      - https://1.1.1.1/dns-query  #Cloudflare的主DNS
-      - https://1.0.0.1/dns-query  #Cloudflare的次DNS
-      - https://8.8.8.8/dns-query  #谷歌的DNS
+    geosite:geolocation-!cn:  #匹配非中国域名，国外应确保可信无污染
+      - https://1.1.1.1/dns-query  #Cloudflare主DNS
+      - https://1.0.0.1/dns-query  #Cloudflare次DNS
+      - https://8.8.8.8/dns-query  #谷歌主DNS
     geosite:category-ads-all:  #匹配广告域名
       - rcode://success  #直接返回一个success也就是空结果
   nameserver:  #默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
-    - 223.5.5.5  #阿里DNS
+    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+    - 223.5.5.5  #阿里主DNS
     - 119.29.29.29  #腾讯主DNS
-    - 114.114.114.114  #三大运营商的DNS
-  fallback:  #后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
-    - https://1.1.1.1/dns-query  #Cloudflare的主DNS
-    - https://1.0.0.1/dns-query  #Cloudflare的次DNS
-    - https://8.8.8.8/dns-query  #谷歌的DNS
+  fallback:  #后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信无污染
+    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+    - https://8.8.8.8/dns-query  #谷歌主DNS
   fallback-filter:  #后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
     geoip: true  #启用geoip库
-    geoip-code: CN  #除了geoip-code 配置的国家 IP, 其他的 IP 结果会被视为污染，也就是说要采用fallback结果
-    geosite:  #geosite 列表的内容被视为已污染，匹配到 geosite 的域名，将只使用 fallback解析，不去使用 nameserver
+    geoip-code: CN  #解析结果除了geoip-code 配置的国家IP, 其他的IP结果会被视为污染，也就是说要采用fallback组的结果
+    geosite:  #geosite指定内容被视为污染，将只使用fallback组解析，不使用nameserver组
       - gfw  #匹配GFW域名
       - "!cn"  #匹配非cn域名
-    ipcidr: #在这个网段内的 IP 地址会被考虑为被污染的 IP
+    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果
       - 240.0.0.0/4
       - 0.0.0.0/8
       - 10.0.0.0/8
@@ -138,7 +137,7 @@ dns:
       - 224.0.0.0/4
       - 240.0.0.0/4
       - 255.255.255.255/32
-    domain:  #在这个列表内的域名采用fallback结果
+    domain:  #下列域名采用fallback组解析
       - "+.google.com"
       - "+.facebook.com"
       - "+.youtube.com"
@@ -150,26 +149,34 @@ dns:
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
 #     - '*.lan'
 #     - localhost.ptlogin2.qq.com
-#  sniffer:  #meta嗅探相关参数，嗅探的作用为当clash不作为DNS解析时接收到纯IP连接无法匹配域名规则的问题
-#    enable: true  #启用流量（域名）探测
-#    force-dns-mapping: true
-#    parse-pure-ip: true  #强制嗅探所有的纯IP连接
-#    force-domain:  #列表内的域名强制嗅探
-#      - "+.netflix.com"
-#      - "+.nflxvideo.net"
-#      - "+.amazonaws.com"
-#      - "+.media.dssott.com"
-#    skip-domain:  #列表内的域名跳过嗅探
-#      - "+.apple.com"
-#      - Mijia Cloud
-#      - dlg.io.mi.com
-#    sniff:  #嗅探规则
-#      TLS:
-#      HTTP:
-#        ports:
-#          - 80
-#          - 8080-8880
-#        override-destination: true  #是否用嗅探结果作为实际访问
+  sniffer:  #meta嗅探相关参数，嗅探的作用为当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
+    enable: true  #启用sniffer
+    force-dns-mapping: true  #对redir-host类型识别的流量进行强制嗅探
+    parse-pure-ip: true  #对所有未获取到域名的流量进行强制嗅探
+    override-destination: true  #是否使用嗅探结果作为实际访问，默认为 true
+    force-domain:  #需要强制嗅探的域名（默认情况下只对IP进行嗅探）
+      - "+.netflix.com"
+      - "+.nflxvideo.net"
+      - "+.amazonaws.com"
+      - "+.media.dssott.com"
+      - "+.v2ex.com"
+    skip-domain:  #需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
+      - "+.apple.com"
+      - Mijia Cloud
+      - dlg.io.mi.com
+    sniff:  #需要嗅探的协议类型
+     HTTP:  #HTTP协议
+       ports:    #端口白名单，只针对下列端口嗅探，不配置则全部嗅探
+          - 80
+          - 8080-8880
+      TLS:  #TLS协议
+        ports:
+          - 443
+          - 8443
+      QUIC:  #QUIC协议
+        ports:
+          - 443
+          - 8443
 
 ########################################################################## hosts设置 ###########################################################################
 #hosts:
