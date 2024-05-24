@@ -2,7 +2,7 @@
 
 ########################################################################## 入站端口 ##############################################################################
 ### 混合端口 HTTP和SOCKS5用一个端口
-mixed-port: 7893
+#mixed-port: 7893
 
 ### SOCKS5 代理端口
 socks-port: 7891
@@ -54,7 +54,7 @@ keep-alive-interval: 1800
 #find-process-mode: false/off  #很怪，在openclash中需要false，客户端需要off，否则就内核启动失败，索性停用配置
 
 ### 外部控制（API）RESTful API 网页控制端的口令 (可选)
-secret: "12345677"
+secret: ""
 
 ### Clash 的 RESTful API，网页控制端地址和端口
 external-controller: 127.0.0.1:9090
@@ -146,42 +146,42 @@ dns:
       - "+.googlevideo.com"
       - "+.msftconnecttest.com"
       - "+.msftncsi.com"
-  #fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
-  #fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
-     #- '*.lan'
-     #- localhost.ptlogin2.qq.com
-  sniffer:  #meta嗅探相关参数
-    enable: true  #启用流量（域名）探测
-    force-dns-mapping: true
-    parse-pure-ip: true  #强制嗅探所有的纯IP连接
-    force-domain:  #列表内的域名强制嗅探
-      - "+.netflix.com"
-      - "+.nflxvideo.net"
-      - "+.amazonaws.com"
-      - "+.media.dssott.com"
-    skip-domain:  #列表内的域名跳过嗅探
-      - "+.apple.com"
-      - Mijia Cloud
-      - dlg.io.mi.com
-    sniff:  #嗅探规则
-      TLS:
-      HTTP:
-        ports:
-          - 80
-          - 8080-8880
-        override-destination: true  #是否用嗅探结果作为实际访问
+#  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
+#  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
+#     - '*.lan'
+#     - localhost.ptlogin2.qq.com
+#  sniffer:  #meta嗅探相关参数，嗅探的作用为当clash不作为DNS解析时接收到纯IP连接无法匹配域名规则的问题
+#    enable: true  #启用流量（域名）探测
+#    force-dns-mapping: true
+#    parse-pure-ip: true  #强制嗅探所有的纯IP连接
+#    force-domain:  #列表内的域名强制嗅探
+#      - "+.netflix.com"
+#      - "+.nflxvideo.net"
+#      - "+.amazonaws.com"
+#      - "+.media.dssott.com"
+#    skip-domain:  #列表内的域名跳过嗅探
+#      - "+.apple.com"
+#      - Mijia Cloud
+#      - dlg.io.mi.com
+#    sniff:  #嗅探规则
+#      TLS:
+#      HTTP:
+#        ports:
+#          - 80
+#          - 8080-8880
+#        override-destination: true  #是否用嗅探结果作为实际访问
 
 ########################################################################## hosts设置 ###########################################################################
-hosts:
+#hosts:
 #  '*.clash.dev': 127.0.0.1
 #  'alpha.clash.dev': '::1'
 
 ########################################################################## TUN设置 #############################################################################
-tun:
-  stack: mixed  #tun 模式堆栈，如无使用问题，建议使用 mixed栈
-  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
-    - any:53
-    - tcp://any:53
+#tun:
+#  stack: mixed  #tun 模式堆栈，如无使用问题，建议使用 mixed栈
+#  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
+#    - any:53
+#    - tcp://any:53
 
 
 # 1. clash DNS 请求逻辑：
