@@ -18,10 +18,10 @@ port: 7890
 mode: rule
 
 ### 允许局域网的连接（可用来共享代理）
-allow-lan: false
+allow-lan: true
 
 ### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此地址访问
-#bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
+bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
 
 ### 允许连接的IP地址段，默认为全部
 #lan-allowed-ips:
