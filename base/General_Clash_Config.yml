@@ -56,7 +56,7 @@ ipv6: true
 keep-alive-interval: 1800
 
 ### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
-find-process-mode: "off"  #一定要加引号，否则openclash里会报错
+#find-process-mode: off  #openclash中要求off带引号，但是经过转换后引号会消失openclash里会报错，因此注释掉
 
 ### 外部控制（API）RESTful API 网页控制端的口令 (可选)
 secret: ""
