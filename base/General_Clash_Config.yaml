@@ -52,29 +52,23 @@ log-level: info  #5 个级别：silent / error / warning / info / debug。级别
 ### 启用ipv6代理，内核是否接受ipv6流量
 ipv6: true
 
-### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施
-keep-alive-interval: 1800
-
-### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
-#find-process-mode: off  #openclash中要求off带引号，但是经过转换后引号会消失openclash里会报错，因此注释掉
-
 ### 外部控制（API）RESTful API 网页控制端的口令 (可选)
 secret: ""
 
 ### Clash 的 RESTful API，网页控制端地址和端口
 external-controller: 127.0.0.1:9090
 
-### 统一延迟计算方式，去除TCP握手等额外的延迟
-unified-delay: true
-
 ### TCP并发
 tcp-concurrent: true
 
-### clash流量出站接口，即接口绑定
-#interface-name: en0
+### 统一延迟计算方式，去除TCP握手等额外的延迟
+unified-delay: true
 
-### Linux下的路由标记，为流量提供标记
-#routing-mark: 6666
+### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施
+keep-alive-interval: 1800
+
+### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
+#find-process-mode: off  #openclash中要求off带引号，但是经过转换后引号会消失openclash里会报错，因此注释掉
 
 ### 全局客户端指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
 global-client-fingerprint: random
@@ -85,6 +79,12 @@ geodata-mode: true
 ### Geo文件加载模式，默认为memconservative，小内存设备适用
 geodata-loader: standard
 
+### clash流量出站接口，即接口绑定
+#interface-name: en0
+
+### Linux下的路由标记，为流量提供标记
+#routing-mark: 6666
+
 ############################################################################## DNS设置 ###########################################################################
 dns:
   enable: true  #是否启用dns
@@ -92,9 +92,31 @@ dns:
   ipv6: true  #是否解析ipv6地址，否则返回空结果
   #listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
   enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
-  default-nameserver:  #仅用于解析使用域名的DNS服务器，可填写加密DNS但是必须为纯IP
+
+#  default-nameserver:  #仅用于解析DNS服务器的域名，可填写加密DNS但是必须为纯IP
+#    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+#    - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
+
+  nameserver:  #默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
     - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-    - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
+    - 223.5.5.5  #阿里主DNS
+    - 119.29.29.29  #腾讯主DNS
+
+#  fallback:  #后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信无污染，据说不配置则使用节点远程解析
+#    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+#    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+#    - https://8.8.8.8/dns-query  #谷歌主DNS
+
+#  fallback-filter:  #后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
+#    geoip: true  #启用geoip库
+#    geoip-code: CN  #解析结果除了geoip-code 配置的国家IP, 其他的IP结果会被视为污染，也就是说要采用fallback组的结果
+#    geosite:  #geosite指定内容被视为污染，将只使用fallback组解析，不使用nameserver组
+#      - gfw  #匹配GFW域名
+#      - "!cn"  #匹配非cn域名
+#    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果，理论上有geoip-code就够了
+#      - 240.0.0.0/4
+#    domain:  #下列域名采用fallback组解析，理论上有geosite就够了
+#      - "+.google.com"
 
   proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
     - https://1.1.1.1/dns-query  #Cloudflare主DNS
@@ -102,37 +124,16 @@ dns:
     - https://8.8.8.8/dns-query  #谷歌主DNS
 
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
-    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
-      - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-      - 223.5.5.5  #阿里主DNS
-      - 119.29.29.29  #腾讯主DNS
-    geosite:geolocation-!cn:  #匹配非中国域名，国外应确保可信无污染
-      - https://1.1.1.1/dns-query  #Cloudflare主DNS
-      - https://1.0.0.1/dns-query  #Cloudflare次DNS
-      - https://8.8.8.8/dns-query  #谷歌主DNS
+#    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
+#      - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+#      - 223.5.5.5  #阿里主DNS
+#      - 119.29.29.29  #腾讯主DNS
+#    geosite:geolocation-!cn:  #匹配非中国域名，国外应确保可信无污染
+#      - https://1.1.1.1/dns-query  #Cloudflare主DNS
+#      - https://1.0.0.1/dns-query  #Cloudflare次DNS
+#      - https://8.8.8.8/dns-query  #谷歌主DNS
     geosite:category-ads-all:  #匹配广告域名
       - rcode://success  #直接返回一个success也就是空结果
-
-  nameserver:  #默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
-    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-    - 223.5.5.5  #阿里主DNS
-    - 119.29.29.29  #腾讯主DNS
-
-  fallback:  #后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信无污染
-    - https://1.1.1.1/dns-query  #Cloudflare主DNS
-    - https://1.0.0.1/dns-query  #Cloudflare次DNS
-    - https://8.8.8.8/dns-query  #谷歌主DNS
-
-  fallback-filter:  #后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
-    geoip: true  #启用geoip库
-    geoip-code: CN  #解析结果除了geoip-code 配置的国家IP, 其他的IP结果会被视为污染，也就是说要采用fallback组的结果
-    geosite:  #geosite指定内容被视为污染，将只使用fallback组解析，不使用nameserver组
-      - gfw  #匹配GFW域名
-      - "!cn"  #匹配非cn域名
-#    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果，理论上有geoip-code就够了
-#      - 240.0.0.0/4
-#    domain:  #下列域名采用fallback组解析，理论上有geosite就够了
-#      - "+.google.com"
 
 #  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
@@ -145,7 +146,7 @@ dns:
 #  'alpha.clash.dev': '::1'
 
 ############################################################################## 域名嗅探 ###########################################################################
-sniffer:  #meta嗅探相关参数，嗅探的作用为当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
+sniffer:  #meta嗅探相关参数，嗅探的作用是：当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
   enable: true  #启用sniffer
   force-dns-mapping: true  #对redir-host类型识别的流量进行强制嗅探
   parse-pure-ip: true  #对所有未获取到域名的流量进行强制嗅探
@@ -180,7 +181,6 @@ sniffer:  #meta嗅探相关参数，嗅探的作用为当clash不作为DNS服务
 #  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
 #    - any:53
 #    - tcp://any:53
-
 
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
