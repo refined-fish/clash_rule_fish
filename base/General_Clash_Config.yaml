@@ -22,10 +22,10 @@ port: 7890
 ### clash运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
 mode: rule
 
-### 允许局域网的连接（可用来共享代理）
+### 允许局域网的连接（可用来共享代理，放在网关透明代理一定要打开）
 allow-lan: true
 
-### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此地址访问共享代理
+### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此指定的IP地址访问共享代理
 bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
 
 ### 允许连接的IP地址段，默认为全部
@@ -33,7 +33,7 @@ bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑�
   #- 0.0.0.0/0
   #- ::/0
 
-### 禁止链接的IP段，优先级高于白名单
+### 禁止链接的IP段，优先级高于允许的白名单
 #lan-disallowed-ips:
   #- 192.168.0.3/32
 
@@ -47,7 +47,7 @@ bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑�
 #  - ::1/128
 
 ### 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
-log-level: info  #5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
+log-level: warning  #5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
 
 ### 启用ipv6代理，内核是否接受ipv6流量
 ipv6: true
@@ -64,7 +64,7 @@ tcp-concurrent: true
 ### 统一延迟计算方式，去除TCP握手等额外的延迟
 unified-delay: true
 
-### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施
+### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施，建议1800
 keep-alive-interval: 1800
 
 ### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
@@ -88,52 +88,27 @@ geodata-loader: standard
 ############################################################################## DNS设置 ###########################################################################
 dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则可以直接使用nameserver-policy，放弃fallback
   enable: true  #是否启用dns
-  prefer-h3: true  #优先使用HTTP/3
+  prefer-h3: true  #优先使用HTTP/3，对于支持的DNS能够加速访问
   ipv6: true  #是否解析ipv6地址，否则返回空结果
   #listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
-  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
-
-#  default-nameserver:  #仅用于解析DNS服务器的域名，可填写加密DNS但是必须为纯IP，未使用域名DNS服务器可以不配置
-#    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-#    - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
-
-  nameserver:  #默认的域名解析服务器，若无其他设置, 则所有域名都由 nameserver 解析
-    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-    - 223.5.5.5  #阿里主DNS
-    - 119.29.29.29  #腾讯主DNS
-
-#  fallback:  #原版内核的后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信无污染，据说不配置则使用节点远程解析
-#    - https://1.1.1.1/dns-query  #Cloudflare主DNS
-#    - https://1.0.0.1/dns-query  #Cloudflare次DNS
-#    - https://8.8.8.8/dns-query  #谷歌主DNS
-
-#  fallback-filter:  #后备域名解析服务器过滤规则，匹配域名将只使用 fallback 解析
-#    geoip: true  #启用geoip库
-#    geoip-code: CN  #解析结果除了geoip-code 配置的国家IP, 其他的IP结果会被视为污染，也就是说要采用fallback组的结果
-#    geosite:  #geosite指定内容被视为污染，将只使用fallback组解析，不使用nameserver组
-#      - gfw  #匹配GFW域名
-#      - "!cn"  #匹配非cn域名
-#    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果，理论上有geoip-code就够了
-#      - 240.0.0.0/4
-#    domain:  #下列域名采用fallback组解析，理论上有geosite就够了
-#      - "+.google.com"
-
-  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
-    - https://1.1.1.1/dns-query  #Cloudflare主DNS
-    - https://1.0.0.1/dns-query  #Cloudflare次DNS
-    - https://8.8.8.8/dns-query  #谷歌主DNS
+  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip；fake-ip更快，但是可能有一些奇怪的NAT问题，尤其是在打网游的时候
 
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
-    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
-      - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-      - 223.5.5.5  #阿里主DNS
-      - 119.29.29.29  #腾讯主DNS
-    geosite:geolocation-!cn:  #匹配非中国域名，国外应确保可信无污染
+    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，使用国内的DNS
+      - https://223.5.5.5/dns-query#h3=true #阿里主DNS，强制开启HTTP/3，实测支持
+      - 119.29.29.29  #腾讯主DNS，不支持http/3
+      - 114.114.114.114  #南京信风DNS，不支持http/3
+    geosite:geolocation-!cn:  #匹配非中国域名，应确保可信无污染，使用国外加密DNS
+      - https://8.8.8.8/dns-query  #谷歌主DNS
       - https://1.1.1.1/dns-query  #Cloudflare主DNS
       - https://1.0.0.1/dns-query  #Cloudflare次DNS
-      - https://8.8.8.8/dns-query  #谷歌主DNS
-    geosite:category-ads-all:  #匹配广告域名
+    geosite:category-ads-all:  #匹配广告域名，直接返回空结果
       - rcode://success  #直接返回一个success也就是空结果
+
+  nameserver:  #默认DNS服务器组，域名若未匹配 nameserver-policy 规则，就会交给 nameserver 解析
+    - https://223.5.5.5/dns-query#h3=true #阿里主DNS，并强制开启HTTP/3，实测支持HTTP/3
+    - 119.29.29.29  #腾讯主DNS，不支持http/3
+    - 114.114.114.114  #南京信风DNS，不支持http/3
 
 #  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
