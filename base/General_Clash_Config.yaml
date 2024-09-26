@@ -95,20 +95,16 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
 
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
     geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，使用国内的DNS
-    - https://223.5.5.5/dns-query#h3=true #阿里主DNS，强制开启HTTP/3，实测支持
-    - 119.29.29.29  #腾讯主DNS，不支持http/3
-    - 114.114.114.114  #南京信风DNS，不支持http/3
+      - https://223.5.5.5/dns-query#h3=true #阿里主DNS，强制开启HTTP/3，实测支持
     geosite:geolocation-!cn:  #匹配非中国域名，应确保可信无污染，使用国外加密DNS
-    - https://8.8.8.8/dns-query  #谷歌主DNS
-    - https://1.1.1.1/dns-query  #Cloudflare主DNS
-    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+      - https://8.8.8.8/dns-query  #谷歌主DNS
+      - https://1.1.1.1/dns-query  #Cloudflare主DNS
+      - https://1.0.0.1/dns-query  #Cloudflare次DNS
     geosite:category-ads-all:  #匹配广告域名，直接返回空结果
-    - rcode://success  #直接返回一个success也就是空结果
+      - rcode://success  #直接返回一个success也就是空结果
 
   nameserver:  #默认DNS服务器组，域名若未匹配 nameserver-policy 规则，就会交给 nameserver 解析
-  - https://223.5.5.5/dns-query#h3=true #阿里主DNS，并强制开启HTTP/3，实测支持HTTP/3
-  - 119.29.29.29  #腾讯主DNS，不支持http/3
-  - 114.114.114.114  #南京信风DNS，不支持http/3
+    - https://223.5.5.5/dns-query#h3=true #阿里主DNS，并强制开启HTTP/3，实测支持HTTP/3
 
 #  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
@@ -139,12 +135,6 @@ sniffer:  #meta嗅探相关参数，嗅探的作用是：当clash不作为DNS服
       ports:
       - 443
       - 8443
-  force-domain:  #需要强制嗅探的域名（默认情况下只对IP进行嗅探）
-  - "+.netflix.com"
-  - "+.nflxvideo.net"
-  - "+.amazonaws.com"
-  - "+.media.dssott.com"
-  - "+.v2ex.com"
   skip-domain:  #需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
   - "+.apple.com"
   - Mijia Cloud
