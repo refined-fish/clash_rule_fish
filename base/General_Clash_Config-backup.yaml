@@ -93,6 +93,18 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
   #listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
   enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
 
+  nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
+    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
+      - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+      - 223.5.5.5  #阿里主DNS
+      - 119.29.29.29  #腾讯主DNS
+    geosite:geolocation-!cn:  #匹配非中国域名，国外应确保可信无污染
+      - https://1.1.1.1/dns-query  #Cloudflare主DNS
+      - https://1.0.0.1/dns-query  #Cloudflare次DNS
+      - https://8.8.8.8/dns-query  #谷歌主DNS
+    geosite:category-ads-all:  #匹配广告域名
+      - rcode://success  #直接返回一个success也就是空结果
+
 #  default-nameserver:  #仅用于解析DNS服务器的域名，可填写加密DNS但是必须为纯IP，未使用域名DNS服务器可以不配置
 #    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
 #    - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
@@ -118,22 +130,10 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
 #    domain:  #下列域名采用fallback组解析，理论上有geosite就够了
 #      - "+.google.com"
 
-  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
-    - https://1.1.1.1/dns-query  #Cloudflare主DNS
-    - https://1.0.0.1/dns-query  #Cloudflare次DNS
-    - https://8.8.8.8/dns-query  #谷歌主DNS
-
-  nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
-    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，国内够快就行
-      - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
-      - 223.5.5.5  #阿里主DNS
-      - 119.29.29.29  #腾讯主DNS
-    geosite:geolocation-!cn:  #匹配非中国域名，国外应确保可信无污染
-      - https://1.1.1.1/dns-query  #Cloudflare主DNS
-      - https://1.0.0.1/dns-query  #Cloudflare次DNS
-      - https://8.8.8.8/dns-query  #谷歌主DNS
-    geosite:category-ads-all:  #匹配广告域名
-      - rcode://success  #直接返回一个success也就是空结果
+#  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
+#    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+#    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+#    - https://8.8.8.8/dns-query  #谷歌主DNS
 
 #  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
