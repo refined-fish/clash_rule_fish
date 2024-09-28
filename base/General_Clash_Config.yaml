@@ -56,7 +56,7 @@ ipv6: true
 secret: ""
 
 ### Clash 的 RESTful API，网页控制端地址和端口
-external-controller: 127.0.0.1:9090
+external-controller: 0.0.0.0:9090
 
 ### TCP并发
 tcp-concurrent: true
