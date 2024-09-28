@@ -91,11 +91,12 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
   prefer-h3: true  #优先使用HTTP/3，对于支持的DNS能够加速访问
   ipv6: true  #是否解析ipv6地址，否则返回空结果
   listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
-  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip；fake-ip更快，但是可能有一些奇怪的NAT问题，尤其是在打网游的时候
+  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip；由于双WAN分流，只能选择redir-host模式
 
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
     geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，使用国内的DNS
-      - https://223.5.5.5/dns-query#h3=true #阿里主DNS，强制开启HTTP/3，实测支持
+      - https://223.5.5.5/dns-query#h3=true  #阿里主DNS，强制开启HTTP/3，实测支持
+      - https://223.6.6.6/dns-query#h3=true  #阿里副DNS，强制开启HTTP/3，实测支持
     geosite:geolocation-!cn:  #匹配非中国域名，应确保可信无污染，使用国外加密DNS
       - https://8.8.8.8/dns-query  #谷歌主DNS
       - https://1.1.1.1/dns-query  #Cloudflare主DNS
@@ -104,7 +105,8 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
       - rcode://success  #直接返回一个success也就是空结果
 
   nameserver:  #默认DNS服务器组，域名若未匹配 nameserver-policy 规则，就会交给 nameserver 解析
-    - https://223.5.5.5/dns-query#h3=true #阿里主DNS，并强制开启HTTP/3，实测支持HTTP/3
+    - https://223.5.5.5/dns-query#h3=true  #阿里主DNS，强制开启HTTP/3，实测支持
+    - https://223.6.6.6/dns-query#h3=true  #阿里副DNS，强制开启HTTP/3，实测支持
 
 #  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
 #  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
