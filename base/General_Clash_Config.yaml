@@ -93,7 +93,8 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
   listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
   enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip；由于双WAN分流，只能选择redir-host模式
 
-  nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
+## 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
+  nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
     geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，使用国内的DNS
       - https://223.5.5.5/dns-query#h3=true  #阿里主DNS，强制开启HTTP/3，实测支持
       - https://223.6.6.6/dns-query#h3=true  #阿里副DNS，强制开启HTTP/3，实测支持
@@ -104,7 +105,7 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
     geosite:category-ads-all:  #匹配广告域名，直接返回空结果
       - rcode://success  #直接返回一个success也就是空结果
 
-  nameserver:  #默认DNS服务器组，域名若未匹配 nameserver-policy 规则，就会交给 nameserver 解析
+  nameserver:  #默认DNS服务器组，域名若未命中 nameserver-policy 规则，就会交给 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
     - https://223.5.5.5/dns-query#h3=true  #阿里主DNS，强制开启HTTP/3，实测支持
     - https://223.6.6.6/dns-query#h3=true  #阿里副DNS，强制开启HTTP/3，实测支持
 
@@ -143,12 +144,16 @@ sniffer:  #meta嗅探相关参数，嗅探的作用是：当clash不作为DNS服
   - dlg.io.mi.com
 
 ########################################################################## TUN设置 #############################################################################
-#tun:
-#  stack: mixed  #tun 模式堆栈，如无使用问题，建议使用 mixed栈
-#  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
-#    - any:53
-#    - tcp://any:53
+tun:
+  enable: true  #是否启用
+  stack: mixed  # tun 模式，如无使用问题，建议使用 mixed：TCP使用system，UDP使用Gvisor
+  device:       #指定TUN网卡名称，此处留空，不同设备不同
+  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不指定协议则为 udp://
+    - any:53
+    - tcp://any:53
+  strict-route: true  #严格路由，可以禁止Windows使用多宿主DNS，可以有效防止DNS泄露
 
+#################################################################### 以下内容有些过时 ############################################################################
 # 1. clash DNS 请求逻辑：
 #   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
 #   (2) clash 将选取 nameserver 列表内，解析最快的结果。
@@ -166,8 +171,7 @@ sniffer:  #meta嗅探相关参数，嗅探的作用是：当clash不作为DNS服
 #   DoH: 以 https:// 开头的 DNS 服务器。拥有更好的伪装性，且几乎不可能被运营商或网络管理封锁，但查询效率和安全性可能略低。
 #   DoT: 以 tls:// 开头的 DNS 服务器。拥有更高的安全性和查询效率，但端口有可能被管制或封锁。
 #   若要了解更多关于 DoH/DoT 相关技术，请自行查阅规范文档。
-
 ########################################################################## Rule规则 #############################################################################
 ### 不推荐在此处添加规则，此处规则会直接排在最终配置文件Rules的最前方，无法控制与外部配置之间的先后顺序优先级
-rules:
+#rules:
 #  - DOMAIN-KEYWORD,testHYB,DIRECT
