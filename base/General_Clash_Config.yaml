@@ -96,7 +96,7 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
   prefer-h3: true  #优先使用HTTP/3，对于支持的DNS能够加速访问
   ipv6: true  #是否解析ipv6地址，否则返回空结果
   listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
-  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip；由于双WAN分流，只能选择redir-host模式
+  enhanced-mode: fake-ip  #DNS处理模式：redir-host/fake-ip；由于双WAN分流，只能选择redir-host模式
 
 ## 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
   nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
@@ -113,6 +113,123 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
   nameserver:  #默认DNS服务器组，域名若未命中 nameserver-policy 规则，就会交给 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
     - https://223.5.5.5/dns-query#h3=true  #阿里主DNS，强制开启HTTP/3，实测支持
     - https://223.6.6.6/dns-query#h3=true  #阿里副DNS，强制开启HTTP/3，实测支持
+
+############## fake-ip 设置 ###############
+  fake-ip-range: 198.18.0.1/16
+    fake-ip-filter-mode: blacklist
+    fake-ip-filter:
+      - "*.lan"
+      - "*.localdomain"
+      - "*.example"
+      - "*.invalid"
+      - "*.localhost"
+      - "*.test"
+      - "*.local"
+      - "*.home.arpa"
+      - time.*.com
+      - time.*.gov
+      - time.*.edu.cn
+      - time.*.apple.com
+      - time-ios.apple.com
+      - time1.*.com
+      - time2.*.com
+      - time3.*.com
+      - time4.*.com
+      - time5.*.com
+      - time6.*.com
+      - time7.*.com
+      - ntp.*.com
+      - ntp1.*.com
+      - ntp2.*.com
+      - ntp3.*.com
+      - ntp4.*.com
+      - ntp5.*.com
+      - ntp6.*.com
+      - ntp7.*.com
+      - "*.time.edu.cn"
+      - "*.ntp.org.cn"
+      - "+.pool.ntp.org"
+      - time1.cloud.tencent.com
+      - music.163.com
+      - "*.music.163.com"
+      - "*.126.net"
+      - musicapi.taihe.com
+      - music.taihe.com
+      - songsearch.kugou.com
+      - trackercdn.kugou.com
+      - "*.kuwo.cn"
+      - api-jooxtt.sanook.com
+      - api.joox.com
+      - joox.com
+      - y.qq.com
+      - "*.y.qq.com"
+      - streamoc.music.tc.qq.com
+      - mobileoc.music.tc.qq.com
+      - isure.stream.qqmusic.qq.com
+      - dl.stream.qqmusic.qq.com
+      - aqqmusic.tc.qq.com
+      - amobile.music.tc.qq.com
+      - "*.xiami.com"
+      - "*.music.migu.cn"
+      - music.migu.cn
+      - "+.msftconnecttest.com"
+      - "+.msftncsi.com"
+      - localhost.ptlogin2.qq.com
+      - localhost.sec.qq.com
+      - "+.qq.com"
+      - "+.tencent.com"
+      - "+.srv.nintendo.net"
+      - "*.n.n.srv.nintendo.net"
+      - "+.cdn.nintendo.net"
+      - "+.stun.playstation.net"
+      - xbox.*.*.microsoft.com
+      - "*.*.xboxlive.com"
+      - xbox.*.microsoft.com
+      - xnotify.xboxlive.com
+      - "+.battlenet.com.cn"
+      - "+.wotgame.cn"
+      - "+.wggames.cn"
+      - "+.wowsgame.cn"
+      - "+.wargaming.net"
+      - proxy.golang.org
+      - stun.*.*
+      - stun.*.*.*
+      - "+.stun.*.*"
+      - "+.stun.*.*.*"
+      - "+.stun.*.*.*.*"
+      - "+.stun.*.*.*.*.*"
+      - heartbeat.belkin.com
+      - "*.linksys.com"
+      - "*.linksyssmartwifi.com"
+      - "*.router.asus.com"
+      - mesu.apple.com
+      - swscan.apple.com
+      - swquery.apple.com
+      - swdownload.apple.com
+      - swcdn.apple.com
+      - swdist.apple.com
+      - lens.l.google.com
+      - stun.l.google.com
+      - na.b.g-tun.com
+      - "+.nflxvideo.net"
+      - "*.square-enix.com"
+      - "*.finalfantasyxiv.com"
+      - "*.ffxiv.com"
+      - "*.ff14.sdo.com"
+      - ff.dorado.sdo.com
+      - "*.mcdn.bilivideo.cn"
+      - "+.media.dssott.com"
+      - shark007.net
+      - Mijia Cloud
+      - "+.cmbchina.com"
+      - "+.cmbimg.com"
+      - local.adguard.org
+      - "+.sandai.net"
+      - "+.n0808.com"
+      - "+.uu.163.com"
+      - ps.res.netease.com
+      - "+.pub.3gppnetwork.org"
+      - geosite:category-games
 
 ########################################################################## hosts设置 ###########################################################################
 #hosts:
