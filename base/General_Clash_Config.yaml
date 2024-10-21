@@ -79,6 +79,11 @@ geodata-mode: false
 ### Geo文件加载模式，默认为memconservative，小内存设备适用
 geodata-loader: standard
 
+### 缓存设置
+profile:
+  store-selected: true  # 存储控制面板对策略组的选择
+  store-fake-ip: true  # 存储fake-ip映射关系
+
 ### clash流量出站接口，即接口绑定
 #interface-name: en0
 
