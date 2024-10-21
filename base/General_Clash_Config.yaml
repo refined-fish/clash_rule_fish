@@ -106,7 +106,7 @@ dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则�
   respect-rules: false  # dns 连接遵守路由规则，需配置 proxy-server-nameserver
   listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
   ipv6: true  #是否解析ipv6地址，否则返回空结果
-  enhanced-mode: fake-ip  #DNS处理模式：redir-host/fake-ip；由于双WAN分流，只能选择redir-host模式
+  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip；由于双WAN分流，只能选择redir-host模式
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
