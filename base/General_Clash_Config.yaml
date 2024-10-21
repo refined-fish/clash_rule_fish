@@ -64,7 +64,7 @@ tcp-concurrent: true
 ### 统一延迟计算方式，去除TCP握手等额外的延迟，没什么卵用就是好看而已
 unified-delay: false
 
-### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施，建议1800
+### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施，建议1800+
 keep-alive-interval: 1800
 
 ### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
@@ -78,6 +78,14 @@ geodata-mode: false
 
 ### Geo文件加载模式，默认为memconservative，小内存设备适用
 geodata-loader: standard
+
+### GEO自动更新
+geo-auto-update: true
+geo-update-interval: 24  # 更新间隔，小时
+geox-url:  # 下载地址
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
 ### 缓存设置
 profile:
