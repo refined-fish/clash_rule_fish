@@ -104,7 +104,7 @@ global-ua: clash.meta
 etag-support: true
 
 ############################################################################## DNS设置 ###########################################################################
-dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则可以直接使用nameserver-policy，放弃fallback
+dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则可以直接使用nameserver-policy，请放弃fallback
   enable: true  # 是否启用dns
   prefer-h3: true  # 优先使用HTTP/3，对于支持的DoH DNS能够加速访问
   use-hosts: true  # 使用clash hosts文件
@@ -112,10 +112,10 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   respect-rules: false  # DNS请求遵循clash规则，需配置 proxy-server-nameserver
   listen: 0.0.0.0:7874  # DNS监听端口，非路由器透明代理客户端使用会出现问题
   ipv6: true  # 是否解析ipv6地址，否则返回空结果
-  enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题
+  enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，需要手动加入filter很麻烦）
   fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun 的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist  # 黑名单/白名单模式，whitelist只有匹配成功才返回 fake-ip
-  fake-ip-filter:  # fakeip 过滤，以下地址不会下发 fakeip 而是返回真是IP
+  fake-ip-filter:  # fakeip过滤，以下域名不会下发 fakeip 而是返回真是IP
     - "+.qing-yu.top"
     - "*.lan"
     - "*.localdomain"
