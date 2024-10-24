@@ -116,6 +116,7 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun 的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist  # 黑名单/白名单模式，whitelist只有匹配成功才返回 fake-ip
   fake-ip-filter:  # fakeip 过滤，以下地址不会下发 fakeip 而是返回真是IP
+    - ctm.crouchingtigerhiddenfruitbat.org
     - "+.qing-yu.top"
     - "*.lan"
     - "*.localdomain"
