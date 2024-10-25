@@ -69,7 +69,7 @@ profile:
   store-selected: true  # 存储控制面板对策略组的选择
   store-fake-ip: true  # 存储fake-ip映射关系，相当于Cache
 
-### 统一延迟计算方式，去除TCP握手等额外的延迟，没什么卵用就是好看而已，还有可能因为不同协议握手时间区别造成比较错误
+### 统一去除不同协议节点间协议固定耗时，可能一个实际延迟很大的节点减去较大固定耗时后反而展示出来延迟很低
 unified-delay: false
 
 ### TCP并发
@@ -84,8 +84,8 @@ tcp-concurrent: true
 ### 全局客户端指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
 global-client-fingerprint: random
 
-### GEOIP数据模式，默认false是mmdb，true是dat，mmdb是更新的版本
-geodata-mode: false
+### GEOIP数据模式，默认false是mmdb，true是dat，mmdb是更新的版本（实测有设备会不支持mmdb，例如IPQ6000）
+geodata-mode: true
 
 ### GEO文件加载模式，默认为memconservative，小内存设备适用
 geodata-loader: standard
@@ -94,8 +94,10 @@ geodata-loader: standard
 geo-auto-update: true
 geo-update-interval: 24  # 更新间隔，小时
 geox-url:  # 下载地址
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
   geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
-  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+#  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+#  asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
 ### 自定义全局UA，默认为clash.meta
 global-ua: clash.meta
@@ -113,6 +115,28 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   listen: 0.0.0.0:7874  # DNS监听端口，非路由器透明代理客户端使用会出现问题
   ipv6: true  # 是否解析ipv6地址，否则返回空结果
   enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，需要手动加入filter很麻烦）
+  
+  ### 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
+  nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
+    geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
+      - dhcp://system  # DHCP分发的DNS
+      - system         # 系统DNS
+      - 223.5.5.5  # 阿里主DNS
+      - 223.6.6.6  # 阿里副DNS
+    geosite:geolocation-!cn:  # 匹配非中国域名，应确保可信无污染且国外加密
+      - https://8.8.8.8/dns-query  # 谷歌主DNS
+      - https://1.1.1.1/dns-query  # Cloudflare主DNS
+      - https://1.0.0.1/dns-query  # Cloudflare次DNS
+    geosite:category-ads-all:  # 匹配广告域名，直接返回空结果
+      - rcode://success  # 直接返回一个success也就是空结果
+
+  nameserver:  # 默认DNS组，留空会被openclash自动添加，域名未命中 nameserver-policy，就会用 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
+    - dhcp://system  # DHCP分发的DNS
+    - system         # 系统DNS
+    - 223.5.5.5  # 阿里主DNS
+    - 223.6.6.6  # 阿里副DNS
+  
+  ### Fake-IP设置
   fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun 的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist  # 黑名单/白名单模式，whitelist只有匹配成功才返回 fake-ip
   fake-ip-filter:  # fakeip过滤，以下域名不会下发 fakeip 而是返回真是IP
@@ -231,25 +255,6 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
     - geosite:category-games
     - geosite:cn
 
-## 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
-  nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
-    geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
-      - dhcp://system
-      - system
-      - 223.5.5.5  # 阿里主DNS
-      - 223.6.6.6  # 阿里副DNS
-    geosite:geolocation-!cn:  # 匹配非中国域名，应确保可信无污染且国外加密
-      - https://8.8.8.8/dns-query  # 谷歌主DNS
-      - https://1.1.1.1/dns-query  # Cloudflare主DNS
-      - https://1.0.0.1/dns-query  # Cloudflare次DNS
-    geosite:category-ads-all:  # 匹配广告域名，直接返回空结果
-      - rcode://success  # 直接返回一个success也就是空结果
-
-  nameserver:  # 默认DNS组，留空会被openclash自动添加，域名未命中 nameserver-policy，就会用 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
-    - dhcp://system
-    - system
-    - 223.5.5.5  # 阿里主DNS
-    - 223.6.6.6  # 阿里副DNS
 
 ########################################################################## hosts设置 ###########################################################################
 #hosts:
