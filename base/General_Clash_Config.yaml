@@ -120,6 +120,7 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
     geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
       - dhcp://eth1  # 指定网卡DHCP获取的DNS
+      - dhcp://system  # 仅cmfa有效，使用系统DNS
       - 223.5.5.5  # 阿里主DNS
       - 223.6.6.6  # 阿里副DNS
     geosite:geolocation-!cn:  # 匹配非中国域名，应确保可信无污染且国外加密
@@ -131,6 +132,7 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
 
   nameserver:  # 默认DNS组，留空会被openclash自动添加，域名未命中 nameserver-policy，就会用 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
     - dhcp://eth1  # 指定网卡DHCP获取的DNS
+    - dhcp://system  # 仅cmfa有效，使用系统DNS
     - 223.5.5.5  # 阿里主DNS
     - 223.6.6.6  # 阿里副DNS
   
