@@ -27,8 +27,8 @@ bind-address: "*"  # 星号: 绑定宿主网卡所有IP地址，192.168.122.11: 
 
 ### 允许连接的IP地址段，默认允许全部
 lan-allowed-ips:
-  - 0.0.0.0/0
-  - ::/0
+  #- 0.0.0.0/0
+  #- ::/0
 
 ### 禁止链接的IP段，优先级高于允许的白名单，默认为空
 lan-disallowed-ips:
@@ -36,12 +36,12 @@ lan-disallowed-ips:
 
 ### 本地 SOCKS5 / HTTP(S) 服务用户认证
 authentication:
-#  - "user1:pass1"
+  #- "user1:pass1"
 
 ### 允许跳过用户验证的IP
 skip-auth-prefixes:
-#  - 127.0.0.1/8
-#  - ::1/128
+  #- 127.0.0.1/8
+  #- ::1/128
 
 ### clash运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连），默认rule
 mode: rule
@@ -69,7 +69,7 @@ profile:
   store-selected: true  # 存储控制面板对策略组的选择
   store-fake-ip: true  # 存储fake-ip映射关系，相当于Cache
 
-### 统一去除不同协议节点间协议固定耗时，可能一个实际延迟很大的节点减去较大固定耗时后反而展示出来延迟很低
+### 减去延迟测试的协议握手开销，意义在于让延迟变得好看，没啥卵用
 unified-delay: false
 
 ### TCP并发
@@ -87,7 +87,7 @@ global-client-fingerprint: random
 ### GEOIP数据模式，默认false是mmdb，true是dat，mmdb是更新的版本（实测有设备会不支持mmdb，例如IPQ6000）
 geodata-mode: true
 
-### GEO文件加载模式，默认为memconservative，小内存设备适用
+### GEO文件加载模式，默认为memconservative（小内存设备模式）
 geodata-loader: standard
 
 ### GEO自动更新
@@ -111,17 +111,22 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   prefer-h3: true  # 优先使用HTTP/3，对于支持的DoH DNS能够加速访问
   use-hosts: true  # 使用clash hosts文件
   use-system-hosts: true  # 使用系统 hosts文件
-  respect-rules: false  # DNS请求遵循clash规则，需配置 proxy-server-nameserver
+  respect-rules: false  # DNS请求遵循clash规则分流，需先配置好 proxy-server-nameserver
   listen: 0.0.0.0:7874  # DNS监听端口，非路由器透明代理客户端使用会出现问题
   ipv6: true  # 是否解析ipv6地址，否则返回空结果
   enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，需要手动加入filter很麻烦）
   
   ### 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
+  proxy-server-nameserver:  # 解析代理节点域名的服务器，如果不指定则会遵循namepolicy，一般节点都属于cn，有污染和识别风险
+    - https://8.8.8.8/dns-query  # 谷歌主DNS
+    - https://1.1.1.1/dns-query  # Cloudflare主DNS
+    - https://1.0.0.1/dns-query  # Cloudflare次DNS
+
   nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
     geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
-      - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口就叫wan
-      - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口一般是最后一张网卡，对于双口就是eth1
-      - dhcp://system  # 使用系统DNS，给非路由客户端使用
+      - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
+      - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口网卡名为最后一张网卡，双口就是eth1
+      - system  # 使用系统DNS，给非路由客户端使用
       - 223.5.5.5  # 阿里主DNS
       - 223.6.6.6  # 阿里副DNS
     geosite:geolocation-!cn:  # 匹配非中国域名，应确保可信无污染且国外加密
@@ -130,11 +135,11 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
       - https://1.0.0.1/dns-query  # Cloudflare次DNS
     geosite:category-ads-all:  # 匹配广告域名，直接返回空结果
       - rcode://success  # 直接返回一个success也就是空结果
-
+  
   nameserver:  # 默认DNS组，留空会被openclash自动添加，域名未命中 nameserver-policy，就会用 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
     - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口就叫wan
     - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口一般是最后一张网卡，对于双口就是eth1
-    - dhcp://system  # 使用系统DNS，给非路由客户端使用
+    - system  # 使用系统DNS，给非路由客户端使用
     - 223.5.5.5  # 阿里主DNS
     - 223.6.6.6  # 阿里副DNS
   
