@@ -119,36 +119,36 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   
   ### 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
   proxy-server-nameserver:  # 解析代理节点域名的服务器，如果不指定则会遵循namepolicy，一般节点域名都属于cn，会使用cn服务器，有污染和识别风险
-  - https://8.8.8.8/dns-query  # 谷歌主DNS
-  - https://1.1.1.1/dns-query  # Cloudflare主DNS
-  - https://1.0.0.1/dns-query  # Cloudflare次DNS
-
-  nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
-    geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
-    - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
-    - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口网卡名为最后一张网卡，双口就是eth1
-    - system  # 使用系统DNS，给非路由客户端使用
-    - 223.5.5.5  # 阿里主DNS
-    - 223.6.6.6  # 阿里副DNS
-    geosite:geolocation-!cn:  # 匹配非中国域名，应确保可信无污染且国外加密
     - https://8.8.8.8/dns-query  # 谷歌主DNS
     - https://1.1.1.1/dns-query  # Cloudflare主DNS
     - https://1.0.0.1/dns-query  # Cloudflare次DNS
+
+  nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
+    geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
+      - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
+      - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口网卡名为最后一张网卡，双口就是eth1
+      - system  # 使用系统DNS，给非路由客户端使用
+      - 223.5.5.5  # 阿里主DNS
+      - 223.6.6.6  # 阿里副DNS
+    geosite:geolocation-!cn:  # 匹配非中国域名，应确保可信无污染且国外加密
+      - https://8.8.8.8/dns-query  # 谷歌主DNS
+      - https://1.1.1.1/dns-query  # Cloudflare主DNS
+      - https://1.0.0.1/dns-query  # Cloudflare次DNS
     geosite:category-ads-all:  # 匹配广告域名，直接返回空结果
-    - rcode://success  # 直接返回一个success也就是空结果
+      - rcode://success  # 直接返回一个success也就是空结果
   
   nameserver:  # 默认DNS组，留空会被openclash自动添加，域名未命中 nameserver-policy，就会用 nameserver/fallback 同时解析，并根据 fallback-filter 选择结果
-  - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口就叫wan
-  - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口一般是最后一张网卡，对于双口就是eth1
-  - system  # 使用系统DNS，给非路由客户端使用
-  - 223.5.5.5  # 阿里主DNS
-  - 223.6.6.6  # 阿里副DNS
+    - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口就叫wan
+    - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口一般是最后一张网卡，对于双口就是eth1
+    - system  # 使用系统DNS，给非路由客户端使用
+    - 223.5.5.5  # 阿里主DNS
+    - 223.6.6.6  # 阿里副DNS
   
   ### Fake-IP设置
   fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun 的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist  # 黑名单/白名单模式，whitelist只有匹配成功才返回 fake-ip
   fake-ip-filter:  # fakeip过滤，以下域名不会下发 fakeip 而是返回真是IP
-  - geosite:category-ads-all,category-games,cn,private
+    - geosite:category-ads-all,category-games,cn,private
 
 ########################################################################## hosts设置 ###########################################################################
 #hosts:
@@ -164,20 +164,20 @@ sniffer:  # meta嗅探相关参数，嗅探的作用是：当clash不作为DNS�
   sniff:  # 需要嗅探的协议类型，仅支持 HTTP/TLS/QUIC
     HTTP:  # HTTP协议
       ports:    # 端口白名单，只针对下列端口嗅探，不配置则全部嗅探
-      - 80
-      - 8080-8880
+        - 80
+        - 8080-8880
     TLS:  # TLS协议
       ports:
-      - 443
-      - 8443
+        - 443
+        - 8443
     QUIC:  # QUIC协议
       ports:
-      - 443
-      - 8443
+        - 443
+        - 8443
   skip-domain:  # 需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
-  - "+.apple.com"
-  - Mijia Cloud
-  - dlg.io.mi.com
+    - "+.apple.com"
+    - Mijia Cloud
+    - dlg.io.mi.com
 
 ########################################################################## TUN设置 #############################################################################
 ### 一般都都是客户端自行设置，此处设置也不生效，仅做留档
