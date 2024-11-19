@@ -1,9 +1,9 @@
 ### 注意该配置文件仅针对meta内核，参照说明文档https://wiki.metacubex.one/
-### 非meta内核请参照对应内核说明修改
+# 非meta内核请参照对应内核说明修改
 
 ########################################################################## 服务端口 ##############################################################################
 ### 不同客户端的默认端口设置不尽相同，一般也会自行配置，因此不要在配置文件中指定
-### 混合端口 HTTP和SOCKS5均可用的端口，一般clash客户端就是让系统代理走这个端口
+# 混合端口 HTTP和SOCKS5均可用的端口，一般clash客户端就是让系统代理走这个端口
 #mixed-port: 7893
 
 ### SOCKS5 代理端口
@@ -53,13 +53,17 @@ log-level: warning  # silent / error / warning / info / debug。级别越高日�
 ### 启用ipv6代理，内核是否接受ipv6流量
 ipv6: true
 
-### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施，建议1800+
-keep-alive-interval: 1800
-### 禁用TCP Keep alive，在移动端应该禁用，路由端应该打开
+### TCP Keep Alive 设置
+# 当一条链接无数据活动到达（keep-alive-idle）时间后 Clash 发出心跳包检测客户端是否在线
+keep-alive-idle: 600
+# 如果心跳包未响应，则会等待（keep-alive-interval）后继续发送，重复最多9次关闭链接
+keep-alive-interval: 600
+# 禁用 keep alive 机制，允许链接一直存在。路由器端不应禁用，安卓端默认为禁用（安卓不会长时间使用）
 #disable-keep-alive: false
 
-### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
-find-process-mode: strict  # openclash中要求此项带引号，但是经过转换后引号会消失openclash里会报错，因此注释掉
+### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，其他客户端处可以打开，匹配进程规则
+# strict由clash决定是否开启，off为关闭，always为开启
+find-process-mode: strict
 
 ### Clash 的 RESTful API，网页控制端地址和端口，由客户端设置
 #external-controller: 127.0.0.1:9090
@@ -69,7 +73,7 @@ find-process-mode: strict  # openclash中要求此项带引号，但是经过转
 
 ### 缓存设置
 profile:
-  store-selected: true  # 存储控制面板对策略组的选择
+  store-selected: true  # 存储API控制面板对策略组的选择
   store-fake-ip: true  # 存储fake-ip映射关系，相当于Cache
 
 ### 减去延迟测试的协议握手开销，意义在于让延迟变得好看，没啥卵用
@@ -120,7 +124,7 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，需要手动加入filter很麻烦）
   
   ### 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
-  proxy-server-nameserver:  # 解析代理节点域名的服务器，如果不指定则会遵循namepolicy，一般节点域名都属于cn，会使用cn服务器，有污染和识别风险
+  proxy-server-nameserver:  # 解析代理节点域名的服务器，如果不指定则会遵循namepolicy，一般节点域名都属于GEO@cn，默认会使用cn的DNS服务器，有污染和识别风险
     - https://8.8.8.8/dns-query  # 谷歌主DNS
     - https://1.1.1.1/dns-query  # Cloudflare主DNS
     - https://1.0.0.1/dns-query  # Cloudflare次DNS
