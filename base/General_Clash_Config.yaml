@@ -189,9 +189,9 @@ sniffer:  # meta嗅探相关参数，嗅探的作用是：当clash不作为DNS�
 tun:
   enable: true  # 是否启用接口
   stack: mixed  # tun 堆栈模式，如无使用问题，建议使用 mixed：TCP使用system，UDP使用Gvisor
-  device:       # 指定TUN网卡名称，此处留空，不同设备不同
+  device: utun0  # 指定TUN网卡名称，此处留空，不同设备不同
   auto-route: true  # 自动设置全局路由，可以自动将全局流量路由进入 tun 网卡。
-  auto-redirect: true  # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接
+  #auto-redirect: true  # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接
   auto-detect-interface: true  # 自动选择流量的出接口（wan）
   dns-hijack:  # dns 劫持，将匹配到的连接导入内部 dns 模块，不指定UDP或tcp则默认为 udp://
     - any:53
