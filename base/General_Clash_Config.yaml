@@ -74,7 +74,6 @@ find-process-mode: strict
 ### 缓存设置
 profile:
   store-selected: true  # 存储API控制面板对策略组的选择
-  store-fake-ip: true  # 存储fake-ip映射关系，相当于Cache
 
 ### 减去延迟测试的协议握手开销，意义在于让延迟变得好看，没啥卵用
 unified-delay: false
