@@ -123,12 +123,12 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
   ipv6: true  # 是否解析ipv6地址，否则返回空结果
   enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，需要手动加入filter很麻烦）
   
-  ### 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
   proxy-server-nameserver:  # 解析代理节点域名的服务器，如果不指定则会遵循namepolicy，一般节点域名都属于GEO@cn，默认会使用cn的DNS服务器，有污染和识别风险
     - https://8.8.8.8/dns-query  # 谷歌主DNS
     - https://1.1.1.1/dns-query  # Cloudflare主DNS
     - https://1.0.0.1/dns-query  # Cloudflare次DNS
 
+  ### 对于命中代理规则的域名，将会直接发往远程节点查询；只有未命中/直连的域名，或需解析的IP规则，才会进入下面的DNS查询流程
   nameserver-policy:  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback，meta内核的升级功能
     geosite:cn,private,apple:  # 匹配中国，私有地址，苹果域名，优先使用运营商DNS
       - dhcp://wan  # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
