@@ -1,0 +1,206 @@
+### 注意该配置文件仅针对meta内核，参照说明文档https://wiki.metacubex.one/
+### 非meta内核请参照对应内核说明修改
+
+########################################################################## 入站端口 ##############################################################################
+### 混合端口 HTTP和SOCKS5均可用的端口，一般clash客户端就是让系统代理走这个端口
+mixed-port: 7893
+
+### SOCKS5 代理端口
+socks-port: 7891
+
+### HTTP 代理端口
+port: 7890
+
+### Linux 和 macOS 的 redir 透明代理端口 (如需使用此功能，请取消注释)
+#redir-port: 7892
+
+### Linux 和 macOS 的 tproxy 透明代理端口 (如需使用此功能，请取消注释)
+#tproxy-port: 7895
+
+
+########################################################################## 全局配置 ##############################################################################
+### clash运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
+mode: rule
+
+### 允许局域网的连接（可用来共享代理）
+allow-lan: true
+
+### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此地址访问共享代理
+bind-address: "*"  #"*": 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
+
+### 允许连接的IP地址段，默认为全部
+#lan-allowed-ips:
+  #- 0.0.0.0/0
+  #- ::/0
+
+### 禁止链接的IP段，优先级高于白名单
+#lan-disallowed-ips:
+  #- 192.168.0.3/32
+
+### 本地 SOCKS5 / HTTP(S) 服务用户认证，开启后需要输入账号密码才可使用
+#authentication:
+#  - "user1:pass1"
+
+### 允许跳过用户验证的IP
+#skip-auth-prefixes:
+#  - 127.0.0.1/8
+#  - ::1/128
+
+### 设置日志输出级别 (默认级别：silent，即不输出任何内容，以避免因日志内容过大而导致程序内存溢出）。
+log-level: info  #5 个级别：silent / error / warning / info / debug。级别越高日志输出量越大，越倾向于调试，若需要请自行开启。
+
+### 启用ipv6代理，内核是否接受ipv6流量
+ipv6: true
+
+### 外部控制（API）RESTful API 网页控制端的口令 (可选)
+secret: ""
+
+### Clash 的 RESTful API，网页控制端地址和端口
+external-controller: 127.0.0.1:9090
+
+### TCP并发
+tcp-concurrent: true
+
+### 统一延迟计算方式，去除TCP握手等额外的延迟
+unified-delay: true
+
+### TCP Keep Alive 间隔，控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施
+keep-alive-interval: 1800
+
+### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，特殊情况可以在客户端处打开，可以匹配进程规则
+#find-process-mode: off  #openclash中要求off带引号，但是经过转换后引号会消失openclash里会报错，因此注释掉
+
+### 全局客户端指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
+global-client-fingerprint: random
+
+### GEOIP数据模式，默认false是mmdb，true是dat
+geodata-mode: true
+
+### Geo文件加载模式，默认为memconservative，小内存设备适用
+geodata-loader: standard
+
+### clash流量出站接口，即接口绑定
+#interface-name: en0
+
+### Linux下的路由标记，为流量提供标记
+#routing-mark: 6666
+
+############################################################################## DNS设置 ###########################################################################
+dns:  #注意，原版内核分流方式为nameserver+fallback；meta内核则可以直接使用nameserver-policy，放弃fallback
+  enable: true  #是否启用dns
+  prefer-h3: true  #优先使用HTTP/3
+  ipv6: true  #是否解析ipv6地址，否则返回空结果
+  #listen: 0.0.0.0:7874  #DNS监听端口，非路由器透明代理客户端使用会出现问题
+  enhanced-mode: redir-host  #DNS处理模式：redir-host/fake-ip，fake-ip更快，但是可能有一些奇怪的问题，尤其是在打网游的时候
+
+  nameserver-policy:  #指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询，meta内核的升级功能
+    geosite:cn,private,apple:  #匹配中国，私有地址，苹果域名，使用国内的DNS
+    - https://223.5.5.5/dns-query#h3=true #阿里主DNS，强制开启HTTP/3，实测支持
+    - 119.29.29.29  #腾讯主DNS，不支持http/3
+    - 114.114.114.114  #南京信风DNS，不支持http/3
+    geosite:geolocation-!cn:  #匹配非中国域名，应确保可信无污染，使用国外加密DNS
+    - https://8.8.8.8/dns-query  #谷歌主DNS
+    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+    geosite:category-ads-all:  #匹配广告域名，直接返回空结果
+    - rcode://success  #直接返回一个success也就是空结果
+
+#  default-nameserver:  #仅用于解析DNS服务器的域名，可填写加密DNS但是必须为纯IP，未使用域名DNS服务器可以不配置
+#    - 114.114.114.114  #南京信风DNS，国内最大的公共DNS服务器
+#    - 1.1.1.1  #Cloudflare主DNS，全球最优秀的公共DNS服务器
+
+  nameserver:  #默认DNS服务器组，域名若未匹配 nameserver-policy 规则，就会交给 nameserver 解析
+  - https://223.5.5.5/dns-query#h3=true #阿里主DNS，并强制开启HTTP/3，实测支持HTTP/3
+  - 119.29.29.29  #腾讯主DNS，不支持http/3
+  - 114.114.114.114  #南京信风DNS，不支持http/3
+
+#  fallback:  #原版内核的后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信无污染，据说不配置则使用节点远程解析
+#    - https://8.8.8.8/dns-query  #谷歌主DNS
+#    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+#    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+
+#  fallback-filter:  #后备域名解析服务器过滤规则，匹配域名将只使用 fallback 解析
+#    geoip: true  #启用geoip库
+#    geoip-code: CN  #解析结果除了geoip-code 配置的国家IP, 其他的IP结果会被视为污染，也就是说要采用fallback组的结果
+#    geosite:  #geosite指定内容被视为污染，将只使用fallback组解析，不使用nameserver组
+#      - gfw  #匹配GFW域名
+#      - "!cn"  #匹配非cn域名
+#    ipcidr: #解析结果在下列网段内会被考虑为被污染，采用fallback组结果，理论上有geoip-code就够了
+#      - 240.0.0.0/4
+#    domain:  #下列域名采用fallback组解析，理论上有geosite就够了
+#      - "+.google.com"
+
+#  proxy-server-nameserver:  #代理节点域名解析服务器，仅用于解析代理节点的域名，应确保可信无污染
+#    - https://8.8.8.8/dns-query  #谷歌主DNS
+#    - https://1.1.1.1/dns-query  #Cloudflare主DNS
+#    - https://1.0.0.1/dns-query  #Cloudflare次DNS
+
+#  fake-ip-range: 198.18.0.1/16  #fake-ip配置字段，fakeip的IP段
+#  fake-ip-filter:  #fake-ip白名单列表，包含域名返回真实IP而非fakeip
+#     - '*.lan'
+#     - localhost.ptlogin2.qq.com
+
+########################################################################## hosts设置 ###########################################################################
+#hosts:
+#  '*.clash.dev': 127.0.0.1
+#  'alpha.clash.dev': '::1'
+
+############################################################################## 域名嗅探 ###########################################################################
+sniffer:  #meta嗅探相关参数，嗅探的作用是：当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
+  enable: true  #启用sniffer
+  force-dns-mapping: true  #对redir-host类型识别的流量进行强制嗅探
+  parse-pure-ip: true  #对所有未获取到域名的流量进行强制嗅探
+  override-destination: true  #是否使用嗅探结果作为实际访问，默认为 true
+  sniff:  #需要嗅探的协议类型
+    HTTP:  #HTTP协议
+      ports:    #端口白名单，只针对下列端口嗅探，不配置则全部嗅探
+        - 80
+        - 8080-8880
+    TLS:  #TLS协议
+      ports:
+        - 443
+        - 8443
+    QUIC:  #QUIC协议
+      ports:
+        - 443
+        - 8443
+  force-domain:  #需要强制嗅探的域名（默认情况下只对IP进行嗅探）
+    - "+.netflix.com"
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.media.dssott.com"
+    - "+.v2ex.com"
+  skip-domain:  #需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
+    - "+.apple.com"
+    - Mijia Cloud
+    - dlg.io.mi.com
+
+########################################################################## TUN设置 #############################################################################
+#tun:
+#  stack: mixed  #tun 模式堆栈，如无使用问题，建议使用 mixed栈
+#  dns-hijack:  #dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
+#    - any:53
+#    - tcp://any:53
+
+# 1. clash DNS 请求逻辑：
+#   (1) 当访问一个域名时， nameserver 与 fallback 列表内的所有服务器并发请求，得到域名对应的 IP 地址。
+#   (2) clash 将选取 nameserver 列表内，解析最快的结果。
+#   (3) 若解析结果中，IP 地址属于 国外，那么 clash 将选择 fallback 列表内，解析最快的结果。
+#
+#   因此，我在 nameserver 和 fallback 内都放置了无污染、解析速度较快的国内 DNS 服务器，以达到最快的解析速度。
+#   但是 fallback 列表内服务器会用在解析境外网站，为了结果绝对无污染，我仅保留了支持 DoT/DoH 的两个服务器。
+#
+# 2. clash DNS 配置注意事项：
+#   (1) 如果您为了确保 DNS 解析结果无污染，请仅保留列表内以 tls:// 或 https:// 开头的 DNS 服务器，但是通常对于国内域名没有必要。
+#   (2) 如果您不在乎可能解析到污染的结果，更加追求速度。请将 nameserver 列表的服务器插入至 fallback 列表内，并移除重复项。
+#
+# 3. 关于 DNS over HTTPS (DoH) 和 DNS over TLS (DoT) 的选择：
+#   对于两项技术双方各执一词，而且会无休止的争论，各有利弊。各位请根据具体需求自行选择，但是配置文件内默认启用 DoT，因为目前国内没有封锁或管制。
+#   DoH: 以 https:// 开头的 DNS 服务器。拥有更好的伪装性，且几乎不可能被运营商或网络管理封锁，但查询效率和安全性可能略低。
+#   DoT: 以 tls:// 开头的 DNS 服务器。拥有更高的安全性和查询效率，但端口有可能被管制或封锁。
+#   若要了解更多关于 DoH/DoT 相关技术，请自行查阅规范文档。
+
+########################################################################## Rule规则 #############################################################################
+### 不推荐在此处添加规则，此处规则会直接排在最终配置文件Rules的最前方，无法控制与外部配置之间的先后顺序优先级
+rules:
+#  - DOMAIN-KEYWORD,testHYB,DIRECT
