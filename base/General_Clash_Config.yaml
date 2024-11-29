@@ -59,8 +59,8 @@ ipv6: true
 #keep-alive-idle: 600
 # 如果心跳包未响应，则会等待（keep-alive-interval）后继续发送，重复最多9次关闭链接
 #keep-alive-interval: 600
-# 禁用 keep alive 机制，允许链接一直存在。路由器端不应禁用，安卓端默认为禁用（安卓不会长时间使用）
-#disable-keep-alive: false
+# 禁用 keep alive 机制，即允许链接一直存在。路由器端不应禁用否则链接超长时间存在，而安卓端默认为禁用
+disable-keep-alive: false
 
 ### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，其他客户端处可以打开，匹配进程规则
 # strict由clash决定是否开启，off为关闭，always为开启
