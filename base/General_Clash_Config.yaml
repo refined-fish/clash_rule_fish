@@ -160,29 +160,28 @@ dns:  # 注意，原版内核分流方式为nameserver+fallback；meta内核则�
 #  'alpha.clash.dev': '::1'
 
 ########################################################################### Sniffer设置 ###########################################################################
-#sniffer:  # meta嗅探相关参数，嗅探的作用是获取握手包中的域名字段，解决当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
-  #enable: true  # 启用sniffer
-  #force-dns-mapping: true  # 对redir-host类型识别的流量进行强制嗅探
-  #parse-pure-ip: true  # 对所有未获取到域名的流量进行强制嗅探
-  #override-destination: true  # 是否使用嗅探结果作为实际访问，默认为 true
-  #force-domain:  # 强制嗅探的域名
-    #- "+.netflix.com"
-    #- "+.nflxvideo.net"
-    #- "+.amazonaws.com"
-    #- "+.media.dssott.com"
-  #skip-domain:  # 需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
-    #- "+.apple.com"
-    #- Mijia Cloud
-    #- dlg.io.mi.com
-    #- "+.oray.com"
-    #- "+.sunlogin.net"
-    #- geosite:cn
-  #sniff:  # 需要嗅探的协议类型，仅支持 HTTP/TLS/QUIC
-    #TLS:  # TLS协议，不配置默认嗅探443端口
-    #HTTP:  # HTTP协议
-      #ports:    # 端口白名单，只针对下列端口嗅探，不配置则全部嗅探
-        #- 80
-        #- 8080-8880
+sniffer:  # meta嗅探相关参数，嗅探的作用是获取握手包中的域名字段，解决当clash不作为DNS服务器时，仅接收到纯IP连接无法匹配域名规则的问题
+  enable: true  # 启用sniffer
+  force-dns-mapping: true  # 对redir-host类型识别的流量进行强制嗅探
+  parse-pure-ip: true  # 对所有未获取到域名的流量进行强制嗅探
+  override-destination: true  # 是否使用嗅探结果作为实际访问，默认为 true
+  force-domain:  # 强制嗅探的域名
+    - "+.netflix.com"
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.media.dssott.com"
+  skip-domain:  # 需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
+    - "+.apple.com"
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - "+.oray.com"
+    - "+.sunlogin.net"
+    - geosite:cn
+  sniff:  # 需要嗅探的协议类型，仅支持 HTTP/TLS/QUIC
+    TLS:  # TLS协议，不配置默认嗅探443端口
+    HTTP:  # HTTP协议
+      ports:    # 端口白名单，只针对下列端口嗅探，不配置则全部嗅探
+        - 80
 
 ########################################################################## TUN设置 #############################################################################
 ### 一般都都是客户端自行设置，此处设置也不生效，仅做留档
