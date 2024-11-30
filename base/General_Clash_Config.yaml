@@ -1,19 +1,19 @@
 ############################################################ 服务端口 
 
 ### 混合端口，HTTP和SOCKS5均可用的端口，系统代理走这个端口
-mixed-port: 7893
+mixed-port: 7890
 
 ### SOCKS5 代理端口
-socks-port: 7891
+socks-port: 1080
 
 ### HTTP 代理端口
-port: 7890
+port: 8080
 
 ### Linux 和 macOS 的 redir 透明代理端口
-redir-port: 7892
+redir-port: 7891
 
 ### Linux 和 macOS 的 tproxy 透明代理端口
-tproxy-port: 7895
+tproxy-port: 7892
 
 
 
