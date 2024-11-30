@@ -1,27 +1,26 @@
 ### 注意该配置文件仅针对meta内核，参照说明文档https://wiki.metacubex.one/
-# 非meta内核请参照对应内核说明修改
 
 ########################################################################## 服务端口 ##############################################################################
-### 不同客户端的默认端口设置不尽相同，一般客户端也会自行配置，因此不要在配置文件中指定
-# 混合端口 HTTP和SOCKS5均可用的端口，一般clash客户端就是让系统代理走这个端口
-#mixed-port: 7893
+
+### 混合端口 HTTP和SOCKS5均可用的端口，一般clash客户端就是让系统代理走这个端口
+mixed-port: 7893
 
 ### SOCKS5 代理端口
-#socks-port: 7891
+socks-port: 7891
 
 ### HTTP 代理端口
-#port: 7890
+port: 7890
 
 ### Linux 和 macOS 的 redir 透明代理端口
-#redir-port: 7892
+redir-port: 7892
 
 ### Linux 和 macOS 的 tproxy 透明代理端口
-#tproxy-port: 7895
+tproxy-port: 7895
 
 
 ########################################################################## 全局配置 ##############################################################################
 ### 允许局域网的连接（可用来共享代理，放在网关透明代理一定要打开，一般交给客户端决定是否开启，openclash默认开启）
-#allow-lan: true
+allow-lan: true
 
 ### 绑定自身地址，仅在将allow-lan设置为true时适用，仅允许其他设备通过此指定的IP地址访问共享代理
 #bind-address: "*"  # 星号: 绑定宿主网卡所有IP地址，192.168.122.11: 绑定单个IPv4地址，[aaaa::a8aa:ff:fe09:57d8]: 绑定单个IPv6地址
@@ -54,12 +53,11 @@ log-level: warning  # silent / error / warning / info / debug。级别越高日�
 ipv6: true
 
 ### TCP Keep Alive 设置
-## 实测如果延长此时间，会导致部分链接不关闭，最终在面板积累上千条
-# 当一条链接无数据活动到达（keep-alive-idle）时间后 Clash 发出心跳包检测客户端是否在线
-#keep-alive-idle: 600
-# 如果心跳包未响应，则会等待（keep-alive-interval）后继续发送，重复最多9次关闭链接
-#keep-alive-interval: 600
-# 禁用 keep alive 机制，即允许链接一直存在。路由器端不应禁用否则链接超长时间存在，而安卓端默认为禁用
+# TCP Keep Alive 空闲，当链接无数据活动到达时间后 Clash 发出心跳包检测
+keep-alive-idle: 15
+# TCP Keep Alive 间隔，如果心跳包未响应，则会等待时间后继续发送，重复最多9次
+keep-alive-interval: 15
+# 禁用 keep alive 机制，即允许链接一直存在。安卓端默认为禁用 keep alive
 disable-keep-alive: false
 
 ### 进程匹配模式，在路由器上关闭，毕竟匹配不到客户端的进程，规则集一般也不带进程规则，其他客户端处可以打开，匹配进程规则
@@ -185,31 +183,31 @@ sniffer:  # meta嗅探相关参数，嗅探的作用是获取握手包中的域�
 
 ########################################################################## TUN设置 #############################################################################
 ### 一般都都是客户端自行设置，此处设置也不生效，仅做留档
-#tun:
-  #enable: true  # 是否启用接口
-  #stack: mixed  # tun 堆栈模式，如无使用问题，建议使用 mixed：TCP使用system，UDP使用Gvisor
-  #device: utun0  # 指定TUN网卡名称，此处留空，不同设备不同
-  #auto-route: true  # 自动设置全局路由，可以自动将全局流量路由进入 tun 网卡。
-  #auto-redirect: true  # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接
-  #auto-detect-interface: true  # 自动选择流量的出接口（wan）
-  #dns-hijack:  # dns 劫持，将匹配到的连接导入内部 dns 模块，不指定UDP或tcp则默认为 udp://
-    #- any:53
-    #- tcp://any:53
-  #strict-route: true  # 严格路由，可以禁止Windows使用多宿主DNS，可以有效防止DNS泄露
-  #exclude-package:  # 安卓排除的包名
-    #- com.tencent.mobileqq  # QQ
-    #- com.tencent.mm  # 微信
-    #- com.tencent.androidqqmail  # QQ邮箱
-    #- com.xingin.xhs  # 小红书
-    #- idm.internet.download.manager  # 1DM下载器
-    #- com.sausage.download  # 浩克下载
-    #- com.eg.android.AlipayGphone  # 支付宝
-    #- com.sgcc.wsgw.cn  # 网上国网
-    #- com.taobao.taobao  # 淘宝
-    #- com.jingdong.app.mall  # 京东
-    #- com.MobileTicket  # 铁路12306
-    #- com.chinamworld.main  # 中国建设银行
-    #- com.jd.jrapp  # 京东金融
+tun:
+  enable: true  # 是否启用接口
+  stack: mixed  # tun 堆栈模式，如无使用问题，建议使用 mixed：TCP使用system，UDP使用Gvisor
+  device: utun0  # 指定TUN网卡名称，此处留空，不同设备不同
+  auto-route: true  # 自动设置全局路由，可以自动将全局流量路由进入 tun 网卡。
+  auto-redirect: true  # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接
+  auto-detect-interface: true  # 自动选择流量的出接口（wan）
+  dns-hijack:  # dns 劫持，将匹配到的连接导入内部 dns 模块，不指定UDP或tcp则默认为 udp://
+    - any:53
+    - tcp://any:53
+  strict-route: true  # 严格路由，可以禁止Windows使用多宿主DNS，可以有效防止DNS泄露
+  exclude-package:  # 安卓排除的包名
+    - com.tencent.mobileqq  # QQ
+    - com.tencent.mm  # 微信
+    - com.tencent.androidqqmail  # QQ邮箱
+    - com.xingin.xhs  # 小红书
+    - idm.internet.download.manager  # 1DM下载器
+    - com.sausage.download  # 浩克下载
+    - com.eg.android.AlipayGphone  # 支付宝
+    - com.sgcc.wsgw.cn  # 网上国网
+    - com.taobao.taobao  # 淘宝
+    - com.jingdong.app.mall  # 京东
+    - com.MobileTicket  # 铁路12306
+    - com.chinamworld.main  # 中国建设银行
+    - com.jd.jrapp  # 京东金融
 
 ########################################################################## Rule规则 #############################################################################
 ### 不推荐在此处添加规则，此处规则会直接排在最终配置文件Rules的最前方，无法控制与外部配置之间的先后顺序优先级
