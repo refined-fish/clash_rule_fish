@@ -1,100 +1,102 @@
-############################################################ 服务端口 
+###########################################################################################################################
+### 端口设置
 
-###* 混合端口，HTTP和SOCKS5均可用的端口，系统代理走这个端口
+#❗混合端口，HTTP和SOCKS5均可用的端口，系统代理走这个端口
 mixed-port: 7890
 
-###* SOCKS5 代理端口
+#❗SOCKS5 代理端口
 socks-port: 1080
 
-###* HTTP 代理端口
+#❗HTTP 代理端口
 port: 8080
 
-###* Linux 和 macOS 的 redir 透明代理端口，其他客户端给了会报错
+#❗Linux 和 macOS 的 redir 透明代理端口，其他客户端给了会报错
 #redir-port: 7891
 
-###* Linux 和 macOS 的 tproxy 透明代理端口，其他客户端给了会报错
+#❗Linux 和 macOS 的 tproxy 透明代理端口，其他客户端给了会报错
 #tproxy-port: 7892
 
 
 
-############################################################ 全局配置
+###########################################################################################################################
+### 全局配置
 
-###* 允许局域网
+#❗允许局域网
 allow-lan: true
 
-###* 绑定地址，仅允许通过此指定地址访问代理
+#❗绑定地址，仅允许通过此指定地址访问代理
 bind-address: 0.0.0.0
 
-### 允许连接的客户端IP，默认允许全部
+# 允许连接的客户端IP，默认允许全部
 lan-allowed-ips:
   - 0.0.0.0/0
   - ::/0
 
-### 禁止链接的IP段，优先级高于允许的白名单，默认为空
+# 禁止链接的IP段，优先级高于允许的白名单，默认为空
 lan-disallowed-ips:
   - 
 
-### http(s)/socks/mixed 代理的用户验证
+# http(s)/socks/mixed 代理的用户验证
 authentication:
   - 
 
-### 允许跳过用户验证的IP
+# 允许跳过用户验证的IP
 skip-auth-prefixes:
   - 
 
-### 运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连）
+# 运行模式：规则模式：rule（规则） / global（全局代理）/ direct（全局直连）
 mode: rule
 
-###* 日志级别
+#❗日志级别
 log-level: warning  # silent / error / warning / info / debug
 
-###* ipv6代理，内核是否接受ipv6流量
+#❗ipv6代理，内核是否接受ipv6流量
 ipv6: true
 
-### TCP Keep Alive 设置
+# TCP Keep Alive 设置
 keep-alive-idle: 15   # TCP Keep Alive 空闲，当链接无数据活动到达时间后 Clash 发出心跳包检测
 keep-alive-interval: 15   # TCP Keep Alive 间隔，如果心跳包未响应，则会等待时间后继续发送，重复最多9次
 disable-keep-alive: false   # 禁用 keep alive 机制，即允许链接一直存在。安卓端默认为禁用 keep alive
 
-### 进程匹配模式
+# 进程匹配模式
 find-process-mode: strict   # strict由clash决定是否开启，off为关闭，always为开启
 
-###* 外部控制面板
+#❗外部控制面板
 external-controller: 0.0.0.0:9090
 #secret: ""   # 面板访问密钥
 
-###* 外部用户界面
+#❗外部用户界面
 #external-ui: ui   # 静态资源的路径
 #external-ui-name: metacubexd    # 外部面板的名字，配合路径合并成特定面板的路径，例如/ui/metacubexd
 #external-ui-url: https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip   # 外部面板下载地址
 
-### 缓存设置
+# 缓存设置
 profile:
   store-selected: true  # 缓存控制面板对策略组的选择，以便下次启动使用
   store-fake-ip: true # 缓存Fake-ip映射关系
 
-### 统一延迟，意义在于让延迟变得好看，没啥卵用
+# 统一延迟，意义在于让延迟变得好看，没啥卵用
 unified-delay: false
 
-### TCP并发
+# TCP并发
 tcp-concurrent: true
 
-###* clash流量出站接口，即接口绑定
+#❗clash流量出站接口，即接口绑定
 #interface-name: en0
 
-### Linux下的路由标记，为流量提供标记
+# Linux下的路由标记，为流量提供标记
 #routing-mark: 6666
 
-### 全局客户端指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
+# 全局客户端指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
 global-client-fingerprint: random
 
-### GEOIP数据模式，默认false是mmdb，true是dat，mmdb是更新的版本（实测有设备会不支持mmdb，例如IPQ6000）
+# GEOIP数据模式，默认false是mmdb，true是dat，mmdb是更新的版本（实测有设备会不支持mmdb，例如IPQ6000）
 geodata-mode: true
 
-### GEO文件加载模式，默认为memconservative（小内存设备模式）
+# GEO文件加载模式，默认为memconservative（小内存设备模式）
 geodata-loader: standard
 
-### GEO自动更新
+# GEO自动更新
 geo-auto-update: true
 geo-update-interval: 24  # 更新间隔，小时
 geox-url:  # Geo数据库下载地址，会按需下载
@@ -103,22 +105,23 @@ geox-url:  # Geo数据库下载地址，会按需下载
   mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
   asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
-### 自定义全局UA，默认为clash.meta
+# 自定义全局UA，默认为clash.meta
 global-ua: clash.meta
 
-### 外部资源下载的 ETag 支持，默认为 true，Etag可用于对比请求资源与本地资源的区别，如果一致则发送304状态码，减轻服务端压力
+# 外部资源下载的 ETag 支持，默认为 true，Etag可用于对比请求资源与本地资源的区别，如果一致则发送304状态码，减轻服务端压力
 etag-support: true
 
 
 
-############################################################ DNS设置
+###########################################################################################################################
+### DNS设置
 
 dns:
-  enable: true  #* 是否启用dns
+  enable: true  #❗是否启用dns
   prefer-h3: true  # 优先使用HTTP/3，对于支持的DoH DNS能够加速访问
-  listen: 0.0.0.0:1053  # DNS监听端口，非路由器透明代理客户端使用会出现问题
+  listen: 0.0.0.0:1053  #❗DNS监听端口，非路由器透明代理客户端使用会出现问题
   ipv6: true  # 是否解析ipv6地址，否则返回空结果
-  enhanced-mode: redir-host  #* DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，爱快缓存fakeip后无法故障切换）
+  enhanced-mode: redir-host  #❗DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，爱快缓存fakeip后无法故障切换）
   fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun 的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist  # 黑/白名单模式，白名单下 filter 会返回 fake-ip
   fake-ip-filter:  # fakeip过滤，具体行为由黑白名单决定
@@ -153,14 +156,16 @@ dns:
 
 
 
-############################################################ hosts
+###########################################################################################################################
+### hosts设置
 
 hosts:
   'mihomo.mihomo': 127.0.0.1
 
 
 
-############################################################ Sniffer设置
+###########################################################################################################################
+### sniffer设置
 
 sniffer:  # 嗅探的作用是获取握手包中的域名字段，让IP流量也可以匹配域名规则
   enable: true  # 启用sniffer
@@ -187,9 +192,9 @@ sniffer:  # 嗅探的作用是获取握手包中的域名字段，让IP流量也
 
 
 
-############################################################ TUN设置
+###########################################################################################################################
+###❗TUN设置
 
-###* TUN设置
 tun:
   enable: false  # 是否启用接口，一般情况下不使用tun模式
   stack: mixed  # tun 堆栈模式，如无使用问题，建议使用 mixed：TCP使用system，UDP使用Gvisor
@@ -219,3 +224,37 @@ tun:
     - com.MobileTicket  # 铁路12306
     - com.chinamworld.main  # 中国建设银行
     - com.jd.jrapp  # 京东金融
+
+
+
+###########################################################################################################################
+### 代理组设置
+
+proxy-providers:
+  subscription_main:    # 集合名字，不建议和策略组名字重复
+    type: http    # 类型，可选http/file
+    url: "https://web.coo.wiki/api/v1/client/subscribe?token=730a756978deb8102407806553cf5cad"    # 订阅连接
+    interval: 86400   # 更新循环时间，单位秒
+    proxy: DIRECT    # 指定代理组
+    size-limit: 0   # 限制下载文件大小
+    override:   # 覆写节点设置
+      additional-prefix: "main|"   # 添加固定前缀
+      udp: true   # 启用udp
+      tfo: true    # 启用TCP Fast Open
+      mptcp: false    # 启用TCP Multi Path
+      udp-over-tcp: false   # 启用 UDP over TCP
+      skip-cert-verify: false    # 跳过证书验证
+  
+  subscription_backup:
+    type: http
+    url: "https://sub2.smallstrawberry.com/api/v1/client/subscribe?token=27eb0a5f891a4fbd9c8cb0c7132e84c4"
+    interval: 86400
+    proxy: DIRECT
+    size-limit: 0
+    override:
+      additional-prefix: "backup|"
+      udp: true
+      tfo: true
+      mptcp: false
+      udp-over-tcp: false
+      skip-cert-verify: false
