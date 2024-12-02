@@ -9,11 +9,11 @@ socks-port: 1080
 ### HTTP 代理端口
 port: 8080
 
-### Linux 和 macOS 的 redir 透明代理端口
-redir-port: 7891
+### Linux 和 macOS 的 redir 透明代理端口，其他客户端给了会报错
+#redir-port: 7891
 
-### Linux 和 macOS 的 tproxy 透明代理端口
-tproxy-port: 7892
+### Linux 和 macOS 的 tproxy 透明代理端口，其他客户端给了会报错
+#tproxy-port: 7892
 
 
 
@@ -22,7 +22,7 @@ tproxy-port: 7892
 ### 允许局域网
 allow-lan: true
 
-### 绑定自身地址，仅允许其他设备通过此指定的IP访问代理
+### 绑定地址，仅允许通过此指定地址访问代理
 #bind-address: "*"
 
 ### 允许连接的客户端IP，默认允许全部
@@ -64,9 +64,9 @@ external-controller: 0.0.0.0:9090
 #secret: ""   # 面板访问密钥
 
 ### 外部用户界面
-external-ui: ui   # 静态资源的路径
-external-ui-name: metacubexd    # 外部面板的名字，配合路径合并成特定面板的路径，例如/ui/metacubexd
-external-ui-url: https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip   # 外部面板下载地址
+#external-ui: ui   # 静态资源的路径
+#external-ui-name: metacubexd    # 外部面板的名字，配合路径合并成特定面板的路径，例如/ui/metacubexd
+#external-ui-url: https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip   # 外部面板下载地址
 
 ### 缓存设置
 profile:
@@ -97,7 +97,7 @@ geodata-loader: standard
 ### GEO自动更新
 geo-auto-update: true
 geo-update-interval: 24  # 更新间隔，小时
-geox-url:  # 下载地址
+geox-url:  # Geo数据库下载地址，会按需下载
   geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
   geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
   mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
@@ -120,9 +120,9 @@ dns:
   ipv6: true  # 是否解析ipv6地址，否则返回空结果
   enhanced-mode: redir-host  # DNS处理模式：redir-host/fake-ip，fake-ip速度更快但可能引入问题（部分网页会打不开，爱快缓存fakeip后无法故障切换）
   fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun 的默认 IPV4 地址 也使用此值作为参考
-  #fake-ip-filter-mode: blacklist  # 黑名单/白名单模式，白名单只有匹配成功才返回 fake-ip
-  #fake-ip-filter:  # fakeip过滤，以下域名不会下发 fakeip 而是返回真是IP
-    #- geosite:category-ads-all,category-games,cn,private
+  fake-ip-filter-mode: blacklist  # 黑/白名单模式，白名单下 filter 会返回 fake-ip
+  fake-ip-filter:  # fakeip过滤，具体行为由黑白名单决定
+    - geosite:category-ads-all,category-games,cn,private
   use-hosts: true  # 查询配置文件中的hosts
   use-system-hosts: true  # 查询系统 hosts
   respect-rules: false  # DNS请求遵循clash规则进行分流，需先配置好 proxy-server-nameserver，否则出现先有鸡先有蛋问题
@@ -150,6 +150,8 @@ dns:
     - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口一般是最后一张网卡，对于双口就是eth1
     - 223.5.5.5  # 阿里主DNS
     - 223.6.6.6  # 阿里副DNS
+
+
 
 ############################################################ hosts
 
