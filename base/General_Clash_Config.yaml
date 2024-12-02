@@ -231,7 +231,7 @@ tun:
 ### 代理组设置
 
 proxy-providers:
-  main:    # 集合名字，不建议和策略组名字重复
+  main:    # 集合名字，不建议和策略组名字重复，里面不要包含符号
     type: http    # 类型，可选http/file
     url: "https://web.coo.wiki/api/v1/client/subscribe?token=730a756978deb8102407806553cf5"    # 订阅连接
     interval: 86400   # 更新循环时间，单位秒
