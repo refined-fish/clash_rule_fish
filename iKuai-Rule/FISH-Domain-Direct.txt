@@ -1,3 +1,5 @@
+apple.com
+ghp.ci
 ntp.org
 client.wns.windows.com
 msftconnecttest.com
