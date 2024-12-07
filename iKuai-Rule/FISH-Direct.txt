@@ -1,0 +1,7 @@
+ntp.org
+client.wns.windows.com
+msftconnecttest.com
+msn.cn
+mp.microsoft.com
+icloud.com
+synologyupdate.com
