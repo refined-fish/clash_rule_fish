@@ -3,3 +3,7 @@ ntp.org
 mp.microsoft.com
 icloud.com
 synologyupdate.com
+stun.syncthing.net
+stun.hot-chilli.net
+stun.fitauto.ru
+stun.miwifi.com
