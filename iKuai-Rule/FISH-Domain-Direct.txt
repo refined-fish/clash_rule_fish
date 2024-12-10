@@ -1,3 +1,4 @@
+ghp.ci
 ghproxy.net
 apple.com
 ntp.org
