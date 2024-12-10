@@ -11,3 +11,6 @@ payload:
 
   # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
   - DOMAIN,rewards.bing.com
+
+  # 国内直连域名
+  - DOMAIN-SUFFIX,qing-yu.top
