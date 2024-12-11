@@ -5,6 +5,14 @@ ntp.org
 mp.microsoft.com
 icloud.com
 synologyupdate.com
+turn.cloudflare.com
+stun.isp.net.au
+fwa.lifesizecloud.com
+stun.freeswitch.org
+stun.voip.blackberry.com
+stun.nextcloud.com
+stun.radiojar.com
+stun.sonetel.com
 stun.syncthing.net
 stun.hot-chilli.net
 stun.fitauto.ru
