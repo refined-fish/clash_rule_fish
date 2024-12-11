@@ -1,6 +1,6 @@
 ## 仓库说明
 - 这是一份 `mihomo` 的Rule规则集合仓库，但**个人色彩**比较重，更推荐作为参考而不是直接引用。
-> 当然直接引用也可以😂
+  > 当然直接引用也可以😂
 
 - 同时仓库提供了一份供参考的 `mihomo` 运行[配置文件](https://github.com/refined-fish/clash_rule_fish?tab=readme-ov-file#配置文件模板)，本配置文件无法直接运行，请保存后根据自己需求修改后使用。
 
@@ -9,6 +9,16 @@
 - **值得注意的是**，无论你有什么问题，我都建议你先查看 `mihomo` 官方文档，否则你既不能学会 `mihomo` 的使用，也可能浪费自己和大家的时间🥲
 
 - 欢迎各位在 `issue` 友善讨论，我看到了都会抽时间回复。
+
+## Ruleset 说明
+**`♻️自动选择-FISH`** ：此规则收录的主要是 `geosite:gfw` 以外，必须代理和代理后体验更好的域名。
+
+**`🌐Direct-FISH`** ：此规则收录的是被包括在 `一般代理规则集` 内，但是实际可以直连的域名。
+
+## iKuai-Rule 说明
+此文件夹内容为 `爱快+openWRT双wan双路由` 架构，搭配 [ikuai-bypass项目](https://github.com/joyanhui/ikuai-bypass) 使用的
+  -  域名直连分流规则
+  -  IP直连分流规则
 
 ## mihomo 配置文件模板
 ```
