@@ -36,6 +36,9 @@ payload:
 
 
   ### 💻CodeSource-FISH，程序源码规则集，一般用于编译或下载程序资源/更新等
+  # vscode远程同步与更新检查
+  - DOMAIN-SUFFIX,vscode-sync.trafficmanager.net
+  
   # bitwarden安装程序资源下载网址，不代理的话bitwarden安装过程要10+分钟
   - DOMAIN,artifacts.bitwarden.com
 
