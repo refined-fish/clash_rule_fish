@@ -36,6 +36,18 @@
 ## mihomo 配置文件模板修改教程
 1. 找到代理合集部分
 ```
+proxy-providers-general: &proxy-providers-general
+  type: http      # 类型，可选http/file
+  interval: 86400
+  proxy: DIRECT
+  size-limit: 0
+  override:
+    tfo: false  # 启用TCP Fast Open，一般都不支持
+    mptcp: false  # 启用TCP Multi Path，一般都不支持
+    udp: true
+    udp-over-tcp: false  # 启用 UDP over TCP
+    skip-cert-verify: false  # 跳过证书验证
+
 proxy-providers:
   #❗provider占位1
   #❗provider占位2
