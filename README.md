@@ -2,7 +2,7 @@
 - 这是一个 **`mihomo`** 的 **`配置文件`** + **`Ruleset规则集合`** 仓库，但**个人色彩**比较重，更推荐作为参考而不是直接引用。
   > 当然直接引用也可以😂
 
-- 仓库提供的 `mihomo` [配置文件](https://github.com/refined-fish/clash_rule_fish?tab=readme-ov-file#配置文件模板)无法直接下载导入运行，里面缺少必要的机场订阅，请保存后根据自己需求修改后使用，[修改教程]()见下。
+- 仓库提供的 `mihomo` [配置文件](https://github.com/refined-fish/clash_rule_fish?tab=readme-ov-file#配置文件模板)无法直接下载导入运行，里面缺少必要的机场订阅，请保存后根据自己需求修改后使用，[修改教程](https://github.com/refined-fish/clash_rule_fish#mihomo-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9%E6%95%99%E7%A8%8B)见下。
   > 若想制作成远程订阅，需要掌握 `nginx反向代理` 一般用法:
   >> 1. 反向代理本仓库的模板文件。
   >> 2. 使用 `nginx_http_sub` 子模块，反向代理时自动替换模板中的 `占位符` 为自己的 `机场订阅` 。
