@@ -2,7 +2,7 @@
 - 这是一个 **`mihomo`** 的 **`配置文件`** + **`Ruleset规则集合`** 仓库，但**个人色彩**比较重，更推荐作为参考而不是直接引用。
   > 当然直接引用也可以😂
 
-- 仓库提供的 `mihomo` [配置文件](https://github.com/refined-fish/clash_rule_fish?tab=readme-ov-file#配置文件模板)无法直接下载导入运行，里面缺少必要的机场订阅，请保存后根据自己需求修改后使用。
+- 仓库提供的 `mihomo` [配置文件](https://github.com/refined-fish/clash_rule_fish?tab=readme-ov-file#配置文件模板)无法直接下载导入运行，里面缺少必要的机场订阅，请保存后根据自己需求修改后使用，[修改教程]()见下。
   > 若想制作成远程订阅，需要掌握 `nginx反向代理` 一般用法:
   >> 1. 反向代理本仓库的模板文件。
   >> 2. 使用 `nginx_http_sub` 子模块，反向代理时自动替换模板中的 `占位符` 为自己的 `机场订阅` 。
@@ -32,3 +32,44 @@
 
 ## mihomo 配置文件模板
 参见仓库文件 [FISH-Template.yaml](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml)
+
+## mihomo 配置文件模板修改教程
+1. 找到代理合集部分
+```
+proxy-providers:
+  #❗provider占位1
+  #❗provider占位2
+  #❗provider占位3
+  #❗provider占位4
+```
+2. 将 `#❗provider占位` 修改为包含自己机场订阅地址的内容，有几个订阅修改几个占位符
+```
+proxy-providers:
+  provider1:
+    <<: *proxy-providers-general  # 引用yaml锚点
+    override:
+      additional-prefix: "provider1|"  # 可选，给订阅添加前缀
+    url: "你的机场订阅地址"
+    path: ./providers/proxy-provider_main.yaml  # 可选，指定下载路径
+  #❗provider占位2
+  #❗provider占位3
+  #❗provider占位4
+```
+3. 找到策略组部分
+```
+use-all-proxy-providers: &use-all-proxy-providers
+  use:
+    #❗use-provider占位1
+    #❗use-provider占位2
+    #❗use-provider占位3
+    #❗use-provider占位4
+```
+4. 将修改过的 `#❗provider占位` 引用进去，同上，你写了几个订阅就改几个引用
+```
+use-all-proxy-providers: &use-all-proxy-providers
+  use:
+    provider1
+    #❗use-provider占位2
+    #❗use-provider占位3
+    #❗use-provider占位4
+```
