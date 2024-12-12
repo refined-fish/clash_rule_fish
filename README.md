@@ -56,13 +56,25 @@ proxy-providers:
 ```
 2. 将 `#❗provider占位` 修改为包含自己机场订阅地址的内容，有几个订阅修改几个占位符
 ```
+proxy-providers-general: &proxy-providers-general
+  type: http      # 类型，可选http/file
+  interval: 86400
+  proxy: DIRECT
+  size-limit: 0
+  override:
+    tfo: false  # 启用TCP Fast Open，一般都不支持
+    mptcp: false  # 启用TCP Multi Path，一般都不支持
+    udp: true
+    udp-over-tcp: false  # 启用 UDP over TCP
+    skip-cert-verify: false  # 跳过证书验证
+
 proxy-providers:
   provider1:
     <<: *proxy-providers-general  # 引用yaml锚点
-    override:
-      additional-prefix: "provider1|"  # 可选，给订阅添加前缀
     url: "你的机场订阅地址"
-    path: ./providers/proxy-provider_main.yaml  # 可选，指定下载路径
+    override:  #可选，覆写设置，不需要可以删除
+      additional-prefix: "provider1|"  # 可选，给订阅添加前缀，不需要可以删除
+    path: ./providers/proxy-provider_main.yaml  # 可选，指定下载路径，不需要可以删除
   #❗provider占位2
   #❗provider占位3
   #❗provider占位4
