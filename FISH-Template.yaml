@@ -77,7 +77,6 @@ dns:
   nameserver-policy:  # 优先级高于nameserver
     'geosite:category-ads-all': rcode://success  # 匹配广告域名
     'geosite:cn,apple,private': *public-dns  # 匹配中国，苹果域名，私有地址
-    'geosite:geolocation-!cn': *secure-dns   # 匹配非中国域名
   proxy-server-nameserver: *secure-dns  # 解析节点域名的DNS，不指定则遵循namepolicy
   nameserver: *public-dns  # 默认DNS组，域名未命中 nameserver-policy 时使用
   direct-nameserver: *public-dns  # direct策略组的 DNS 服务器，不填则遵循nameserver-policy
