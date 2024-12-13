@@ -78,7 +78,7 @@ dns:
   use-system-hosts: true  # 查询系统 hosts
   respect-rules: false  # DNS请求遵循路由规则，redir-host模式推荐，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
   
-  default-nameserver: *public-dns  # 解析DNS服务器的域名
+  default-nameserver: 223.5.5.5  # 解析DNS服务器的域名
   nameserver-policy:  # 优先级高于nameserver
     'geosite:category-ads-all': rcode://success  # 匹配广告域名
     'geosite:cn,apple,private': *public-dns  # 匹配中国，苹果域名，私有地址
