@@ -6,8 +6,5 @@ payload:
   # New Relic 浏览器监控平台，不知道怎么分类到了国外媒体
   - DOMAIN-KEYWORD,bam.nr-data.net
 
-  # cloudflare，国内可连，节省流量强制直连
-  - DOMAIN-KEYWORD,cloudflare
-
   # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
   - DOMAIN,rewards.bing.com

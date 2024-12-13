@@ -19,8 +19,8 @@ skip-auth-prefixes:  # 白名单，允许跳过用户验证的IP
 mode: rule  # 运行模式：rule（规则） / global（全局代理）/ direct（全局直连）
 log-level: warning  #⭕日志级别
 ipv6: true  #⭕是否接受ipv6流量
-keep-alive-idle: 15  # 触发心跳包的无活动阈值
-keep-alive-interval: 15  # 发送心跳包的间隔，最多9次
+keep-alive-idle: 30  # 触发心跳包的无活动阈值
+keep-alive-interval: 30  # 发送心跳包的间隔，最多9次
 disable-keep-alive: false  # 禁用 keep alive，允许链接一直存在
 find-process-mode: strict  # 进程匹配：strict由mihomo决定是否开启（off:关闭，alwas:开启）
 external-controller: 0.0.0.0:9090  #⭕API面板监听地址
