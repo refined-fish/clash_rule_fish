@@ -77,7 +77,7 @@ dns:
   fake-ip-filter-mode: blacklist  # 黑/白名单模式，白名单下 filter 会返回 fake-ip
   use-hosts: true  # 查询配置文件 hosts
   use-system-hosts: true  # 查询系统 hosts
-  respect-rules: true  # DNS请求遵循路由规则，redir-host模式必开，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+  respect-rules: false  # DNS请求遵循路由规则，redir-host模式推荐，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
   
   nameserver-policy:  # 优先级高于nameserver
     'geosite:category-ads-all': rcode://success  # 匹配广告域名
