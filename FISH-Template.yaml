@@ -57,8 +57,13 @@ public-dns: &public-dns
 
 secure-dns: &secure-dns
   - https://8.8.8.8/dns-query   # 谷歌主DNS
-  - https://1.1.1.1/dns-query   # Cloudflare主DNS
-  - https://1.0.0.1/dns-query   # Cloudflare次DNS
+  - https://8.8.4.4/dns-query   # 谷歌副DNS
+  - https://208.67.222.222/dns-query   # OpenDNS主DNS，支持H3
+  - https://208.67.220.220/dns-query   # OpenDNS次DNS，支持H3
+  - https://1.1.1.1/dns-query#h3=true   # Cloudflare主DNS，支持H3
+  - https://1.0.0.1/dns-query#h3=true   # Cloudflare次DNS，支持H3
+  - https://45.90.28.0#h3=true   # NextDNS主DNS，支持H3
+  - https://45.90.30.0#h3=true   # NextDNS次DNS，支持H3
 
 dns:
   enable: true  #⭕启用dns
@@ -72,12 +77,13 @@ dns:
   fake-ip-filter-mode: blacklist  # 黑/白名单模式，白名单下 filter 会返回 fake-ip
   use-hosts: true  # 查询配置文件 hosts
   use-system-hosts: true  # 查询系统 hosts
-  respect-rules: false  # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+  respect-rules: true  # DNS请求遵循路由规则，redir-host模式必开，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
   
   nameserver-policy:  # 优先级高于nameserver
     'geosite:category-ads-all': rcode://success  # 匹配广告域名
     'geosite:cn,apple,private': *public-dns  # 匹配中国，苹果域名，私有地址
-  proxy-server-nameserver: *secure-dns  # 解析节点域名的DNS，不指定则遵循namepolicy
+    'geosite:geolocation-!cn': *secure-dns   # 匹配非中国域名
+  proxy-server-nameserver: *public-dns  # 解析节点域名的DNS，不指定则遵循namepolicy
   nameserver: *public-dns  # 默认DNS组，域名未命中 nameserver-policy 时使用
   direct-nameserver: *public-dns  # direct策略组的 DNS 服务器，不填则遵循nameserver-policy
 
