@@ -27,7 +27,7 @@ external-controller: 0.0.0.0:9090  #⭕API面板监听地址
 secret: "hd54RIm0LiUpyu"  #⭕API面板访问密钥
 external-ui: ./ui  #⭕API面板静态资源路径
 external-ui-name: metacubexd  #⭕API面板名，配合路径拼接成路径，例如/ui/metacubexd
-external-ui-url: "https://ghp.ci/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"  #⭕API面板下载地址
+external-ui-url: "https://ghproxy.net/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"  #⭕API面板下载地址
 profile:  # 缓存设置
   store-selected: true  # 缓存 API面板 对策略组的选择
   store-fake-ip: true  # 缓存 fakeip 映射表
@@ -41,10 +41,10 @@ geodata-loader: standard  # GEO文件加载模式，默认memconservative（小�
 geo-auto-update: true  # GEO文件自动更新
 geo-update-interval: 24  # 更新间隔，小时
 geox-url:  # GEO数据库下载地址，内核会按需下载
-  geoip: "https://ghp.ci/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://ghp.ci/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://ghp.ci/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
-  asn: "https://ghp.ci/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+  geoip: "https://ghproxy.net/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://ghproxy.net/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://ghproxy.net/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
+  asn: "https://ghproxy.net/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 global-ua: clash.meta  # 全局UA，默认为clash.meta
 etag-support: true  # 资源下载的 ETag 支持
 
@@ -212,7 +212,7 @@ proxy-groups:
       - 🇺🇲美国节点
       - 🖐️手动切换
       - DIRECT
-    icon: https://ghp.ci/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://ghproxy.net/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
   
   - name: ⏣OpenAi
     type: select
@@ -224,7 +224,7 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - 🖐️手动切换
-    icon: https://ghp.ci/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
+    icon: https://ghproxy.net/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
   
   - name: ✈️Telegram
     type: select
@@ -236,7 +236,7 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - 🖐️手动切换
-    icon: https://ghp.ci/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://ghproxy.net/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
   
 ########################### 
   - name: 🇭🇰香港节点
@@ -273,27 +273,27 @@ rule-providers-general: &rule-providers-general
 rule-providers:  
   ♻️自动选择-FISH:
     <<: *rule-providers-general
-    url: https://ghp.ci/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️自动选择-FISH.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️自动选择-FISH.yaml
     path: ./providers/rule-provider_♻️自动选择-FISH.yaml
   
   🌐Direct-FISH:
     <<: *rule-providers-general
-    url: https://ghp.ci/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
     path: ./providers/rule-provider_🌐Direct-FISH.yaml
   
   UnBan:
     <<: *rule-providers-general
-    url: https://ghp.ci/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/UnBan.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/UnBan.yaml
     path: ./providers/rule-provider_UnBan.yaml
   
   Download:
     <<: *rule-providers-general
-    url: https://ghp.ci/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Download.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Download.yaml
     path: ./providers/rule-provider_Download.yaml
   
   Bing:
     <<: *rule-providers-general
-    url: https://ghp.ci/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Ruleset/Bing.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Ruleset/Bing.yaml
     path: ./providers/rule-provider_Bing.yaml
 
 ###########################################################################################################################
