@@ -297,9 +297,9 @@ rule-providers:
     url: https://ghproxy.net/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Download.yaml
     path: ./providers/rule-provider_Download.yaml
   
-  Bing:
+  Ⓜ️微软Copilot:
     <<: *rule-providers-general
-    url: https://ghproxy.net/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Ruleset/Bing.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/%E2%93%82%EF%B8%8FBing-FISH.yaml
     path: ./providers/rule-provider_Bing.yaml
 
 ###########################################################################################################################
@@ -316,7 +316,7 @@ rules:
   - RULE-SET,Download,DIRECT
   - GEOSITE,google@cn,DIRECT
   - GEOSITE,category-games@cn,DIRECT
-  - RULE-SET,Bing,Ⓜ️微软Copilot
+  - RULE-SET,Ⓜ️微软Copilot,Ⓜ️微软Copilot
   - GEOSITE,github,♻️自动选择
   - GEOSITE,microsoft,DIRECT
   - GEOSITE,openai,⏣OpenAi
