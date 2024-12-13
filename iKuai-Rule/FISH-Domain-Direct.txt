@@ -3,7 +3,6 @@ ghp.ci
 ghproxy.net
 apple.com
 ntp.org
-mp.microsoft.com
 icloud.com
 synologyupdate.com
 turn.cloudflare.com
