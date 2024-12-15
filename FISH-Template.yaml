@@ -302,6 +302,11 @@ rule-providers:
     <<: *rule-providers-general
     url: https://ghproxy.net/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/%E2%93%82%EF%B8%8F%E5%BE%AE%E8%BD%AFCopilot-FISH.yaml
     path: ./providers/rule-provider_Ⓜ️微软Copilot-FISH.yaml
+  
+  Ⓜ️微软服务: # ACL4SSR@微软服务（GEO@Microsoft疑似影响onedrive同步）
+    <<: *rule-providers-general
+    url: https://ghproxy.net/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Ruleset/Microsoft.yaml
+    path: ./providers/rule-provider_Ⓜ️微软服务.yaml
 
 ###########################################################################################################################
 rules:
@@ -319,7 +324,7 @@ rules:
   - GEOSITE,category-games@cn,DIRECT
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot
   - GEOSITE,github,♻️自动选择
-  - GEOSITE,microsoft,DIRECT
+  - RULE-SET,Ⓜ️微软服务,DIRECT
   - GEOSITE,openai,⏣OpenAi
   - GEOSITE,bahamut,🇨🇳台湾节点
   - GEOSITE,telegram,✈️Telegram
