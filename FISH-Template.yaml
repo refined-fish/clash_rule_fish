@@ -183,7 +183,7 @@ health-check-general: &health-check-general
   timeout: 5000
 
 proxy-groups:
-  - name: ♻️自动选择
+  - name: ♻️延迟最低
     type: url-test
     <<: *health-check-general
   
@@ -195,7 +195,7 @@ proxy-groups:
     type: select
     proxies:
       - DIRECT
-      - ♻️自动选择
+      - ♻️延迟最低
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
@@ -211,7 +211,7 @@ proxy-groups:
     type: select
     proxies:
       - ⚠️故障切换
-      - ♻️自动选择
+      - ♻️延迟最低
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
@@ -225,7 +225,7 @@ proxy-groups:
     type: select
     proxies:
       - 🇸🇬狮城节点
-      - ♻️自动选择
+      - ♻️延迟最低
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇯🇵日本节点
@@ -236,7 +236,7 @@ proxy-groups:
   - name: ✈️Telegram
     type: select
     proxies:
-      - ♻️自动选择
+      - ♻️延迟最低
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
@@ -278,10 +278,10 @@ rule-providers-general: &rule-providers-general
   interval: 86400
 
 rule-providers:  
-  ♻️自动选择-FISH:
+  ♻️延迟最低-FISH:
     <<: *rule-providers-general
-    url: https://ghproxy.net/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️自动选择-FISH.yaml
-    path: ./providers/rule-provider_♻️自动选择-FISH.yaml
+    url: https://ghproxy.net/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️延迟最低-FISH.yaml
+    path: ./providers/rule-provider_♻️延迟最低-FISH.yaml
   
   🌐Direct-FISH:
     <<: *rule-providers-general
@@ -313,7 +313,7 @@ rules:
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT  # 禁用QUIC
   - DOMAIN,portal.office.com,🇭🇰香港节点
   - DOMAIN-SUFFIX,asmrbbs.com,🇭🇰香港节点
-  - RULE-SET,♻️自动选择-FISH,♻️自动选择
+  - RULE-SET,♻️延迟最低-FISH,♻️延迟最低
   - RULE-SET,🌐Direct-FISH,DIRECT
   - GEOIP,private,DIRECT,no-resolve
   - GEOSITE,private,DIRECT
@@ -323,14 +323,14 @@ rules:
   - GEOSITE,google@cn,DIRECT
   - GEOSITE,category-games@cn,DIRECT
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot
-  - GEOSITE,github,♻️自动选择
+  - GEOSITE,github,♻️延迟最低
   - RULE-SET,Ⓜ️微软服务,DIRECT
   - GEOSITE,openai,⏣OpenAi
   - GEOSITE,bahamut,🇨🇳台湾节点
   - GEOSITE,telegram,✈️Telegram
   - GEOIP,telegram,✈️Telegram,no-resolve
-  - GEOSITE,category-porn,♻️自动选择
-  - GEOSITE,gfw,♻️自动选择
+  - GEOSITE,category-porn,♻️延迟最低
+  - GEOSITE,gfw,♻️延迟最低
   - GEOSITE,cn,DIRECT
   - GEOIP,cn,DIRECT,no-resolve
   - MATCH,🐟漏网之鱼
