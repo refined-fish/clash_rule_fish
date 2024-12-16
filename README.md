@@ -104,7 +104,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
     ```yaml
     use-all-proxy-providers: &use-all-proxy-providers
       use:
-        provider1
+        - provider1
         #❗use-provider占位2
         #❗use-provider占位3
         #❗use-provider占位4
