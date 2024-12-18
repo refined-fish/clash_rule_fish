@@ -5,110 +5,110 @@
 #tproxy-port: 7892  #⭕tproxy 透明代理端口，非linux系会报错
 
 ###########################################################################################################################
-allow-lan: true  #⭕允许局域网
-bind-address: "*"  #⭕监听地址，*为所有
-lan-allowed-ips:  # 允许连接的客户端IP，默认允许全部
+allow-lan: true #⭕允许局域网
+bind-address: "*" #⭕监听地址，*为所有
+lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
   - 0.0.0.0/0
   - ::/0
-lan-disallowed-ips:  # 禁止连接的IP，优先级高于白名单
+lan-disallowed-ips: # 禁止连接的IP，优先级高于白名单
   - ~
-authentication:  # http(s)/socks/mixed 代理的用户验证，格式："user1:pass1"，不写则禁止全部用户
+authentication: # http(s)/socks/mixed 代理的用户验证，格式："user1:pass1"，不写则禁止全部用户
   - ~
-skip-auth-prefixes:  # 白名单，允许跳过用户验证的IP
+skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
   - ~
-mode: rule  # 运行模式：rule（规则） / global（全局代理）/ direct（全局直连）
-log-level: warning  #⭕日志级别
-ipv6: true  #⭕是否接受ipv6流量
-keep-alive-idle: 30  # 触发心跳包的无活动阈值
-keep-alive-interval: 30  # 发送心跳包的间隔，最多9次
-disable-keep-alive: false  # 禁用 keep alive，允许链接一直存在
-find-process-mode: strict  # 进程匹配：strict由mihomo决定是否开启（off:关闭，alwas:开启）
-external-controller: 0.0.0.0:9090  #⭕API面板监听地址
-secret: "hd54RIm0LiUpyu"  #⭕API面板访问密钥
-external-ui: ./ui  #⭕API面板静态资源路径
-external-ui-name: metacubexd  #⭕API面板名，配合路径拼接成路径，例如/ui/metacubexd
-external-ui-url: "https://gh-proxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"  #⭕API面板下载地址
-profile:  # 缓存设置
-  store-selected: true  # 缓存 API面板 对策略组的选择
-  store-fake-ip: true  # 缓存 fakeip 映射表
-unified-delay: false  # 统一延迟计算，没啥卵用
-tcp-concurrent: true  # TCP并发
+mode: rule # 运行模式：rule（规则） / global（全局代理）/ direct（全局直连）
+log-level: warning #⭕日志级别
+ipv6: true #⭕是否接受ipv6流量
+keep-alive-idle: 30 # 触发心跳包的无活动阈值
+keep-alive-interval: 30 # 发送心跳包的间隔，最多9次
+disable-keep-alive: false # 禁用 keep alive，允许链接一直存在
+find-process-mode: strict # 进程匹配：strict由mihomo决定是否开启（off:关闭，alwas:开启）
+external-controller: 0.0.0.0:9090 #⭕API面板监听地址
+secret: "hd54RIm0LiUpyu" #⭕API面板访问密钥
+external-ui: ./ui #⭕API面板静态资源路径
+external-ui-name: zashboard #⭕API面板名，配合路径拼接成路径，例如/ui/metacubexd
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" #⭕API面板下载地址
+profile: # 缓存设置
+  store-selected: true # 缓存 API面板 对策略组的选择
+  store-fake-ip: true # 缓存 fakeip 映射表
+unified-delay: false # 统一延迟计算，没啥卵用
+tcp-concurrent: true # TCP并发
 #interface-name: en0  #⭕clash流量出站接口，即接口绑定
 #routing-mark: 6666  # Linux下的路由标记，为流量提供标记
-global-client-fingerprint: random  # 全局客户端指纹，优先低于其他处的声明
-geodata-mode: true  # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但有设备不支持
-geodata-loader: standard  # GEO文件加载模式，默认memconservative（小内存设备模式）
-geo-auto-update: true  # GEO文件自动更新
-geo-update-interval: 24  # 更新间隔，小时
-geox-url:  # GEO数据库下载地址，内核会按需下载
+global-client-fingerprint: random # 全局客户端指纹，优先低于其他处的声明
+geodata-mode: true # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但有设备不支持
+geodata-loader: standard # GEO文件加载模式，默认memconservative（小内存设备模式）
+geo-auto-update: true # GEO文件自动更新
+geo-update-interval: 24 # 更新间隔，小时
+geox-url: # GEO数据库下载地址，内核会按需下载
   geoip: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
   geosite: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   mmdb: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
   asn: "https://gh-proxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
-global-ua: clash.meta  # 全局UA，默认为clash.meta
-etag-support: true  # 资源下载的 ETag 支持
+global-ua: clash.meta # 全局UA，默认为clash.meta
+etag-support: true # 资源下载的 ETag 支持
 
 ###########################################################################################################################
 public-dns: &public-dns
-  - dhcp://wan   # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
-  - dhcp://eth1  # 指定网卡获取的DNS，软路由的wan口网卡名为最后一张网卡，双口就是eth1
-  - 223.5.5.5    # 阿里主DNS
-  - 223.6.6.6    # 阿里副DNS
+  - dhcp://wan # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
+  - dhcp://eth1 # 指定网卡获取的DNS，软路由的wan口网卡名为最后一张网卡，双口就是eth1
+  - 223.5.5.5 # 阿里主DNS
+  - 223.6.6.6 # 阿里副DNS
 
 secure-dns: &secure-dns
-  - https://8.8.8.8/dns-query   # 谷歌主DNS
-  - https://8.8.4.4/dns-query   # 谷歌副DNS
-  - https://208.67.222.222/dns-query   # OpenDNS主DNS
-  - https://208.67.220.220/dns-query   # OpenDNS次DNS
-  - https://1.1.1.1/dns-query#h3=true   # Cloudflare主DNS，支持H3
-  - https://1.0.0.1/dns-query#h3=true   # Cloudflare次DNS，支持H3
-  - https://dns.nextdns.io#h3=true   # NextDNS，支持H3
+  - https://8.8.8.8/dns-query # 谷歌主DNS
+  - https://8.8.4.4/dns-query # 谷歌副DNS
+  - https://208.67.222.222/dns-query # OpenDNS主DNS
+  - https://208.67.220.220/dns-query # OpenDNS次DNS
+  - https://1.1.1.1/dns-query#h3=true # Cloudflare主DNS，支持H3
+  - https://1.0.0.1/dns-query#h3=true # Cloudflare次DNS，支持H3
+  - https://dns.nextdns.io#h3=true # NextDNS，支持H3
 
 dns:
-  enable: true  #⭕启用dns
-  prefer-h3: true  # 优先使用HTTP/3，DoH能加速
-  listen: 0.0.0.0:1053  #⭕DNS监听端口，仅支持udp
-  ipv6: true  # 是否解析ipv6地址，否则返回空结果
-  enhanced-mode: redir-host  #⭕DNS处理模式：redir-host/fake-ip，fake-ip更快但引入问题（缓存fakeip后无法故障切换）
-  fake-ip-range: 198.18.0.1/16  # fakeip 下的 IP 段设置，tun接口的默认 IPV4 地址 也使用此值作为参考
-  fake-ip-filter:  # fakeip过滤
+  enable: true #⭕启用dns
+  prefer-h3: true # 优先使用HTTP/3，DoH能加速
+  listen: 0.0.0.0:1053 #⭕DNS监听端口，仅支持udp
+  ipv6: true # 是否解析ipv6地址，否则返回空结果
+  enhanced-mode: redir-host #⭕DNS处理模式：redir-host/fake-ip，fake-ip更快但引入问题（缓存fakeip后无法故障切换）
+  fake-ip-range: 198.18.0.1/16 # fakeip 下的 IP 段设置，tun接口的默认 IPV4 地址 也使用此值作为参考
+  fake-ip-filter: # fakeip过滤
     - geosite:category-ads-all,category-games,cn,private
-  fake-ip-filter-mode: blacklist  # 黑/白名单模式，白名单下 filter 会返回 fake-ip
-  use-hosts: true  # 查询配置文件 hosts
-  use-system-hosts: true  # 查询系统 hosts
-  respect-rules: false  # DNS请求遵循路由规则，redir-host模式推荐，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
-  
-  default-nameserver: 
-    - 223.5.5.5  # 解析DNS服务器的域名
-  nameserver-policy:  # 优先级高于nameserver
-    'geosite:category-ads-all': rcode://success  # 匹配广告域名
-    'geosite:cn,apple,private': *public-dns  # 匹配中国，苹果域名，私有地址
-    'geosite:geolocation-!cn': *secure-dns  # 匹配非中国域名
-  proxy-server-nameserver: *public-dns  # 解析节点域名的DNS，不指定则遵循namepolicy
-  nameserver: *public-dns  # 默认DNS组，域名未命中 nameserver-policy 时使用
-  direct-nameserver: *public-dns  # direct策略组的 DNS 服务器，不填则遵循nameserver-policy
+  fake-ip-filter-mode: blacklist # 黑/白名单模式，白名单下 filter 会返回 fake-ip
+  use-hosts: true # 查询配置文件 hosts
+  use-system-hosts: true # 查询系统 hosts
+  respect-rules: false # DNS请求遵循路由规则，redir-host模式推荐，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+
+  default-nameserver:
+    - 223.5.5.5 # 解析DNS服务器的域名
+  nameserver-policy: # 优先级高于nameserver
+    "geosite:category-ads-all": rcode://success # 匹配广告域名
+    "geosite:cn,apple,private": *public-dns # 匹配中国，苹果域名，私有地址
+    "geosite:geolocation-!cn": *secure-dns # 匹配非中国域名
+  proxy-server-nameserver: *public-dns # 解析节点域名的DNS，不指定则遵循namepolicy
+  nameserver: *public-dns # 默认DNS组，域名未命中 nameserver-policy 时使用
+  direct-nameserver: *public-dns # direct策略组的 DNS 服务器，不填则遵循nameserver-policy
 
 ###########################################################################################################################
 hosts:
-  'mihomo.mihomo': 127.0.0.1
+  "mihomo.mihomo": 127.0.0.1
 
 ###########################################################################################################################
-sniffer:                      # 嗅探，获取SNI中的域名
-  enable: true                # 启用sniffer
-  force-dns-mapping: true     # 对redir-host类型识别的流量进行强制嗅探
-  parse-pure-ip: true         # 对所有未获取到域名的流量进行强制嗅探
-  override-destination: true  # 是否使用嗅探结果作为实际访问，默认为 true
-  sniff:                      # 需要嗅探的协议类型，仅支持 HTTP/TLS/QUIC
-    TLS:                      # TLS协议，不配置默认嗅探443端口
-    HTTP:                     # HTTP协议
-      ports:                  # 端口白名单，只针对下列端口嗅探，不配置则全部嗅探
+sniffer: # 嗅探，获取SNI中的域名
+  enable: true # 启用sniffer
+  force-dns-mapping: true # 对redir-host类型识别的流量进行强制嗅探
+  parse-pure-ip: true # 对所有未获取到域名的流量进行强制嗅探
+  override-destination: true # 是否使用嗅探结果作为实际访问，默认为 true
+  sniff: # 需要嗅探的协议类型，仅支持 HTTP/TLS/QUIC
+    TLS: # TLS协议，不配置默认嗅探443端口
+    HTTP: # HTTP协议
+      ports: # 端口白名单，只针对下列端口嗅探，不配置则全部嗅探
         - 80
-  force-domain:               # 强制嗅探的域名
+  force-domain: # 强制嗅探的域名
     - "+.netflix.com"
     - "+.nflxvideo.net"
     - "+.amazonaws.com"
     - "+.media.dssott.com"
-  skip-domain:                # 需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
+  skip-domain: # 需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
     - "+.apple.com"
     - Mijia Cloud
     - dlg.io.mi.com
@@ -118,47 +118,47 @@ sniffer:                      # 嗅探，获取SNI中的域名
 
 ###########################################################################################################################
 tun:
-  enable: false                 #⭕启用Tun接口
-  stack: mixed                  # TUN 堆栈模式,建议 mixed（TCP：system，UDP：Gvisor）
-  device: utun0                 # TUN 网卡名，MacOS 只能 utun 开头
-  auto-route: true              # 自动设置全局路由，自动将全局流量路由进 tun
-  auto-redirect: true           # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true
-  auto-detect-interface: true   # 自动选择流量的出接口（wan）
-  dns-hijack:                   # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则默认 udp://
+  enable: false #⭕启用Tun接口
+  stack: mixed # TUN 堆栈模式,建议 mixed（TCP：system，UDP：Gvisor）
+  device: utun0 # TUN 网卡名，MacOS 只能 utun 开头
+  auto-route: true # 自动设置全局路由，自动将全局流量路由进 tun
+  auto-redirect: true # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true
+  auto-detect-interface: true # 自动选择流量的出接口（wan）
+  dns-hijack: # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则默认 udp://
     - any:53
     - tcp://any:53
-  strict-route: true            # 严格路由，添加防火墙规则禁止Windows使用多DNS，有效防止DNS泄露
-  mtu: 9000                     # MTU
-  gso: true                     # 通用分段卸载
-  gso-max-size: 65536           # 数据块最大长度
+  strict-route: true # 严格路由，添加防火墙规则禁止Windows使用多DNS，有效防止DNS泄露
+  mtu: 9000 # MTU
+  gso: true # 通用分段卸载
+  gso-max-size: 65536 # 数据块最大长度
   endpoint-independent-nat: false # 独立于端点的 NAT，性能可能下降，不建议不需要时开启
-  exclude-package:              # 安卓排除的包名
-    - com.tencent.mobileqq      # QQ
-    - com.tencent.mm            # 微信
+  exclude-package: # 安卓排除的包名
+    - com.tencent.mobileqq # QQ
+    - com.tencent.mm # 微信
     - com.tencent.androidqqmail # QQ邮箱
-    - com.xingin.xhs            # 小红书
-    - idm.internet.download.manager  # 1DM下载器
-    - com.sausage.download      # 浩克下载
-    - com.eg.android.AlipayGphone  # 支付宝
-    - com.sgcc.wsgw.cn          # 网上国网
-    - com.taobao.taobao         # 淘宝
-    - com.jingdong.app.mall     # 京东
-    - com.MobileTicket          # 铁路12306
-    - com.chinamworld.main      # 中国建设银行
-    - com.jd.jrapp              # 京东金融
+    - com.xingin.xhs # 小红书
+    - idm.internet.download.manager # 1DM下载器
+    - com.sausage.download # 浩克下载
+    - com.eg.android.AlipayGphone # 支付宝
+    - com.sgcc.wsgw.cn # 网上国网
+    - com.taobao.taobao # 淘宝
+    - com.jingdong.app.mall # 京东
+    - com.MobileTicket # 铁路12306
+    - com.chinamworld.main # 中国建设银行
+    - com.jd.jrapp # 京东金融
 
 ###########################################################################################################################
 proxy-providers-general: &proxy-providers-general
-  type: http      # 类型，可选http/file
+  type: http # 类型，可选http/file
   interval: 86400
   proxy: DIRECT
   size-limit: 0
   override:
-    tfo: false  # 启用TCP Fast Open，一般都不支持
-    mptcp: false  # 启用TCP Multi Path，一般都不支持
+    tfo: false # 启用TCP Fast Open，一般都不支持
+    mptcp: false # 启用TCP Multi Path，一般都不支持
     udp: true
-    udp-over-tcp: false  # 启用 UDP over TCP
-    skip-cert-verify: false  # 跳过证书验证
+    udp-over-tcp: false # 启用 UDP over TCP
+    skip-cert-verify: false # 跳过证书验证
 
 proxy-providers:
   #❗provider占位1
@@ -186,11 +186,11 @@ proxy-groups:
   - name: ♻️延迟最低
     type: url-test
     <<: *health-check-general
-  
+
   - name: ⚠️故障切换
     type: fallback
     <<: *health-check-general
-  
+
   - name: 🐟漏网之鱼
     type: select
     proxies:
@@ -202,11 +202,11 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - 🖐️手动切换
-  
+
   - name: 🖐️手动切换
     type: select
     <<: *use-all-proxy-providers
-  
+
   - name: Ⓜ️微软Copilot
     type: select
     proxies:
@@ -220,7 +220,7 @@ proxy-groups:
       - 🖐️手动切换
       - DIRECT
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
-  
+
   - name: ⏣OpenAi
     type: select
     proxies:
@@ -232,7 +232,7 @@ proxy-groups:
       - 🇺🇲美国节点
       - 🖐️手动切换
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
-  
+
   - name: ✈️Telegram
     type: select
     proxies:
@@ -244,28 +244,28 @@ proxy-groups:
       - 🇺🇲美国节点
       - 🖐️手动切换
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
-  
-########################### 
+
+  ###########################
   - name: 🇭🇰香港节点
     type: url-test
     <<: *health-check-general
     filter: "港|HK|hk|Hong Kong|HongKong|hongkong"
-  
+
   - name: 🇯🇵日本节点
     type: url-test
     <<: *health-check-general
     filter: "日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan"
-  
+
   - name: 🇺🇲美国节点
     type: url-test
     <<: *health-check-general
     filter: "美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States"
-  
+
   - name: 🇨🇳台湾节点
     type: url-test
     <<: *health-check-general
     filter: "台|新北|彰化|TW|Taiwan"
-  
+
   - name: 🇸🇬狮城节点
     type: url-test
     <<: *health-check-general
@@ -277,32 +277,32 @@ rule-providers-general: &rule-providers-general
   behavior: classical
   interval: 86400
 
-rule-providers:  
+rule-providers:
   ♻️延迟最低-FISH:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️延迟最低-FISH.yaml
     path: ./providers/rule-provider_♻️延迟最低-FISH.yaml
-  
+
   🌐Direct-FISH:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
     path: ./providers/rule-provider_🌐Direct-FISH.yaml
-  
+
   UnBan:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/UnBan.yaml
     path: ./providers/rule-provider_UnBan.yaml
-  
+
   Download:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Download.yaml
     path: ./providers/rule-provider_Download.yaml
-  
+
   Ⓜ️微软Copilot-FISH:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/%E2%93%82%EF%B8%8F%E5%BE%AE%E8%BD%AFCopilot-FISH.yaml
     path: ./providers/rule-provider_Ⓜ️微软Copilot-FISH.yaml
-  
+
   Ⓜ️微软服务: # ACL4SSR@微软服务（GEO@Microsoft疑似影响onedrive同步）
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Ruleset/Microsoft.yaml
@@ -310,7 +310,7 @@ rule-providers:
 
 ###########################################################################################################################
 rules:
-  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT  # 禁用QUIC
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT # 禁用QUIC
   - DOMAIN,portal.office.com,🇭🇰香港节点
   - DOMAIN-SUFFIX,asmrbbs.com,🇭🇰香港节点
   - RULE-SET,♻️延迟最低-FISH,♻️延迟最低
