@@ -1,6 +1,7 @@
 logitech.io
 ghp.ci
 ghproxy.net
+gh-proxy.com
 apple.com
 ntp.org
 icloud.com
