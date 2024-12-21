@@ -322,6 +322,7 @@ rules:
   - RULE-SET,Download,DIRECT
   - GEOSITE,google@cn,DIRECT
   - GEOSITE,category-games@cn,DIRECT
+  - GEOSITE,steam,♻️延迟最低
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot
   - GEOSITE,github,♻️延迟最低
   - RULE-SET,Ⓜ️微软服务,DIRECT
