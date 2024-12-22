@@ -1,3 +1,4 @@
+sentry.io
 logitech.io
 ghproxy.net
 gh-proxy.com
