@@ -310,28 +310,33 @@ rule-providers:
 
 ###########################################################################################################################
 rules:
-  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT # 禁用QUIC
-  - DOMAIN,portal.office.com,🇭🇰香港节点
-  - DOMAIN-SUFFIX,asmrbbs.com,🇭🇰香港节点
-  - RULE-SET,♻️延迟最低-FISH,♻️延迟最低
-  - RULE-SET,🌐Direct-FISH,DIRECT
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOSITE,private,DIRECT
-  - RULE-SET,UnBan,DIRECT
-  - GEOSITE,category-ads-all,REJECT
-  - RULE-SET,Download,DIRECT
-  - GEOSITE,google@cn,DIRECT
-  - GEOSITE,category-games@cn,DIRECT
-  - GEOSITE,steam,♻️延迟最低
-  - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot
-  - GEOSITE,github,♻️延迟最低
-  - RULE-SET,Ⓜ️微软服务,DIRECT
-  - GEOSITE,openai,⏣OpenAi
-  - GEOSITE,bahamut,🇨🇳台湾节点
-  - GEOSITE,telegram,✈️Telegram
-  - GEOIP,telegram,✈️Telegram,no-resolve
-  - GEOSITE,category-porn,♻️延迟最低
-  - GEOSITE,gfw,♻️延迟最低
-  - GEOSITE,cn,DIRECT
-  - GEOIP,cn,DIRECT,no-resolve
-  - MATCH,🐟漏网之鱼
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT # CN运营商UDP有QoS，禁用QUIC
+  # FISH自定义规则块
+  - DOMAIN,portal.office.com,🇭🇰香港节点 # FISH-避免IP变动过大
+  - DOMAIN-SUFFIX,asmrbbs.com,🇭🇰香港节点 # FISH-避免IP变动过大
+  - RULE-SET,♻️延迟最低-FISH,♻️延迟最低 # FISH自定义代理
+  - RULE-SET,🌐Direct-FISH,DIRECT # FISH自定义直连
+  # 广告拦截与局域网/下载绕过块
+  - GEOIP,private,DIRECT,no-resolve # 私有地址直连
+  - GEOSITE,private,DIRECT # 私有地址直连
+  - RULE-SET,UnBan,DIRECT # 解除ads-all中的部分域名
+  - GEOSITE,category-ads-all,REJECT # 广告拦截
+  - RULE-SET,Download,DIRECT # 下载直连
+  # 代理规则块，按照使用频率/规则集大小排序
+  - GEOSITE,google@cn,DIRECT # Google中国直连
+  - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot代理-FISH自定义
+  - GEOSITE,github,♻️延迟最低 # Github代理
+  - RULE-SET,Ⓜ️微软服务,DIRECT # 微软服务直连，GEO的微软服务涵盖太过广泛
+  - GEOSITE,category-games@cn,DIRECT # 各种游戏直连
+  - GEOSITE,steam,♻️延迟最低 # Steam商店、社区代理
+  - GEOSITE,openai,⏣OpenAi # OpenAi代理
+  - GEOSITE,telegram,✈️Telegram # Telegram代理
+  - GEOIP,telegram,✈️Telegram,no-resolve # Telegram代理
+  - GEOSITE,docker,♻️延迟最低 # Docker代理
+  - GEOSITE,bahamut,🇨🇳台湾节点 # 巴哈姆特台湾代理
+  - GEOSITE,category-porn,♻️延迟最低 # X代理
+  # 兜底规则块，一般规则应在其上
+  - GEOSITE,gfw,♻️延迟最低 # GFW兜底
+  - GEOSITE,cn,DIRECT # 中国直连
+  - GEOIP,cn,DIRECT,no-resolve # 中国直连
+  - MATCH,🐟漏网之鱼 # 漏网之鱼
