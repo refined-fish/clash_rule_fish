@@ -1,5 +1,4 @@
 payload:
-  ### ✈️节点选择-FISH
   # Parsec启动、更新、API、WebSocket与用户内容（已被运营商屏蔽）
   - DOMAIN,public.parsec.app
   - DOMAIN,builds.parsec.app
@@ -23,19 +22,17 @@ payload:
   # V2RaySSR综合网，禁止大陆IP访问，内有一些教程交流贴
   - DOMAIN,v2rayssr.com
 
+  # 星露谷物语在线编辑器
+  - DOMAIN,v3.stardew.info
 
-
-  ### Ⓜ️OnedriveWeb-FISH，onedrive网页版，众所周知onedrive可以直接使用但网页版却不能直接打开（该规则已包含在GFW中，但优先级在微软云盘规则之后）
-  # 网页版onedrive页面，不代理无法打开onedrive网页，在微软云盘规则集中有重复出现
+  ### Ⓜ️onedrive网页版（该规则已包含在GFW中，但GFW优先级在微软云盘规则之后所以再次声明在前）
+  # 网页版onedrive页面
   - DOMAIN,onedrive.live.com
 
   # 网页版onedrive的文件操作功能，不代理无法在网页进行文件移动复制等操作，在微软云盘规则集中有重复出现
   - DOMAIN,skyapi.onedrive.live.com
 
-
-
-
-  ### 💻CodeSource-FISH，程序源码规则集，一般用于编译或下载程序资源/更新等  
+  ### 💻CodeSource-FISH，程序源码规则集，一般用于编译或下载程序资源/更新等
   # bitwarden安装程序资源下载网址，不代理的话bitwarden安装过程要10+分钟
   - DOMAIN,artifacts.bitwarden.com
 
@@ -86,9 +83,6 @@ payload:
 
   # debian仓库
   - DOMAIN,deb.debian.org
-
-
-
 
   ### 🚫Porn-FISH
   # ZodGame论坛，主营i社游戏，国内可访问但较慢
