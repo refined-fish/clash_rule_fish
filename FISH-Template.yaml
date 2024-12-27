@@ -22,7 +22,7 @@ ipv6: true #⭕是否接受ipv6流量
 keep-alive-idle: 30 # 触发心跳包的无活动阈值
 keep-alive-interval: 30 # 发送心跳包的间隔，最多9次
 disable-keep-alive: false # 禁用 keep alive，允许链接一直存在
-find-process-mode: strict # 进程匹配：strict由mihomo决定是否开启（off:关闭，alwas:开启）
+find-process-mode: off # 进程匹配：strict由mihomo决定是否开启（off:关闭，alwas:开启，tun模式下失效）
 external-controller: 0.0.0.0:9090 #⭕API面板监听地址
 secret: "hd54RIm0LiUpyu" #⭕API面板访问密钥
 external-ui: ./ui #⭕API面板静态资源路径
@@ -293,11 +293,6 @@ rule-providers:
     url: https://gh-proxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/UnBan.yaml
     path: ./providers/rule-provider_UnBan.yaml
 
-  Download:
-    <<: *rule-providers-general
-    url: https://gh-proxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/Download.yaml
-    path: ./providers/rule-provider_Download.yaml
-
   Ⓜ️微软Copilot-FISH:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/%E2%93%82%EF%B8%8F%E5%BE%AE%E8%BD%AFCopilot-FISH.yaml
@@ -321,7 +316,6 @@ rules:
   - GEOSITE,private,DIRECT # 私有地址直连
   - RULE-SET,UnBan,DIRECT # 解除ads-all中的部分域名
   - GEOSITE,category-ads-all,REJECT # 广告拦截
-  - RULE-SET,Download,DIRECT # 下载直连
   # 代理规则块，按照使用频率/规则集大小排序
   - GEOSITE,google@cn,DIRECT # Google中国直连
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot代理-FISH自定义
