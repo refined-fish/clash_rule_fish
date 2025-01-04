@@ -1,6 +1,8 @@
 payload:
   # HomeAssistant地图依赖openstreetmap的CDN加速，不代理加载缓慢，原始服务已在GFW中
   - DOMAIN,basemaps.cartocdn.com
+  # HomeAssistant社区，代理加速
+  - DOMAIN,community.home-assistant.io
 
   # Parsec启动、更新、API、WebSocket与用户内容（已被运营商屏蔽）
   - DOMAIN,public.parsec.app
