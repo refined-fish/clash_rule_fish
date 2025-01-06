@@ -44,8 +44,8 @@ geox-url: # GEO数据库下载地址，内核会按需下载
   geoip: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
   geosite: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   mmdb: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
-  asn: "https://gh-proxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
-global-ua: clash.meta # 全局UA，默认为clash.meta
+  asn: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+global-ua: mihomo # 全局UA，默认为clash.meta
 etag-support: true # 资源下载的 ETag 支持
 
 ###########################################################################################################################
@@ -310,12 +310,9 @@ rules:
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
   - RULE-SET,UnBan,DIRECT # 解除ads-all中的部分域名
-  - GEOSITE,category-ads-all,REJECT # 广告拦截
   # 代理规则块，按照使用频率/规则集大小排序
   - GEOSITE,google@cn,DIRECT # Google中国直连
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot代理-FISH自定义
-  - GEOSITE,github,♻️延迟最低 # Github代理
-  - GEOSITE,microsoft,DIRECT # 微软服务直连
   - GEOSITE,category-games@cn,DIRECT # 各种游戏直连
   - GEOSITE,steam,♻️延迟最低 # Steam商店、社区代理
   - GEOSITE,openai,⏣OpenAi # OpenAi代理
