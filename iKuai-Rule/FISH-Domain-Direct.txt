@@ -3,6 +3,7 @@ logitech.io
 ntp.org
 synologyupdate.com
 turn.cloudflare.com
+api.ipify.org
 xxxxxxxxxxxxxxxxxxxx.Windows-service
 time.windows.com
 xxxxxxxxxxxxxxxxxxxx.github-accelerate
