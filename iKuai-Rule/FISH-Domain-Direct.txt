@@ -5,6 +5,7 @@ synologyupdate.com
 turn.cloudflare.com
 api.ipify.org
 hassbian.com
+hasstatic.com
 xxxxxxxxxxxxxxxxxxxx.Windows-service
 time.windows.com
 msn.cn
