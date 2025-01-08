@@ -7,6 +7,7 @@ api.ipify.org
 hassbian.com
 xxxxxxxxxxxxxxxxxxxx.Windows-service
 time.windows.com
+msn.cn
 xxxxxxxxxxxxxxxxxxxx.github-accelerate
 ghproxy.net
 gh-proxy.com
