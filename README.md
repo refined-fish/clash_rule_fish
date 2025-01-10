@@ -10,11 +10,13 @@
 
 - 关于 **路由规则Rule** ，非必要时更推荐各位朋友直接使用 **geo数据库** ，减少外部依赖，简化配置文件，提升使用体验❤️
 
+- 关于 **Fake-IP** ，我没有感受到明显的访问加速，但却感受到了许多问题，例如安全软件不支持fakeip，BT下载、游戏也受到影响。需要额外配置过滤来规避这些影响，增加维护复杂度并且不能一劳永逸。所以本仓库直接全面放弃，但在注释中保留了相关内容，有需要的人可以自行研究。
+
 - 欢迎各位在 `issue` 友善🙌讨论，我看到了都会抽时间回复。**值得注意的是**，无论你有什么问题，我都建议你先查看 **mihomo [官方文档](https://wiki.metacubex.one/config/general/)**，以及学会 **`yaml`** 的一般语法，否则你既不能学会 mihomo 的使用，也可能浪费自己和大家的时间🥲
 
 ## 更新日志
 
-参见[ChangeLog.log](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/ChangeLog.log)文件。
+参见[ChangeLog.log](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/ChangeLog.log)文件，但日志更新随缘，不如直接看提交日志。
 
 ## Ruleset 说明
 
