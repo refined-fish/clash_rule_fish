@@ -1,48 +1,48 @@
-## 端口设置---------------------------------------------------------------------------------------------------
-mixed-port: 7890 #⭕混合，系统代理端口
-socks-port: 1080 #⭕Socks5,代理端口
-port: 8080 #⭕HTTP,代理端口
-#redir-port: 7891  #⭕非linux无效，redir 透明代理端口
-#tproxy-port: 7892  #⭕非linux无效，tproxy 透明代理端口
+## 端口配置 ---------------------------------------------------------------------------------------------------
+mixed-port: 7890 #🔴混合，系统代理端口
+socks-port: 1080 #🔴Socks5，代理端口
+port: 8080 #🔴HTTP，代理端口
+#redir-port: 7891  #🔴非linux无效，redir 透明代理端口
+#tproxy-port: 7892  #🔴非linux无效，tproxy 透明代理端口
 
-## 内核全局设置------------------------------------------------------------------------------------------------
-mode: rule # 运行模式：rule（规则） / global（全局代理）/ direct（全局直连）
-allow-lan: true #⭕允许局域网链接
-bind-address: "*" #⭕监听的本地网卡地址，*为所有网卡地址
-log-level: warning #⭕日志级别
-ipv6: true #⭕是否接受ipv6流量
-find-process-mode: off # 进程匹配（off:关闭，alwas:开启，tun模式无法监控进程，strict由mihomo决定是否开启）
+## 全局配置 ------------------------------------------------------------------------------------------------
+mode: rule # rule（规则）/ global（全局）/ direct（直连）
+allow-lan: true #🔴允许局域网连接
+bind-address: "*" #🔴监听的本地网卡地址，*为全部
+log-level: warning #🔴日志级别
+ipv6: true #🔴是否接受ipv6流量
 tcp-concurrent: true # TCP并发
 profile: # 缓存设置
   store-selected: true # 缓存 API面板 对策略组的选择
-  store-fake-ip: true # 缓存 fakeip 映射表
+  #store-fake-ip: true # 缓存 fakeip 映射表
+#interface-name: en0  #🔴clash流量出站接口，即接口绑定
+#find-process-mode: off # 进程匹配（off:关闭，alwas:开启，strict自动），tun下无效
 #lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
 #- 0.0.0.0/0
 #- ::/0
 #lan-disallowed-ips: # 禁止连接的IP，优先级高于白名单
 #- ~
-#authentication: # http(s)/socks/mixed 代理的用户验证，格式："user1:pass1"，不写则禁止全部用户
+#authentication: # http(s)/socks/mixed 的用户验证，格式："user1:pass1"，不写则禁止全部用户
 #- ~
 #skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
 #- ~
 #unified-delay: false # 统一延迟计算，没啥卵用
-#interface-name: en0  #⭕clash流量出站接口，即接口绑定
 #routing-mark: 6666  # 非linux无效，路由标记，为流量提供标记
 
-## TCP-KeepA-live设置------------------------------------------------------------------------------------------
+## TCP-KeepA-live配置 ------------------------------------------------------------------------------------------
 keep-alive-idle: 30 # 触发心跳包的无活动阈值
 keep-alive-interval: 30 # 发送心跳包的间隔，最多9次
 disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在
 
 ## API面板设置---------------------------------------------------------------------------------------------------
-external-controller: 0.0.0.0:9090 #⭕API面板监听地址
-secret: "hd54RIm0LiUpyu" #⭕API面板访问密钥
-external-ui: ./ui #⭕API面板静态资源路径
-external-ui-name: zashboard #⭕API面板名，配合路径拼接成路径，例如/ui/metacubexd
-external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" #⭕API面板下载地址
+external-controller: 0.0.0.0:9090 #🔴API面板监听地址
+secret: "hd54RIm0LiUpyu" #🔴API面板访问密钥
+external-ui: ./ui #🔴API面板静态资源路径
+external-ui-name: zashboard #🔴API面板名，配合路径拼接成路径，例如/ui/metacubexd
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" #🔴API面板下载地址
 
 ## 外部资源下载设置---------------------------------------------------------------------------------------------------
-global-client-fingerprint: random # 全局客户端指纹，优先低于其他处的声明
+global-client-fingerprint: random # 全局客户端指纹，优先级低于其他处的声明
 global-ua: mihomo # 全局UA，默认为clash.meta
 etag-support: true # 资源下载的 ETag 支持
 geodata-mode: true # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但有设备不支持
@@ -56,39 +56,37 @@ geox-url: # GEO数据库下载地址，内核会按需下载
   asn: "https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
 
 ## DNS设置---------------------------------------------------------------------------------------------------
-public-dns: &public-dns
-  - dhcp://wan # 指定网卡获取的DNS，硬路由的wan口网卡名为wan
-  - dhcp://eth1 # 指定网卡获取的DNS，软路由的wan口网卡名为最后一张网卡，双口就是eth1
+public-dns: &public-dns # 快速的DNS，不关心是否存在污染和劫持
+  - dhcp://wan # 指定网卡DHCP获取的DNS，硬路由的wan口网卡名一般为wan
+  - dhcp://eth1 # 软路由的wan口一般为最后一张网卡，eth0,eth1 双网口就是eth1
   - 223.5.5.5 # 阿里主DNS
 
-secure-dns: &secure-dns
-  - https://1.1.1.1/dns-query#h3=true # Cloudflare主DNS，支持H3
-  - https://1.0.0.1/dns-query#h3=true # Cloudflare次DNS，支持H3
-  - https://dns.nextdns.io#h3=true # NextDNS，支持H3
+secure-dns: &secure-dns # 加密的DNS，绝对避免污染和劫持
+  - https://223.5.5.5/dns-query#h3=true # 阿里主DNS，支持H3
 
 dns:
-  enable: true #⭕启用dns模块
-  listen: 0.0.0.0:1053 #⭕DNS监听端口，仅支持udp
-  enhanced-mode: redir-host #⭕DNS处理模式：redir-host/fake-ip，fake-ip更快但可能引入问题（缓存fakeip后无法故障切换）
+  enable: true #🔴启用dns模块，否则采用系统DNS
+  listen: 0.0.0.0:1053 #🔴DNS监听端口，仅支持udp
+  enhanced-mode: redir-host #🔴DNS处理模式：redir-host/fake-ip，fake-ip更快但可能引入问题（缓存fakeip后无法故障切换）
   prefer-h3: true # DoH优先使用HTTP/3
   ipv6: true # 是否解析ipv6地址，否则返回空结果
   use-hosts: true # 查询配置文件 hosts
   use-system-hosts: true # 查询系统 hosts
-  respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
-  fake-ip-range: 198.18.0.1/16 # fakeip 下的 IP 段设置，tun接口的默认 IPV4 地址 也使用此值作为参考
-  fake-ip-filter-mode: blacklist # 黑/白名单模式，白名单下 filter 会返回 fake-ip
-  fake-ip-filter: # fakeip过滤
-    - "geosite:category-ads-all,category-games,cn,private"
-    - "rule-set:🌐Direct-FISH"
-  default-nameserver: *public-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP
   proxy-server-nameserver: *public-dns # 解析代理节点域名的DNS，不填遵循namepolicy
-  direct-nameserver: *public-dns # 解析direct策略组的DNS，不填遵循namepolicy
+  direct-nameserver: *public-dns # 解析direct组的DNS，不填遵循namepolicy
   nameserver-policy: # 优先级高于nameserver
     "geosite:category-ads-all": rcode://success # 匹配广告域名
     "rule-set:🌐Direct-FISH": *public-dns # 匹配🌐Direct-FISH
     "geosite:cn,apple,private": *public-dns # 匹配中国，苹果域名，私有地址
     "geosite:geolocation-!cn": *secure-dns # 匹配非中国域名
-  nameserver: *public-dns # 默认DNS组，域名未命中 nameserver-policy 时使用
+  nameserver: *public-dns # 兜底默认DNS组，未命中 nameserver-policy 时启用
+  #respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+  #fake-ip-range: 198.18.0.1/16 # fakeip 下的 IP 段设置，tun接口的默认 IPV4 地址 也使用此值作为参考
+  #fake-ip-filter-mode: blacklist # 黑/白名单模式，白名单下 filter 会返回 fake-ip
+  #fake-ip-filter: # fakeip过滤
+  #- "geosite:category-ads-all,category-games,cn,private"
+  #- "rule-set:🌐Direct-FISH"
+  #default-nameserver: [223.5.5.5] # 解析DNS服务器域名的DNS，可以加密但必须为IP
 
 ## hosts设置---------------------------------------------------------------------------------------------------
 hosts:
@@ -120,20 +118,17 @@ sniffer: # 嗅探，获取SNI中的域名
 
 ## tun设置---------------------------------------------------------------------------------------------------
 tun:
-  enable: false #⭕启用Tun接口
+  enable: true #🔴启用Tun接口
   stack: mixed # TUN 堆栈模式,建议 mixed（TCP：system，UDP：Gvisor）
   device: utun0 # TUN 网卡名，MacOS 只能 utun 开头
   auto-route: true # 自动设置全局路由，自动将全局流量路由进 tun
-  auto-redirect: true # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true
-  auto-detect-interface: true # 自动选择流量的出接口（wan）
+  auto-detect-interface: true # 自动选择流量的出接口（默认wan口）
   dns-hijack: # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则默认 udp://
     - any:53
     - tcp://any:53
-  strict-route: true # 严格路由，添加防火墙规则禁止Windows使用多DNS，有效防止DNS泄露
   mtu: 9000 # MTU
   gso: true # 通用分段卸载
   gso-max-size: 65536 # 数据块最大长度
-  endpoint-independent-nat: false # 独立于端点的 NAT，性能可能下降，不建议不需要时开启
   exclude-package: # 安卓排除的包名
     - com.tencent.mobileqq # QQ
     - com.tencent.mm # 微信
@@ -148,6 +143,9 @@ tun:
     - com.MobileTicket # 铁路12306
     - com.chinamworld.main # 中国建设银行
     - com.jd.jrapp # 京东金融
+  #auto-redirect: true # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true
+  #strict-route: false # 严格路由，添加防火墙规则禁止Windows使用多DNS，有效防止DNS泄露，实测严重拖慢Windows访问速度
+  #endpoint-independent-nat: false # 独立于端点的 NAT，性能可能下降，不建议不需要时开启
 
 ## 代理提供者设置---------------------------------------------------------------------------------------------------
 proxy-providers-general: &proxy-providers-general
@@ -158,8 +156,8 @@ proxy-providers-general: &proxy-providers-general
   override:
     tfo: false # 启用TCP Fast Open，一般都不支持
     mptcp: false # 启用TCP Multi Path，一般都不支持
-    udp: true
-    udp-over-tcp: false # 启用 UDP over TCP
+    udp: true # 启用UDP
+    udp-over-tcp: false # 启用UDP over TCP
     skip-cert-verify: false # 跳过证书验证
 
 proxy-providers:
@@ -290,11 +288,6 @@ rule-providers:
     url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
     path: ./providers/rule-provider_🌐Direct-FISH.yaml
 
-  UnBan:
-    <<: *rule-providers-general
-    url: https://gh-proxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Providers/UnBan.yaml
-    path: ./providers/rule-provider_UnBan.yaml
-
   Ⓜ️微软Copilot-FISH:
     <<: *rule-providers-general
     url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/%E2%93%82%EF%B8%8F%E5%BE%AE%E8%BD%AFCopilot-FISH.yaml
@@ -307,15 +300,13 @@ rules:
   - DOMAIN-SUFFIX,asmrbbs.com,🇭🇰香港节点 # FISH-避免IP变动过大
   - RULE-SET,♻️延迟最低-FISH,♻️延迟最低 # FISH自定义代理
   - RULE-SET,🌐Direct-FISH,DIRECT # FISH自定义直连
-  # 广告拦截与局域网/下载绕过块
+  # 广告拦截与局域网绕过块
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
-  - RULE-SET,UnBan,DIRECT # 解除ads-all中的部分域名
   # 代理规则块，按照使用频率/规则集大小排序
   - GEOSITE,google@cn,DIRECT # Google中国直连
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot代理-FISH自定义
   - GEOSITE,category-games@cn,DIRECT # 各种游戏直连
-  - GEOSITE,steam,♻️延迟最低 # Steam商店、社区代理
   - GEOSITE,openai,⏣OpenAi # OpenAi代理
   - GEOSITE,telegram,✈️Telegram # Telegram代理
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram代理
