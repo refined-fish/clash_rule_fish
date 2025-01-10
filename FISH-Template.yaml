@@ -56,8 +56,9 @@ public-dns: &public-dns
   - 223.6.6.6 # 阿里副DNS
 
 secure-dns: &secure-dns
-  - https://1.1.1.1/dns-query#h3=true # Cloudflare主DNS，支持H3
-  - https://1.0.0.1/dns-query#h3=true # Cloudflare次DNS，支持H3
+  - 8.8.8.8 # Google主DNS，不支持H3
+  - 1.1.1.1 # Cloudflare主DNS，支持H3
+  - 1.0.0.1 # Cloudflare次DNS，支持H3
 
 dns:
   enable: true #⭕启用dns
