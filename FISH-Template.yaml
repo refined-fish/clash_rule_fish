@@ -56,13 +56,8 @@ public-dns: &public-dns
   - 223.6.6.6 # 阿里副DNS
 
 secure-dns: &secure-dns
-  - https://8.8.8.8/dns-query # 谷歌主DNS
-  - https://8.8.4.4/dns-query # 谷歌副DNS
-  - https://208.67.222.222/dns-query # OpenDNS主DNS
-  - https://208.67.220.220/dns-query # OpenDNS次DNS
   - https://1.1.1.1/dns-query#h3=true # Cloudflare主DNS，支持H3
   - https://1.0.0.1/dns-query#h3=true # Cloudflare次DNS，支持H3
-  - https://dns.nextdns.io#h3=true # NextDNS，支持H3
 
 dns:
   enable: true #⭕启用dns
@@ -76,7 +71,7 @@ dns:
   fake-ip-filter-mode: blacklist # 黑/白名单模式，白名单下 filter 会返回 fake-ip
   use-hosts: true # 查询配置文件 hosts
   use-system-hosts: true # 查询系统 hosts
-  respect-rules: false # DNS请求遵循路由规则，redir-host模式推荐，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+  respect-rules: true # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
 
   default-nameserver:
     - 223.5.5.5 # 解析DNS服务器的域名
