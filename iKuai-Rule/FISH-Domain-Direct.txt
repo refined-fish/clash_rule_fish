@@ -7,6 +7,7 @@ api.ipify.org
 hassbian.com
 hasstatic.com
 qing-yu.top
+bam.nr-data.net
 xxxxxxxxxxxxxxxxxxxx.Windows-service
 time.windows.com
 msn.cn
