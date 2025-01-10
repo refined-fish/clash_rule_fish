@@ -29,3 +29,5 @@ stun.syncthing.net
 stun.hot-chilli.net
 stun.fitauto.ru
 stun.miwifi.com
+xxxxxxxxxxxxxxxxxxxx.research
+pubmed.ncbi.nlm.nih.gov
