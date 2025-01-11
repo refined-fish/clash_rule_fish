@@ -9,3 +9,7 @@ payload:
 
   # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
   - DOMAIN-SUFFIX,rewards.bing.com
+
+  # github代理加速
+  - DOMAIN-SUFFIX,ghproxy.net
+  - DOMAIN-SUFFIX,gh-proxy.com
