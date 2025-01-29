@@ -1,19 +1,13 @@
 payload:
-  ### Game-FISH
-  # 天马G主页
-  - DOMAIN-SUFFIX,pegasus-frontend.org
+  ### Tools
+  # ESET
+  - DOMAIN-SUFFIX,edf.eset.com
+  - DOMAIN-SUFFIX,play.eset.com
 
   # HomeAssistant地图依赖openstreetmap的CDN加速，最近的在日本，不代理加载缓慢，原始服务已在GFW中
   - DOMAIN-SUFFIX,basemaps.cartocdn.com
   # HomeAssistant社区，代理加速
   - DOMAIN-SUFFIX,community.home-assistant.io
-
-  # Parsec启动、更新、API、WebSocket与用户内容（已被运营商屏蔽）
-  - DOMAIN-SUFFIX,public.parsec.app
-  - DOMAIN-SUFFIX,builds.parsec.app
-  - DOMAIN-SUFFIX,kessel-api.parsec.app
-  - DOMAIN-SUFFIX,kessel-ws.parsec.app
-  - DOMAIN-SUFFIX,parsecusercontent.com
 
   # openWRT在线固件定制-kiddin9
   - DOMAIN-SUFFIX,openwrt.ai
@@ -22,14 +16,25 @@ payload:
   - DOMAIN-SUFFIX,web.coo.wiki
   - DOMAIN-SUFFIX,xn--4gq62f52gdss.ink
 
-  # NS密钥下载
-  - DOMAIN-SUFFIX,prodkeys.net
-
   # 大侠阿木木的商业版onedrive代理加速下载手机Rom，不影响其他商业版onedrive
   - DOMAIN-SUFFIX,huodroid-my.sharepoint.com
 
   # V2RaySSR综合网，禁止大陆IP访问，内有一些教程交流贴
   - DOMAIN-SUFFIX,v2rayssr.com
+
+  ### Game-FISH
+  # 天马G主页
+  - DOMAIN-SUFFIX,pegasus-frontend.org
+
+  # Parsec启动、更新、API、WebSocket与用户内容（已被运营商屏蔽）
+  - DOMAIN-SUFFIX,public.parsec.app
+  - DOMAIN-SUFFIX,builds.parsec.app
+  - DOMAIN-SUFFIX,kessel-api.parsec.app
+  - DOMAIN-SUFFIX,kessel-ws.parsec.app
+  - DOMAIN-SUFFIX,parsecusercontent.com
+
+  # NS密钥下载
+  - DOMAIN-SUFFIX,prodkeys.net
 
   # 星露谷物语在线编辑器
   - DOMAIN-SUFFIX,v3.stardew.info
