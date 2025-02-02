@@ -1,8 +1,7 @@
 payload:
   ### Tools
   # ESET
-  - DOMAIN-SUFFIX,edf.eset.com
-  - DOMAIN-SUFFIX,play.eset.com
+  - DOMAIN-SUFFIX,eset.com
 
   # HomeAssistant地图依赖openstreetmap的CDN加速，最近的在日本，不代理加载缓慢，原始服务已在GFW中
   - DOMAIN-SUFFIX,basemaps.cartocdn.com
