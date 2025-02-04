@@ -221,7 +221,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: 🎮游戏平台
     type: select
@@ -248,7 +248,7 @@ proxy-groups:
       - 🇨🇳台湾节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
@@ -262,7 +262,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
@@ -312,17 +312,17 @@ rule-providers-general: &rule-providers-general
 rule-providers:
   ♻️延迟最低-FISH:
     <<: *rule-providers-general
-    url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️延迟最低-FISH.yaml
+    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️延迟最低-FISH.yaml
     path: ./providers/rule-provider_♻️延迟最低-FISH.yaml
 
   🌐Direct-FISH:
     <<: *rule-providers-general
-    url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
+    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
     path: ./providers/rule-provider_🌐Direct-FISH.yaml
 
   Ⓜ️微软Copilot-FISH:
     <<: *rule-providers-general
-    url: https://gh-proxy.com/https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/%E2%93%82%EF%B8%8F%E5%BE%AE%E8%BD%AFCopilot-FISH.yaml
+    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/Ⓜ️微软Copilot-FISH.yaml
     path: ./providers/rule-provider_Ⓜ️微软Copilot-FISH.yaml
 
 ## 路由规则设置---------------------------------------------------------------------------------------------------
