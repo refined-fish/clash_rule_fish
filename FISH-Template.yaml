@@ -223,6 +223,19 @@ proxy-groups:
       - 🇺🇲美国节点
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
+  - name: 🎮游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - ♻️延迟最低
+      - ⚠️故障切换
+      - 🖐️手动切换
+      - 🇭🇰香港节点
+      - 🇨🇳台湾节点
+      - 🇸🇬狮城节点
+      - 🇯🇵日本节点
+      - 🇺🇲美国节点
+
   - name: ⏣OpenAi
     type: select
     proxies:
@@ -256,19 +269,6 @@ proxy-groups:
     proxies:
       - ♻️延迟最低
       - DIRECT
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-
-  - name: 🎮游戏平台
-    type: select
-    proxies:
-      - DIRECT
-      - ♻️延迟最低
       - ⚠️故障切换
       - 🖐️手动切换
       - 🇭🇰香港节点
@@ -340,7 +340,7 @@ rules:
   # 代理规则块，按照使用频率/规则集大小排序
   - GEOSITE,google@cn,DIRECT # Google中国服务
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
-  - GEOSITE,category-games@cn,🎮游戏平台 # 各种游戏国内服务
+  - GEOSITE,category-games,🎮游戏平台 # Steam等各种游戏服务
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
@@ -348,7 +348,7 @@ rules:
   - GEOSITE,bahamut,🇨🇳台湾节点 # 巴哈姆特服务
   - GEOSITE,category-porn,♻️延迟最低 # X服务
 
-  # 兜底规则块，一般规则应在其上
+  # 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,cn,DIRECT # 中国域名
   - GEOIP,cn,DIRECT,no-resolve # 中国IP
