@@ -187,86 +187,95 @@ proxy-groups:
     type: url-test
     <<: *health-check-general
 
-  - name: ⚠️故障切换
-    type: fallback
-    <<: *health-check-general
-
   - name: 🐟漏网之鱼
     type: select
     proxies:
       - DIRECT
       - ♻️延迟最低
+      - ⚠️故障切换
+      - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-      - 🖐️手动切换
+
+  - name: ⚠️故障切换
+    type: fallback
+    <<: *health-check-general
 
   - name: 🖐️手动切换
     type: select
     <<: *use-all-proxy-providers
 
+    ##############################
   - name: Ⓜ️微软Copilot
     type: select
     proxies:
       - ⚠️故障切换
+      - DIRECT
       - ♻️延迟最低
+      - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-      - 🖐️手动切换
-      - DIRECT
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: ⏣OpenAi
     type: select
     proxies:
       - 🇸🇬狮城节点
+      - DIRECT
       - ♻️延迟最低
+      - ⚠️故障切换
+      - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-      - 🖐️手动切换
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
     proxies:
       - ♻️延迟最低
+      - DIRECT
+      - ⚠️故障切换
+      - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-      - 🖐️手动切换
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
     proxies:
       - ♻️延迟最低
+      - DIRECT
+      - ⚠️故障切换
+      - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-      - 🖐️手动切换
 
   - name: 🎮游戏平台
     type: select
     proxies:
       - DIRECT
       - ♻️延迟最低
+      - ⚠️故障切换
+      - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-      - 🖐️手动切换
 
   ###########################
   - name: 🇭🇰香港节点
@@ -323,21 +332,24 @@ rules:
   - DOMAIN-SUFFIX,asmrbbs.com,🇭🇰香港节点 # FISH-避免IP变动过大
   - RULE-SET,♻️延迟最低-FISH,♻️延迟最低 # FISH自定义代理
   - RULE-SET,🌐Direct-FISH,DIRECT # FISH自定义直连
+
   # 广告拦截与局域网绕过块
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
+
   # 代理规则块，按照使用频率/规则集大小排序
-  - GEOSITE,google@cn,DIRECT # Google中国直连
-  - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot代理-FISH自定义
-  - GEOSITE,category-games@cn,🎮游戏平台 # 各种游戏直连
-  - GEOSITE,openai,⏣OpenAi # OpenAi代理
-  - GEOSITE,telegram,✈️Telegram # Telegram代理
-  - GEOIP,telegram,✈️Telegram,no-resolve # Telegram代理
-  - GEOSITE,docker,♻️延迟最低 # Docker代理
-  - GEOSITE,bahamut,🇨🇳台湾节点 # 巴哈姆特台湾代理
-  - GEOSITE,category-porn,♻️延迟最低 # X代理
+  - GEOSITE,google@cn,DIRECT # Google中国服务
+  - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
+  - GEOSITE,category-games@cn,🎮游戏平台 # 各种游戏国内服务
+  - GEOSITE,openai,⏣OpenAi # OpenAi服务
+  - GEOSITE,telegram,✈️Telegram # Telegram服务
+  - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
+  - GEOSITE,docker,♻️延迟最低 # Docker服务
+  - GEOSITE,bahamut,🇨🇳台湾节点 # 巴哈姆特服务
+  - GEOSITE,category-porn,♻️延迟最低 # X服务
+
   # 兜底规则块，一般规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
-  - GEOSITE,cn,DIRECT # 中国直连
-  - GEOIP,cn,DIRECT,no-resolve # 中国直连
+  - GEOSITE,cn,DIRECT # 中国域名
+  - GEOIP,cn,DIRECT,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
