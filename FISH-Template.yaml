@@ -221,7 +221,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: 🎮游戏平台
     type: select
@@ -248,7 +248,7 @@ proxy-groups:
       - 🇨🇳台湾节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
@@ -262,7 +262,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select

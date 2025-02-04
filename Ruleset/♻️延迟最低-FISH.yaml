@@ -20,6 +20,9 @@ payload:
   - DOMAIN-SUFFIX,v2rayssr.com
 
   ### Game-FISH
+  # Steam社区，不代理无法访问
+  - DOMAIN-SUFFIX,steamcommunity.com
+
   # 天马G主页
   - DOMAIN-SUFFIX,pegasus-frontend.org
 
