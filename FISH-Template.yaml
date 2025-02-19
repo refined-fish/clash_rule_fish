@@ -296,6 +296,13 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
 
+  - name: 📺巴哈姆特
+    type: select
+    proxies:
+      - 🇭🇰香港节点
+      - 🇨🇳台湾节点
+    icon: https://gh-proxy.com/github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
+
   ###########################
   - name: 🇭🇰香港节点
     type: url-test
@@ -362,7 +369,7 @@ rules:
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   - GEOSITE,docker,✅默认代理 # Docker服务
-  - GEOSITE,bahamut,🇨🇳台湾节点 # 巴哈姆特服务
+  - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   - GEOSITE,category-porn,✅默认代理 # X服务
 
   # 兜底规则块，一般精细的分流规则应在其上
