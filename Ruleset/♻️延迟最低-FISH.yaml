@@ -23,7 +23,9 @@ payload:
 
   # Steam社区，不代理无法访问
   - DOMAIN-SUFFIX,steamcommunity.com
-  # Steam商店，不代理访问受到部分限制
+
+  # 模组网站
+  - DOMAIN-SUFFIX,thunderstore.io
 
   # 天马G主页
   - DOMAIN-SUFFIX,pegasus-frontend.org
