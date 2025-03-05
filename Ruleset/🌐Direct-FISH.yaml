@@ -1,7 +1,5 @@
 payload:
   ### 🌐Direct-FISH
-  # onedrive个人版
-  - DOMAIN-SUFFIX,api.onedrive.com
   # CN域名
   - DOMAIN-SUFFIX,qing-yu.top
   # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
