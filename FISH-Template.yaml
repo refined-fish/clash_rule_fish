@@ -56,12 +56,17 @@ geox-url: # GEO数据库下载地址，内核会按需下载
   asn: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
 
 ## DNS设置---------------------------------------------------------------------------------------------------
+# 客户端发起网址A的DNS，到达mihomo的DNS模块，mihomo会使用下方的配置进行DNS，得到IP后返回给客户端
+# 客户端拿到IP后，再次对IP发起连接请求，此时请求会进入mihomo的规则匹配，根据匹配结果直连或者远端解析
+# 也就是说DNS解析实际上会发生两次，第一次的结果并不重要，第二次只要规则正确触发远程解析，绝不会污染和劫持
+# 但如果第一次拿到了0.0.0.0,127.0.0.1这样的错误IP，请求无法发给mihomo就会无法访问
+
 public-dns: &public-dns # 快速的DNS，不关心是否存在污染和劫持
   - dhcp://wan # 指定网卡DHCP获取的DNS，硬路由的wan口网卡名一般为wan
   - dhcp://eth1 # 软路由的wan口一般为最后一张网卡，eth0,eth1 双网口就是eth1
   - 223.5.5.5 # 阿里主DNS
 
-secure-dns: &secure-dns # 加密的DNS，绝对避免污染和劫持
+secure-dns: &secure-dns # 加密的DNS，必须避免被解析为0.0.0.0等污染
   - https://223.5.5.5/dns-query#h3=true # 阿里主DNS，支持H3
 
 dns:
