@@ -18,6 +18,7 @@ xxxxxxxxxxxxxxxxxxxx.apple-service
 apple.com
 icloud.com
 xxxxxxxxxxxxxxxxxxxx.stun-server
+tailscale.com
 stun.isp.net.au
 fwa.lifesizecloud.com
 stun.freeswitch.org
