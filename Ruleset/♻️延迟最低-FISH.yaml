@@ -1,9 +1,9 @@
 payload:
   #################### Tools
 
-  # HomeAssistant地图依赖openstreetmap的CDN加速，最近的在日本，不代理加载缓慢，原始服务已在GFW中
+  # HomeAssistant地图的CDN，不代理加载缓慢，其原始服务已被GFW包含
   - DOMAIN-SUFFIX,basemaps.cartocdn.com
-  # HomeAssistant社区，代理加速
+  # HomeAssistant社区论坛
   - DOMAIN-SUFFIX,community.home-assistant.io
 
   # openWRT在线固件定制-kiddin9
@@ -13,16 +13,10 @@ payload:
   - DOMAIN-SUFFIX,web.coo.wiki
   - DOMAIN-SUFFIX,xn--4gq62f52gdss.ink
 
-  # 大侠阿木木的商业版onedrive代理加速下载手机Rom，不影响其他商业版onedrive
-  - DOMAIN-SUFFIX,huodroid-my.sharepoint.com
-
   # V2RaySSR综合网，禁止大陆IP访问，内有一些教程交流贴
   - DOMAIN-SUFFIX,v2rayssr.com
 
   #################### Game-FISH
-
-  # Steam社区，不代理无法访问
-  - DOMAIN-SUFFIX,steamcommunity.com
 
   # 模组网站
   - DOMAIN-SUFFIX,thunderstore.io
@@ -42,14 +36,6 @@ payload:
 
   # 星露谷物语在线编辑器
   - DOMAIN-SUFFIX,v3.stardew.info
-
-  #################### Ⓜ️onedrive网页版（该规则已包含在GFW中，但GFW优先级在微软云盘规则之后所以再次声明在前）
-
-  # 网页版onedrive页面
-  - DOMAIN-SUFFIX,onedrive.live.com
-
-  # 网页版onedrive的文件操作功能，不代理无法在网页进行文件移动复制等操作，在微软云盘规则集中有重复出现
-  - DOMAIN-SUFFIX,skyapi.onedrive.live.com
 
   #################### 💻CodeSource-FISH，程序源码规则集，一般用于编译或下载程序资源/更新等
 
