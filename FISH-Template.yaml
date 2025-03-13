@@ -39,7 +39,7 @@ external-controller: 0.0.0.0:9090 #🔴API面板监听地址
 secret: "hd54RIm0LiUpyu" #🔴API面板访问密钥
 external-ui: ./ui #🔴API面板静态资源路径
 external-ui-name: zashboard #🔴API面板名，配合路径拼接成路径，例如/ui/metacubexd
-external-ui-url: "https://gh-proxy.com/github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" #🔴API面板下载地址
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" #🔴API面板下载地址
 
 ## 外部资源下载设置---------------------------------------------------------------------------------------------------
 global-client-fingerprint: random # 全局客户端指纹，优先级低于其他处的声明
@@ -241,7 +241,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: 🎮Steam国外
     type: select
@@ -256,7 +256,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
 
   - name: 🎮游戏平台
     type: select
@@ -285,7 +285,7 @@ proxy-groups:
       - 🇨🇳台湾节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
@@ -300,7 +300,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
-    icon: https://gh-proxy.com/github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
@@ -321,7 +321,7 @@ proxy-groups:
     proxies:
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
-    icon: https://gh-proxy.com/github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
+    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
 
   ###########################
   - name: 🇭🇰香港节点
