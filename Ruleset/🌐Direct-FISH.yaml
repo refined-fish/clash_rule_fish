@@ -5,6 +5,9 @@ payload:
   # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,sentry.io
 
+  # 微软OneDrive个人版
+  - DOMAIN-SUFFIX,api.onedrive.com
+
   # New Relic 浏览器监控平台，不知道怎么分类到了国外媒体
   - DOMAIN-SUFFIX,bam.nr-data.net
 
