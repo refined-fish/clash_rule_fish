@@ -188,6 +188,7 @@ health-check-general: &health-check-general
   timeout: 5000
 
 proxy-groups:
+  ##################################
   - name: ♻️延迟最低
     type: url-test
     <<: *health-check-general
@@ -200,7 +201,7 @@ proxy-groups:
     type: select
     <<: *use-all-proxy-providers
 
-    ##############################
+  ##################################
   - name: ✅默认代理
     type: select
     proxies:
@@ -242,35 +243,6 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
-
-  - name: 🎮Steam国外
-    type: select
-    proxies:
-      - ✅默认代理
-      - DIRECT
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-    icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
-
-  - name: 🎮游戏平台
-    type: select
-    proxies:
-      - DIRECT
-      - ✅默认代理
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
 
   - name: ⏣OpenAi
     type: select
@@ -323,7 +295,7 @@ proxy-groups:
       - 🇨🇳台湾节点
     icon: https://gh-proxy.com/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
 
-  ###########################
+  ##################################
   - name: 🇭🇰香港节点
     type: url-test
     <<: *health-check-general
@@ -382,12 +354,8 @@ rules:
   - GEOSITE,private,DIRECT # 私有地址直连
 
   # 代理规则块，按照使用频率/规则集大小排序
-  - GEOSITE,google@cn,DIRECT # Google中国服务
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
-  - GEOSITE,steam@cn,DIRECT # Steam中国服务
-  - GEOSITE,steam,🎮Steam国外 # Steam服务
-  - GEOSITE,category-games,🎮游戏平台 # Steam等各种游戏服务
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   - GEOSITE,docker,✅默认代理 # Docker服务
