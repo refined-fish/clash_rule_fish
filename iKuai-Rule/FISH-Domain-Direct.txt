@@ -11,6 +11,12 @@ bam.nr-data.net
 xxxxxxxxxxxxxxxxxxxx.Windows-service
 time.windows.com
 msn.cn
+xxxxxxxxxxxxxxxxxxxx.game
+gearbox.com
+gearboxsoftware.com
+gamepass.com
+xboxlive.com
+xboxab.com
 xxxxxxxxxxxxxxxxxxxx.github-accelerate
 ghproxy.net
 gh-proxy.com
