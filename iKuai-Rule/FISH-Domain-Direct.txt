@@ -9,8 +9,11 @@ hasstatic.com
 qing-yu.top
 bam.nr-data.net
 xxxxxxxxxxxxxxxxxxxx.Windows-service
-time.windows.com
 msn.cn
+onenote.com
+microsoft.com
+xxxxxxxxxxxxxxxxxxxx.azure-service
+azure.com
 xxxxxxxxxxxxxxxxxxxx.game
 gearbox.com
 gearboxsoftware.com
@@ -25,6 +28,7 @@ apple.com
 icloud.com
 xxxxxxxxxxxxxxxxxxxx.stun-server
 tailscale.com
+controlplane.tailscale.com
 stun.isp.net.au
 fwa.lifesizecloud.com
 stun.freeswitch.org
