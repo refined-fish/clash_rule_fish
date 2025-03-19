@@ -17,3 +17,7 @@ payload:
   # github代理加速
   - DOMAIN-SUFFIX,ghproxy.net
   - DOMAIN-SUFFIX,gh-proxy.com
+
+  # 科研网站，不允许代理访问
+  - DOMAIN-SUFFIX,ncbi.nlm.nih.gov
+  - DOMAIN-SUFFIX,crossref.org
