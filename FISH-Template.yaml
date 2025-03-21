@@ -355,6 +355,7 @@ rules:
 
   # 代理规则块，按照使用频率/规则集大小排序
   - GEOSITE,tailscale,DIRECT # tailscale直连
+  - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
   - GEOSITE,telegram,✈️Telegram # Telegram服务
