@@ -40,6 +40,8 @@ stun.syncthing.net
 stun.hot-chilli.net
 stun.fitauto.ru
 stun.miwifi.com
+xxxxxxxxxxxxxxxxxxxx.PT
+ptzone.xyz
 xxxxxxxxxxxxxxxxxxxx.research
 ncbi.nlm.nih.gov
 crossref.org
