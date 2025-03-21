@@ -50,10 +50,10 @@ geodata-loader: standard # GEO文件加载模式，默认memconservative（小�
 geo-auto-update: true # GEO文件自动更新
 geo-update-interval: 24 # 更新间隔，小时
 geox-url: # GEO数据库下载地址，内核会按需下载
-  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
-  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
-  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
-  asn: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
+  geoip: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  asn: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
 
 ## DNS设置---------------------------------------------------------------------------------------------------
 # 客户端发起网址A的DNS，到达mihomo的DNS模块，mihomo会使用下方的配置进行DNS，得到IP后返回给客户端
