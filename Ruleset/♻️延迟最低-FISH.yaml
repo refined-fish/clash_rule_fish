@@ -3,8 +3,8 @@ payload:
 
   # HomeAssistant地图的CDN，不代理加载缓慢，其原始服务已被GFW包含
   - DOMAIN-SUFFIX,basemaps.cartocdn.com
-  # HomeAssistant社区论坛
-  - DOMAIN-SUFFIX,community.home-assistant.io
+  # HomeAssistant相关，社区，论坛等，不代理加载缓慢
+  - DOMAIN-SUFFIX,home-assistant.io
 
   # openWRT在线固件定制-kiddin9
   - DOMAIN-SUFFIX,openwrt.ai
