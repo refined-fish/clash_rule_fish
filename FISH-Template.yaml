@@ -360,7 +360,7 @@ rules:
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
-  - GEOSITE,docker,✅默认代理 # Docker服务
+  - GEOSITE,category-container,✅默认代理 # 各种容器服务
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   - GEOSITE,category-porn,✅默认代理 # X服务
 
