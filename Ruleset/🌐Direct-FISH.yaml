@@ -9,6 +9,7 @@ payload:
   - DOMAIN-SUFFIX,ptzone.xyz
   - DOMAIN-SUFFIX,rousi.zip
   - DOMAIN-SUFFIX,1ptba.com
+  - DOMAIN-SUFFIX,icc2022.com
 
   # 微软OneDrive个人版
   - DOMAIN-SUFFIX,api.onedrive.com
