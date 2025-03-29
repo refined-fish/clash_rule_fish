@@ -12,6 +12,7 @@ payload:
   - DOMAIN-SUFFIX,icc2022.com
   - DOMAIN-SUFFIX,icc2022.xyz
   - DOMAIN-SUFFIX,m-team.cc
+  - DOMAIN-SUFFIX,m-team.io
 
   # 微软OneDrive个人版
   - DOMAIN-SUFFIX,api.onedrive.com
