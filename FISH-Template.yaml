@@ -359,6 +359,7 @@ rules:
   - GEOSITE,category-pt,DIRECT # PT直连
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
+  - GEOSITE,synology,DIRECT # 群晖服务，包括QC
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
