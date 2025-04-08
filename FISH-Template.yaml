@@ -206,7 +206,6 @@ proxy-groups:
     type: select
     proxies:
       - ♻️延迟最低
-      - DIRECT
       - ⚠️故障切换
       - 🖐️手动切换
       - 🇭🇰香港节点
@@ -214,6 +213,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
+      - DIRECT
 
   - name: 🐟漏网之鱼
     type: select
@@ -232,39 +232,38 @@ proxy-groups:
   - name: Ⓜ️微软Copilot
     type: select
     proxies:
-      - ⚠️故障切换
-      - DIRECT
       - ✅默认代理
       - ♻️延迟最低
+      - ⚠️故障切换
       - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
+      - DIRECT
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: ⏣OpenAi
     type: select
     proxies:
-      - 🇸🇬狮城节点
-      - DIRECT
       - ✅默认代理
       - ♻️延迟最低
       - ⚠️故障切换
       - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
+      - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
+      - DIRECT
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
     proxies:
-      - ♻️延迟最低
-      - DIRECT
       - ✅默认代理
+      - ♻️延迟最低
       - ⚠️故障切换
       - 🖐️手动切换
       - 🇭🇰香港节点
@@ -272,14 +271,14 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
+      - DIRECT
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
     proxies:
-      - ♻️延迟最低
-      - DIRECT
       - ✅默认代理
+      - ♻️延迟最低
       - ⚠️故障切换
       - 🖐️手动切换
       - 🇭🇰香港节点
@@ -287,6 +286,7 @@ proxy-groups:
       - 🇸🇬狮城节点
       - 🇯🇵日本节点
       - 🇺🇲美国节点
+      - DIRECT
 
   - name: 📺巴哈姆特
     type: select
