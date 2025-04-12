@@ -37,7 +37,7 @@ payload:
   # 星露谷物语在线编辑器
   - DOMAIN-SUFFIX,v3.stardew.info
 
-  # 模拟城市天际线-ipad版
+  # 模拟城市天际线-ipad版-国际服
   - DOMAIN-SUFFIX,simcitybuildit.com
 
   #################### 💻CodeSource-FISH，程序源码规则集，一般用于编译或下载程序资源/更新等
