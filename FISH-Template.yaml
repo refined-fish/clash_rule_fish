@@ -296,6 +296,7 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - DIRECT
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
 
   - name: 📺巴哈姆特
     type: select
