@@ -251,7 +251,7 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - DIRECT
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: ⏣OpenAi
     type: select
@@ -266,7 +266,7 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - DIRECT
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
@@ -281,7 +281,7 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - DIRECT
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
@@ -302,7 +302,7 @@ proxy-groups:
     proxies:
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
 
   ##################################
   - name: 🇭🇰香港节点
