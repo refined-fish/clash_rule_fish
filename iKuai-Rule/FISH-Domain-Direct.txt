@@ -8,7 +8,8 @@ hasstatic.com
 xxxxxxxxxxxxxxxxxxxx.Private
 qing-yu.top
 xxxxxxxxxxxxxxxxxxxx.cloudflare
-turn.cloudflare.com
+cloudflare.com
+cloudflare-ech.com
 xxxxxxxxxxxxxxxxxxxx.NTP.Service
 ntp.org
 xxxxxxxxxxxxxxxxxxxx.logi.luoji
@@ -22,6 +23,8 @@ quickconnect.to
 synologyupdate.com
 xxxxxxxxxxxxxxxxxxxx.Microsoft
 msn.cn
+windows.com
+microsoft.com
 xxxxxxxxxxxxxxxxxxxx.Game
 gearbox.com
 gearboxsoftware.com
