@@ -2,6 +2,7 @@ payload:
   ### 🌐Direct-FISH
   # CN域名
   - DOMAIN-SUFFIX,qing-yu.top
+
   # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,sentry.io
 
@@ -14,11 +15,8 @@ payload:
   - DOMAIN-SUFFIX,m-team.cc
   - DOMAIN-SUFFIX,m-team.io
 
-  # 微软OneDrive个人版
+  # 微软OneDrive个人版，现已被划分到GFW
   - DOMAIN-SUFFIX,api.onedrive.com
-
-  # New Relic 浏览器监控平台，不知道怎么分类到了国外媒体
-  - DOMAIN-SUFFIX,bam.nr-data.net
 
   # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
   - DOMAIN-SUFFIX,rewards.bing.com
