@@ -374,6 +374,7 @@ rules:
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   - GEOSITE,category-container,✅默认代理 # 各种容器服务
+  - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   - GEOSITE,category-porn,✅默认代理 # X服务
 
