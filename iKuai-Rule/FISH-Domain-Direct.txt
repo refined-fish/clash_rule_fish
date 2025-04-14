@@ -24,6 +24,7 @@ synologyupdate.com
 xxxxxxxxxxxxxxxxxxxx.Microsoft
 msn.cn
 windows.com
+storage.live.com
 xxxxxxxxxxxxxxxxxxxx.Game
 gearbox.com
 gearboxsoftware.com
