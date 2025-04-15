@@ -4,7 +4,7 @@ payload:
   - DOMAIN-SUFFIX,qing-yu.top
 
   # Steam下载地区检测，影响下载CDN以及游戏锁区
-  - DOMAIN-SUFFIX,steamserver.net
+  #- DOMAIN-SUFFIX,steamserver.net
 
   # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,sentry.io

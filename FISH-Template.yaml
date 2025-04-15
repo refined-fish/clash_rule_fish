@@ -1,9 +1,9 @@
 ## 端口配置 ---------------------------------------------------------------------------------------------------
-mixed-port: 7890 #🔴混合，系统代理端口
+mixed-port: 7890 #🔴HTTP+Socks4混合，Win下的系统代理端口
 socks-port: 1080 #🔴Socks5，代理端口
 port: 8080 #🔴HTTP，代理端口
-#redir-port: 7891  #🔴非linux无效，redir 透明代理端口
-#tproxy-port: 7892  #🔴非linux无效，tproxy 透明代理端口
+#redir-port: 7891  #🔴非linux系统无效，redir 透明代理端口
+#tproxy-port: 7892  #🔴非linux系统无效，tproxy 透明代理端口
 
 ## 全局配置 ------------------------------------------------------------------------------------------------
 mode: rule # rule（规则）/ global（全局）/ direct（直连）
@@ -16,22 +16,22 @@ profile: # 缓存设置
   store-selected: true # 缓存 API面板 对策略组的选择
   #store-fake-ip: true # 缓存 fakeip 映射表
 #interface-name: en0  #🔴clash流量出站接口，即接口绑定
-#find-process-mode: off # 进程匹配（off:关闭，alwas:开启，strict自动），tun下无效
+#find-process-mode: off # 进程匹配（off:关闭，alwas:开启，strict自动），tun模式下无效
 #lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
 #- 0.0.0.0/0
 #- ::/0
-#lan-disallowed-ips: # 禁止连接的IP，优先级高于白名单
+#lan-disallowed-ips: # 禁止连接的IP，优先级高于allow白名单
 #- ~
 #authentication: # http(s)/socks/mixed 的用户验证，格式："user1:pass1"，不写则禁止全部用户
 #- ~
 #skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
 #- ~
-#unified-delay: false # 统一延迟计算，没啥卵用
-#routing-mark: 6666  # 非linux无效，路由标记，为流量提供标记
+#unified-delay: false # 统一延迟计算，没啥卵用，就是界面好看
+#routing-mark: 6666  # 非linux无效，路由标记，为流量提供标记以供其他应用进行流量处理
 
 ## TCP-KeepA-live配置 ------------------------------------------------------------------------------------------
-keep-alive-idle: 30 # 触发心跳包的无活动阈值
-keep-alive-interval: 30 # 发送心跳包的间隔，最多9次
+keep-alive-idle: 30 # 触发心跳包的链路无活动阈值，无活动后发送心跳包检测对端是否存活
+keep-alive-interval: 30 # 发送心跳包的间隔，无回应则最多重发9次后判断链路关闭
 disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在
 
 ## API面板设置---------------------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的�
 # 但如果第一次拿到了0.0.0.0,127.0.0.1这样的错误IP，请求无法发给mihomo就会无法访问
 # 综上所述，配置DNS没有那么重要，只要保证首次解析不要得到0.0.0.0这样的错误IP即可
 
-public-dns: &public-dns # 快速的DNS，不关心是否存在污染和劫持
+public-dns: &public-dns # 快速的DNS，不关心是否存在污染和劫持，只要快就好了
   - dhcp://wan # 指定网卡DHCP获取的DNS，硬路由的wan口网卡名一般为wan
   - dhcp://eth1 # 软路由的wan口一般为最后一张网卡，eth0,eth1 双网口就是eth1
   - 223.5.5.5 # 阿里主DNS
@@ -78,7 +78,7 @@ dns:
   ipv6: true # 是否解析ipv6地址，否则返回空结果
   use-hosts: true # 查询配置文件中的 hosts
   use-system-hosts: true # 查询系统的 hosts
-  proxy-server-nameserver: *public-dns # 解析代理节点域名的DNS，不填则遵循namepolicy
+  proxy-server-nameserver: *secure-dns # 解析代理节点域名的DNS，不填则遵循namepolicy
   direct-nameserver: *public-dns # 解析direct组的DNS，不填则遵循namepolicy
   nameserver-policy: # 优先级高于nameserver
     "geosite:category-ads-all": rcode://success # 匹配广告域名，返回空结果
@@ -92,7 +92,7 @@ dns:
   #fake-ip-filter: # fakeip过滤
   #- "geosite:category-ads-all,category-games,cn,private"
   #- "rule-set:🌐Direct-FISH"
-  #default-nameserver: [223.5.5.5] # 解析DNS服务器域名的DNS，可以加密但必须为IP
+  #default-nameserver: [223.5.5.5] # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
 
 ## hosts设置---------------------------------------------------------------------------------------------------
 hosts:
@@ -162,7 +162,7 @@ tun:
   #endpoint-independent-nat: false # 独立于端点的 NAT，性能可能下降，不建议不需要时开启
 
 ## 代理提供者设置---------------------------------------------------------------------------------------------------
-proxy-providers-general: &proxy-providers-general
+proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
   type: http # 类型，可选http/file
   interval: 86400
   proxy: DIRECT
@@ -181,20 +181,46 @@ proxy-providers:
   #❗provider占位4
 
 ## 代理组设置---------------------------------------------------------------------------------------------------
-use-all-proxy-providers: &use-all-proxy-providers
+use-all-proxy-providers: &use-all-proxy-providers # 代理组通用配置
   use:
     #❗use-provider占位1
     #❗use-provider占位2
     #❗use-provider占位3
     #❗use-provider占位4
 
-health-check-general: &health-check-general
+health-check-general: &health-check-general # 代理组健康检查通用配置
   <<: *use-all-proxy-providers
   url: http://www.gstatic.com/generate_204
   interval: 30
   tolerance: 200
   lazy: true
   timeout: 5000
+
+default-proxy: &default-proxy # 默认代理组
+  proxies:
+    - ✅默认代理
+    - ♻️延迟最低
+    - ⚠️故障切换
+    - 🖐️手动切换
+    - 🇭🇰香港节点
+    - 🇨🇳台湾节点
+    - 🇸🇬狮城节点
+    - 🇯🇵日本节点
+    - 🇺🇲美国节点
+    - DIRECT
+
+default-direct: &default-direct # 默认直连组
+  proxies:
+    - DIRECT
+    - ✅默认代理
+    - ♻️延迟最低
+    - ⚠️故障切换
+    - 🖐️手动切换
+    - 🇭🇰香港节点
+    - 🇨🇳台湾节点
+    - 🇸🇬狮城节点
+    - 🇯🇵日本节点
+    - 🇺🇲美国节点
 
 proxy-groups:
   ##################################
@@ -226,76 +252,26 @@ proxy-groups:
 
   - name: 🐟漏网之鱼
     type: select
-    proxies:
-      - DIRECT
-      - ✅默认代理
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
+    <<: *default-direct
 
   - name: Ⓜ️微软Copilot
     type: select
-    proxies:
-      - ✅默认代理
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - DIRECT
+    <<: *default-proxy
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: ⏣OpenAi
     type: select
-    proxies:
-      - ✅默认代理
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - DIRECT
+    <<: *default-proxy
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
-    proxies:
-      - ✅默认代理
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - DIRECT
+    <<: *default-proxy
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
-    proxies:
-      - ✅默认代理
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - DIRECT
+    <<: *default-proxy
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
 
   - name: 📺巴哈姆特
@@ -304,6 +280,11 @@ proxy-groups:
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
+
+  - name: 🎮Steam
+    type: select
+    <<: *default-direct
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
 
   ##################################
   - name: 🇭🇰香港节点
@@ -380,6 +361,7 @@ rules:
 
   # 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
+  - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
   - GEOSITE,cn,DIRECT # 中国域名
   - GEOIP,cn,DIRECT,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
