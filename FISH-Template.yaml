@@ -90,7 +90,7 @@ dns:
   fake-ip-range: 198.18.0.1/16 #🔴fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
   fake-ip-filter: # fakeip过滤，以下域名将使用redir-host模式，填入无需代理的内容
-    - "geosite:cn,category-ads-all,category-games,private,apple" # 中国、广告、游戏、私有、苹果域名
+    - "geosite:cn,category-ads-all,private,apple" # 中国、广告、私有、苹果域名
     - "rule-set:🌐Direct-FISH" # 个人收集直连域名
   # redir-host配置段
   default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
