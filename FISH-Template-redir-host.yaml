@@ -1,6 +1,4 @@
-## 带🔴标记的配置项为一般代理软件强制覆写的项目，需要在代理软件配置相应项目
-
-## 入站端口配置 ---------------------------------------------------------------------------------------------------
+## 端口配置 ---------------------------------------------------------------------------------------------------
 mixed-port: 7890 #🔴HTTP+Socks4混合，Win下的系统代理端口
 socks-port: 1080 #🔴Socks5，代理端口
 port: 8080 #🔴HTTP，代理端口
@@ -16,7 +14,7 @@ ipv6: true #🔴是否接受ipv6流量
 tcp-concurrent: true # TCP并发
 profile: # 缓存设置
   store-selected: true # 缓存 API面板 对策略组的选择
-  store-fake-ip: true # 缓存 fakeip 映射表
+  #store-fake-ip: true # 缓存 fakeip 映射表
 #interface-name: en0  #🔴clash流量出站接口，即接口绑定
 #find-process-mode: off # 进程匹配（off:关闭，alwas:开启，strict自动），tun模式下无效
 #lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
@@ -28,7 +26,7 @@ profile: # 缓存设置
 #- ~
 #skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
 #- ~
-#unified-delay: false # 统一延迟计算，没啥卵用，就是界面好看，会对延迟自动选择策略造成影响
+#unified-delay: false # 统一延迟计算，没啥卵用，就是界面好看
 #routing-mark: 6666  # 非linux无效，路由标记，为流量提供标记以供其他应用进行流量处理
 
 ## TCP-KeepA-live配置 ------------------------------------------------------------------------------------------
@@ -57,16 +55,12 @@ geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的�
   mmdb: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
   asn: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
 
-## fakeip下的DNS设置---------------------------------------------------------------------------------------------------
-# 客户端发起网址A的DNS，到达mihomo的DNS模块，mihomo会使用下方的配置进行DNS
-# 当fakeip为黑名单模式时，未匹配到filter的域名将直接返回fakeip
-# 匹配到fakeip的域名将会使用redir-host模式进行常规解析，得到IP后返回给客户端
+## DNS设置---------------------------------------------------------------------------------------------------
+# 客户端发起网址A的DNS，到达mihomo的DNS模块，mihomo会使用下方的配置进行DNS，得到IP后返回给客户端
 # 客户端拿到IP后，再次对IP发起连接请求，此时请求会进入mihomo的规则匹配，根据匹配结果直连或者远端解析
 # 也就是说DNS解析实际上会发生两次，第一次的结果并不重要，第二次只要规则正确触发远程解析，绝不会污染和劫持
 # 但如果第一次拿到了0.0.0.0,127.0.0.1这样的错误IP，请求无法发给mihomo就会无法访问
 # 综上所述，配置DNS没有那么重要，只要保证首次解析不要得到0.0.0.0这样的错误IP即可
-# 但是如果一定要要求访问国外域名DNS无泄漏，或者需要对国外进行分流，那么建议使用fakeip模式
-# 因为fakeip模式下，国外域名全部是fakeip并未进行本地解析，而且国外域名内网全部使用fakeip段，方便分流
 
 public-dns: &public-dns # 快速的DNS，不关心是否存在污染和劫持，只要快就好了
   - dhcp://wan # 指定网卡DHCP获取的DNS，硬路由的wan口网卡名一般为wan
@@ -79,30 +73,26 @@ secure-dns: &secure-dns # 加密的DNS，必须避免被解析为0.0.0.0等污�
 dns:
   enable: true #🔴启用dns模块，否则采用系统DNS
   listen: 0.0.0.0:1053 #🔴DNS监听端口，仅支持udp
-  enhanced-mode: fake-ip #🔴DNS处理模式：redir-host/fake-ip，fake-ip更快但可能引入问题（缓存fakeip后无法故障切换）
-  cache-algorithm: arc # DNS缓存算法，lru（默认）策略尽可能缓存更多条目，arc策略则是动态调整缓存
+  enhanced-mode: redir-host #🔴DNS处理模式：redir-host/fake-ip，fake-ip更快但可能引入问题（缓存fakeip后无法故障切换）
   prefer-h3: true # DoH若支持则优先使用HTTP/3
   ipv6: true # 是否解析ipv6地址，否则返回空结果
   use-hosts: true # 查询配置文件中的 hosts
   use-system-hosts: true # 查询系统的 hosts
-  #respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
-  # fakeip配置段
-  fake-ip-range: 198.18.0.1/16 # fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
-  fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
-  fake-ip-filter: # fakeip过滤，以下域名将使用redir-host模式，填入无需代理的内容
-    - "geosite:category-ads-all,category-games,cn,private,apple"
-    - "rule-set:🌐Direct-FISH"
-  # redir-host配置段
-  default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
   proxy-server-nameserver: *secure-dns # 解析代理节点域名的DNS，不填则遵循namepolicy
   direct-nameserver: *public-dns # 解析direct组的DNS，不填则遵循namepolicy
-  #direct-nameserver-follow-policy: false # direct代理组是否遵循nameserver-policy，false则直接使用direct-nameserver
   nameserver-policy: # 优先级高于nameserver
     "geosite:category-ads-all": rcode://success # 匹配广告域名，返回空结果
     "rule-set:🌐Direct-FISH": *public-dns # 匹配🌐Direct-FISH
-    "geosite:cn,private,apple": *public-dns # 匹配国内、私有、苹果域名
+    "geosite:cn,apple,private": *public-dns # 匹配中国，苹果域名，私有地址
+    "geosite:geolocation-!cn": *secure-dns # 匹配非中国域名
   nameserver: *public-dns # 兜底默认DNS组，未命中 nameserver-policy 时启用
-  # fallback: # 过时的配置，已被 nameserver-policy 取代，使用时会产生DNS泄露
+  #respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+  #fake-ip-range: 198.18.0.1/16 # fakeip 下的 IP 段设置，tun接口的默认 IPV4 地址 也使用此值作为参考
+  #fake-ip-filter-mode: blacklist # 黑/白名单模式，白名单下 filter 会返回 fake-ip
+  #fake-ip-filter: # fakeip过滤
+  #- "geosite:category-ads-all,category-games,cn,private"
+  #- "rule-set:🌐Direct-FISH"
+  #default-nameserver: [223.5.5.5] # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
 
 ## hosts设置---------------------------------------------------------------------------------------------------
 hosts:
@@ -139,8 +129,6 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
     - "+.oray.com"
     - "+.sunlogin.net"
     - geosite:cn
-  #skip-src-address: # 需要跳过嗅探的源地址
-  #skip-dst-address: # 需要跳过嗅探的目的地址
 
 ## tun设置---------------------------------------------------------------------------------------------------
 tun:
@@ -185,9 +173,6 @@ proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
     udp: true # 启用UDP
     udp-over-tcp: false # 启用UDP over TCP
     skip-cert-verify: false # 跳过证书验证
-    #down: "50 Mbps" # 下行限速
-    #up: "10 Mbps" # 上行限速
-    ip-version: dual # IP版本，可选优先v4或v6，仅v4或v6
 
 proxy-providers:
   #❗provider占位1
@@ -206,11 +191,10 @@ use-all-proxy-providers: &use-all-proxy-providers # 代理组通用配置
 health-check-general: &health-check-general # 代理组健康检查通用配置
   <<: *use-all-proxy-providers
   url: http://www.gstatic.com/generate_204
-  interval: 30 # 健康检查间隔
-  tolerance: 200 # 延迟容忍度，单位ms
-  lazy: true # 未选中当前组时不进行测试
-  timeout: 5000 # 健康检查超时，单位ms
-  max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
+  interval: 30
+  tolerance: 200
+  lazy: true
+  timeout: 5000
 
 default-proxy: &default-proxy # 默认代理组
   proxies:
