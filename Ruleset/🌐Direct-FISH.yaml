@@ -2,6 +2,22 @@ payload:
   ### 🌐Direct-FISH
   # CN域名
   - DOMAIN-SUFFIX,qing-yu.top
+  - DOMAIN-SUFFIX,api.ipify.org
+  - DOMAIN-SUFFIX,bam.nr-data.net
+
+  # Stun-server
+  - DOMAIN-SUFFIX,tailscale.com
+  - DOMAIN-SUFFIX,stun.isp.net.au
+  - DOMAIN-SUFFIX,fwa.lifesizecloud.com
+  - DOMAIN-SUFFIX,stun.freeswitch.org
+  - DOMAIN-SUFFIX,stun.voip.blackberry.com
+  - DOMAIN-SUFFIX,stun.nextcloud.com
+  - DOMAIN-SUFFIX,stun.radiojar.com
+  - DOMAIN-SUFFIX,stun.sonetel.com
+  - DOMAIN-SUFFIX,stun.syncthing.net
+  - DOMAIN-SUFFIX,stun.hot-chilli.net
+  - DOMAIN-SUFFIX,stun.fitauto.ru
+  - DOMAIN-SUFFIX,stun.miwifi.com
 
   # Steam下载地区检测，影响下载CDN以及游戏锁区
   #- DOMAIN-SUFFIX,steamserver.net
