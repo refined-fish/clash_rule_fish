@@ -1,23 +1,23 @@
 ## 带🔴标记的配置项为一般代理软件强制覆写的项目，需要在代理软件配置相应项目
 
 ## 入站端口配置 ---------------------------------------------------------------------------------------------------
-mixed-port: 7890 #🔴HTTP+Socks4混合，Win下的系统代理端口
-socks-port: 1080 #🔴Socks5，代理端口
-port: 8080 #🔴HTTP，代理端口
+mixed-port: 7890 # HTTP+Socks4混合，Win下的系统代理端口
+socks-port: 1080 # Socks5，代理端口
+port: 8080 # HTTP，代理端口
 #redir-port: 7891  #🔴非linux系统无效，redir 透明代理端口
 #tproxy-port: 7892  #🔴非linux系统无效，tproxy 透明代理端口
 
 ## 全局配置 ------------------------------------------------------------------------------------------------
 mode: rule # rule（规则）/ global（全局）/ direct（直连）
-allow-lan: true #🔴允许局域网连接
+allow-lan: true # 允许局域网连接
 bind-address: "*" #🔴监听的本地网卡地址，*为全部
-log-level: warning #🔴日志级别
-ipv6: true #🔴是否接受ipv6流量
+log-level: warning # 日志级别
+ipv6: true # 是否接受ipv6流量
 tcp-concurrent: true # TCP并发
 profile: # 缓存设置
   store-selected: true # 缓存 API面板 对策略组的选择
   store-fake-ip: true # 缓存 fakeip 映射表
-#interface-name: en0  #🔴clash流量出站接口，即接口绑定
+#interface-name: en0  # clash流量出站接口，即接口绑定
 #find-process-mode: off # 进程匹配（off:关闭，alwas:开启，strict自动），tun模式下无效
 #lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
 #- 0.0.0.0/0
@@ -40,8 +40,8 @@ disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在
 external-controller: 0.0.0.0:9090 #🔴API面板监听地址
 secret: "hd54RIm0LiUpyu" #🔴API面板访问密钥
 external-ui: ./ui #🔴API面板静态资源路径
-external-ui-name: zashboard #🔴API面板名，配合路径拼接成路径，例如/ui/metacubexd
-external-ui-url: "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip" #🔴API面板下载地址
+external-ui-name: zashboard # API面板名，配合路径拼接成路径，例如/ui/metacubexd
+external-ui-url: "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip" # API面板下载地址
 
 ## 外部资源下载设置---------------------------------------------------------------------------------------------------
 global-client-fingerprint: random # 全局客户端指纹，优先级低于其他处的声明
@@ -87,7 +87,7 @@ dns:
   use-system-hosts: true # 查询系统的 hosts
   #respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
   # fakeip配置段
-  fake-ip-range: 198.18.0.1/16 # fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
+  fake-ip-range: 198.18.0.1/16 #🔴fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
   fake-ip-filter: # fakeip过滤，以下域名将使用redir-host模式，填入无需代理的内容
     - "geosite:cn,category-ads-all,category-games,private,apple" # 中国、广告、游戏、私有、苹果域名
@@ -146,7 +146,7 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
 tun:
   enable: true #🔴启用Tun接口
   stack: mixed # TUN 堆栈模式,建议 mixed（TCP：system，UDP：Gvisor）
-  device: utun0 # TUN 网卡名，MacOS 只能 utun 开头
+  device: utun0 #🔴TUN 网卡名，MacOS 只能 utun 开头
   auto-route: true # 自动设置全局路由，自动将全局流量路由进 tun
   auto-detect-interface: true # 自动选择流量的出接口（默认wan口）
   dns-hijack: # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则默认 udp://
