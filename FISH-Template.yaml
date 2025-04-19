@@ -272,10 +272,15 @@ proxy-groups:
       - 🇺🇲美国节点
       - DIRECT
 
+  - name: 🌐默认直连
+    type: select
+    <<: *default-direct
+
   - name: 🐟漏网之鱼
     type: select
     <<: *default-direct
 
+  ##################################
   - name: Ⓜ️微软Copilot
     type: select
     <<: *default-proxy
@@ -358,21 +363,22 @@ rule-providers:
 
 ## 路由规则设置---------------------------------------------------------------------------------------------------
 rules:
+  ## 对于必须直连者直接使用direct写死，其他尽可能使用代理组以方便面板控制以及切换测试
   # FISH自定义规则块
   - RULE-SET,♻️延迟最低-FISH,✅默认代理 # FISH自定义代理
-  - RULE-SET,🌐Direct-FISH,DIRECT # FISH自定义直连
+  - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   # 广告拦截与私有地址绕过块
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
 
   # 代理规则块，按照使用频率/规则集大小排序
-  - GEOSITE,tailscale,DIRECT # tailscale直连
-  - GEOSITE,tracker,DIRECT # PT/BT直连
-  - GEOSITE,category-pt,DIRECT # PT直连
+  - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale代理打洞
+  - GEOSITE,tracker,DIRECT # 必须直连，否则PT/BT直连代理下载
+  - GEOSITE,category-pt,DIRECT # 必须直连，否则PT标记盒子
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
-  - GEOSITE,synology,DIRECT # 群晖服务，包括QC
+  - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
@@ -384,6 +390,6 @@ rules:
   # 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
-  - GEOSITE,cn,DIRECT # 中国域名
-  - GEOIP,cn,DIRECT,no-resolve # 中国IP
+  - GEOSITE,cn,🌐默认直连 # 中国域名
+  - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
