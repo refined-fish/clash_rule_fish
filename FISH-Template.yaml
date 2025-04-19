@@ -93,12 +93,22 @@ dns:
     - "geosite:category-ads-all" # 广告域名
     - "geosite:cn" # 中国域名
     - "geosite:geolocation-cn" # 中国地区域名
-    - "geosite:private" # 私有地址
+    - "geosite:private" # 私有地址，包括stun，lan等域名
     - "geosite:apple" # 苹果域名
     - "geosite:tailscale" # tailscale域名
     - "geosite:tracker,category-pt" # PT/BT域名
     - "geosite:synology" # 群晖域名
     - "rule-set:🌐Direct-FISH" # 个人收集直连域名
+    - "geosite:category-ntp" # NTP域名
+    # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - xbox.*.*.microsoft.com
+    - "*.ipv6.microsoft.com"
+    - "*.*.xboxlive.com"
+    - dns.msftncsi.com
+    - www.msftncsi.com
+    - www.msftconnecttest.com
   # redir-host配置段
   default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
   proxy-server-nameserver: *secure-dns # 解析代理节点域名的DNS，不填则遵循namepolicy
