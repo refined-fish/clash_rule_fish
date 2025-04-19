@@ -5,6 +5,11 @@ payload:
   - DOMAIN-SUFFIX,api.ipify.org
   - DOMAIN-SUFFIX,bam.nr-data.net
 
+  # 谷歌商店使用送中节点后会被返回大陆域名，但无法完成全部数据交互导致无法下载
+  # 如果采用直连策略，需要将以下GFW的域名强制直连，以及CN域名services.googleapis.cn直连
+  - DOMAIN-SUFFIX,connectivitycheck.gstatic.com
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com
+
   # Stun-server
   - DOMAIN-SUFFIX,tailscale.com
   - DOMAIN-SUFFIX,stun.isp.net.au
