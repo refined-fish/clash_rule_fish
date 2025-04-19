@@ -349,17 +349,17 @@ rule-providers:
   ♻️延迟最低-FISH:
     <<: *rule-providers-general
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/♻️延迟最低-FISH.yaml
-    path: ./providers/rule-provider_♻️延迟最低-FISH.yaml
+    path: ./providers/rule/rule-provider_♻️延迟最低-FISH.yaml
 
   🌐Direct-FISH:
     <<: *rule-providers-general
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
-    path: ./providers/rule-provider_🌐Direct-FISH.yaml
+    path: ./providers/rule/rule-provider_🌐Direct-FISH.yaml
 
   Ⓜ️微软Copilot-FISH:
     <<: *rule-providers-general
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/Ⓜ️微软Copilot-FISH.yaml
-    path: ./providers/rule-provider_Ⓜ️微软Copilot-FISH.yaml
+    path: ./providers/rule/rule-provider_Ⓜ️微软Copilot-FISH.yaml
 
 ## 路由规则设置---------------------------------------------------------------------------------------------------
 rules:

@@ -81,7 +81,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
         url: "你的机场订阅地址"
         override:  #可选，覆写设置，不需要可以删除
           additional-prefix: "provider1|"  # 可选，给订阅添加前缀，不需要可以删除
-        path: ./providers/proxy-provider1.yaml  # 可选，指定下载路径，不需要可以删除
+        path: ./providers/proxy/proxy-provider1.yaml  # 可选，指定下载路径，不需要可以删除
       #❗provider占位2
       #❗provider占位3
       #❗provider占位4
@@ -137,7 +137,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
           # 只匹配替换一次（否则全文匹配全部替换）
           sub_filter_once on;
           # 替换内容，有多个订阅可以自己复制多个替换
-          sub_filter '#❗provider占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "当前订阅的自定义前缀|"\n    url: "你的机场订阅连接"\n    path: ./providers/proxy-provider1.yaml';
+          sub_filter '#❗provider占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "当前订阅的自定义前缀|"\n    url: "你的机场订阅连接"\n    path: ./providers/proxy/proxy-provider1.yaml';
           sub_filter '#❗use-provider占位1' '- provider1';
         }
       }
