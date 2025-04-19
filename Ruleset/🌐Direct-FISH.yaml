@@ -5,10 +5,6 @@ payload:
   - DOMAIN-SUFFIX,api.ipify.org
   - DOMAIN-SUFFIX,bam.nr-data.net
 
-  # 谷歌商店 google playstore解决送中节点绕过大陆后无法下载问题
-  #此域名在gfw中，但为了解决送中节点问题，需要强制直连
-  - DOMAIN-SUFFIX,connectivitycheck.gstatic.com
-
   # Stun-server
   - DOMAIN-SUFFIX,tailscale.com
   - DOMAIN-SUFFIX,stun.isp.net.au
