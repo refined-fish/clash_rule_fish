@@ -1,5 +1,5 @@
 payload:
-  ### 🌐Direct-FISH
+  ### 🌐Direct-FISH，此列表被引用到Fakeip-filter，兼具返回真实IP的功能
   # CN域名
   - DOMAIN-SUFFIX,qing-yu.top
   - DOMAIN-SUFFIX,api.ipify.org
@@ -9,6 +9,13 @@ payload:
   # 如果采用直连策略，需要将以下GFW的域名强制直连，以及CN域名services.googleapis.cn直连
   - DOMAIN-SUFFIX,connectivitycheck.gstatic.com
   - DOMAIN-SUFFIX,xn--ngstr-lra8j.com
+
+  # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
+  - DOMAIN-SUFFIX,wns.windows.com # Windows推送服务，包括更新等消息通知
+  - DOMAIN-SUFFIX,msftconnecttest.com # 微软连接测试
+  - DOMAIN-SUFFIX,msftncsi.com # 微软网络连接状态指示器
+  - DOMAIN-SUFFIX,ipv6.microsoft.com # 微软IPv6相关域名
+  - DOMAIN-SUFFIX,xboxlive.com # Xbox相关域名
 
   # Stun-server
   - DOMAIN-SUFFIX,tailscale.com
