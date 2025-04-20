@@ -181,7 +181,7 @@ tun:
 
 ## 代理提供者设置---------------------------------------------------------------------------------------------------
 proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
-  type: http # 类型，可选http/file
+  type: http # 类型，可选http/file/inline
   interval: 86400 # 更新间隔，单位秒
   proxy: DIRECT # http类型更新时使用的代理组
   size-limit: 0 # 文件大小限制，0为不限制
