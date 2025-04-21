@@ -194,7 +194,7 @@ proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
     skip-cert-verify: false # 跳过证书验证
     #down: "50 Mbps" # 下行限速
     #up: "10 Mbps" # 上行限速
-    ip-version: dual # IP版本，可选优先v4或v6，仅v4或v6
+    ip-version: dual # 可选dual/ipv4/ipv6/ipv4-prefer/ipv6-prefer，即优先v4或v6，仅v4或v6
 
 proxy-providers:
   #❗provider占位1
