@@ -392,5 +392,5 @@ rules:
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
   - GEOSITE,cn,🌐默认直连 # 中国域名
-  - GEOIP,cn,🌐默认直连 # 中国IP
+  - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
