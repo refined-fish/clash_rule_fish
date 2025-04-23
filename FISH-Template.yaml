@@ -96,6 +96,8 @@ dns:
     - "geosite:geolocation-cn" # 中国地区域名
     - "geosite:private" # 私有地址，包括stun，lan等域名
     - "geosite:apple" # 苹果域名
+    - "geosite:win-extra" # 微软附加的隐私跟踪域名
+    - "geosite:win-update" # 微软更新域名
     - "geosite:tailscale" # tailscale域名
     - "geosite:tracker,category-pt" # PT/BT域名
     - "geosite:synology" # 群晖域名
@@ -314,6 +316,11 @@ proxy-groups:
     <<: *default-direct
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
 
+  - name: Ⓜ️微软服务
+    type: select
+    <<: *default-direct
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft.png
+
   ##################################
   - name: 🇭🇰香港节点
     type: url-test
@@ -364,7 +371,7 @@ rule-providers:
 
 ## 路由规则设置---------------------------------------------------------------------------------------------------
 rules:
-  ## 对于必须直连者直接使用direct写死，其他尽可能使用代理组以方便面板控制以及切换测试
+  #### 对于必须直连者直接使用direct写死，其他尽可能使用代理组以方便面板控制以及切换测试
   # FISH自定义规则块
   - RULE-SET,♻️延迟最低-FISH,✅默认代理 # FISH自定义代理
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
@@ -373,23 +380,32 @@ rules:
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
 
-  # 代理规则块，按照使用频率/规则集大小排序
+  #### 代理规则块，按照使用频率/规则集大小排序
+  # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale代理打洞
   - GEOSITE,tracker,DIRECT # 必须直连，否则PT/BT直连代理下载
   - GEOSITE,category-pt,DIRECT # 必须直连，否则PT标记盒子
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削
+  # 微软相关
+  - GEOSITE,win-extra,Ⓜ️微软服务 # 微软附加隐私跟踪域名
+  - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
   - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
+  # openAI相关
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
+  # telegram相关
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
+  # 编程相关
   - GEOSITE,category-container,✅默认代理 # 各种容器服务
   - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
+  # 其他
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   - GEOSITE,category-porn,✅默认代理 # X服务
 
-  # 兜底规则块，一般精细的分流规则应在其上
+  #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
+  - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
   - GEOSITE,cn,🌐默认直连 # 中国域名
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
