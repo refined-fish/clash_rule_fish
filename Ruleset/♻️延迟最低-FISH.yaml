@@ -1,4 +1,7 @@
 payload:
+  #################### wiki
+  - DOMAIN-SUFFIX,wiki.movie-pilot.org # Moviepilot的文档
+
   #################### HomeAssistant
   - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN，不代理加载缓慢，其原始服务已被GFW包含
   - DOMAIN-SUFFIX,home-assistant.io # 社区，论坛等，不代理加载缓慢
