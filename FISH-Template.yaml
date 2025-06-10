@@ -92,14 +92,13 @@ dns:
   fake-ip-filter: # fakeip过滤，以下域名将使用redir-host模式，填入无需代理的内容
     - "rule-set:🌐Direct-FISH" # 个人收集直连域名，不能直接用GEOSITE引用的零散域名
     - "geosite:category-ads-all" # 广告域名
-    - "geosite:cn" # 中国域名
-    - "geosite:geolocation-cn" # 中国地区域名
-    - "geosite:private" # 私有地址，包括stun，lan等域名
+    - "geosite:cn" # cn可访问域名，为了兼容V2ray的cn标志，包括geolocation-cn和tld-cn
+    - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
     - "geosite:win-extra" # 微软附加的隐私跟踪域名
     - "geosite:win-update" # 微软更新域名
     - "geosite:tailscale" # tailscale域名
-    - "geosite:tracker,category-pt" # PT/BT域名
+    - "geosite:tracker,category-pt" # BT/PT域名
     - "geosite:synology" # 群晖域名
     - "geosite:category-ntp" # NTP域名
   # redir-host配置段
@@ -383,9 +382,9 @@ rules:
   #### 代理规则块，按照使用频率/规则集大小排序
   # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale代理打洞
-  - GEOSITE,tracker,DIRECT # 必须直连，否则PT/BT直连代理下载
-  - GEOSITE,category-pt,DIRECT # 必须直连，否则PT标记盒子
-  - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削
+  - GEOSITE,tracker,DIRECT # 必须直连，否则BT直连代理下载
+  - GEOSITE,category-pt,DIRECT # 必须直连，否则PT代理下载会被标记盒子
+  - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
   - GEOSITE,win-extra,Ⓜ️微软服务 # 微软附加隐私跟踪域名
   - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
