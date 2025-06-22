@@ -14,11 +14,8 @@ bind-address: "*" #🔴监听的本地网卡地址，*为全部
 log-level: warning # 日志级别
 ipv6: true # 是否接受ipv6流量
 tcp-concurrent: true # TCP并发
-profile: # 缓存设置
-  store-selected: true # 缓存 API面板 对策略组的选择
-  store-fake-ip: true # 缓存 fakeip 映射表
 #interface-name: en0  # clash流量出站接口，即接口绑定
-#find-process-mode: off # 进程匹配（off:关闭，alwas:开启，strict自动），tun模式下无效
+find-process-mode: strict # 进程匹配（off:关闭，alwas:开启，strict自动），tun模式下无效
 #lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
 #- 0.0.0.0/0
 #- ::/0
@@ -34,7 +31,7 @@ profile: # 缓存设置
 ## TCP-KeepA-live配置 ------------------------------------------------------------------------------------------
 keep-alive-idle: 30 # 触发心跳包的链路无活动阈值，无活动后发送心跳包检测对端是否存活
 keep-alive-interval: 30 # 发送心跳包的间隔，无回应则最多重发9次后判断链路关闭
-disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在
+disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在，目前安卓端强制true
 
 ## API面板设置---------------------------------------------------------------------------------------------------
 external-controller: 0.0.0.0:9090 #🔴API面板监听地址
@@ -56,6 +53,11 @@ geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的�
   geosite: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   mmdb: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
   asn: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+
+## 缓存设置
+profile:
+  store-selected: true # 缓存 API面板 对策略组的选择
+  store-fake-ip: true # 缓存 fakeip 映射表
 
 ## fakeip下的DNS设置---------------------------------------------------------------------------------------------------
 # 客户端发起网址A的DNS，到达mihomo的DNS模块，mihomo会使用下方的配置进行DNS
@@ -160,8 +162,8 @@ tun:
     - any:53
     - tcp://any:53
   mtu: 9000 # MTU
-  gso: true # 通用分段卸载
-  gso-max-size: 65536 # 数据块最大长度
+  gso: true # 通用分段卸载，仅支持Linux，提高性能
+  gso-max-size: 65536 # 通用分段卸载包的最大长度
   exclude-package: # 安卓排除的包名
     - com.tencent.mobileqq # QQ
     - com.tencent.mm # 微信
@@ -177,7 +179,7 @@ tun:
     - com.chinamworld.main # 中国建设银行
     - com.jd.jrapp # 京东金融
   #auto-redirect: true # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true
-  #strict-route: false # 严格路由，添加防火墙规则禁止Windows使用多DNS，有效防止DNS泄露，但实测严重拖慢Windows访问速度，可能造成虚拟机运行异常
+  #strict-route: false # 将所有连接路由到 tun 来防止泄漏，但你的设备将无法其他设备被访问，严重拖慢Windows访问速度，可能造成虚拟机运行异常
   #endpoint-independent-nat: false # 独立于端点的 NAT，性能可能下降，不建议不需要时开启
 
 ## 代理提供者设置---------------------------------------------------------------------------------------------------
