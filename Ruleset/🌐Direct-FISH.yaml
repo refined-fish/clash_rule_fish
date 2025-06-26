@@ -22,7 +22,7 @@ payload:
   - DOMAIN-SUFFIX,ipv6.microsoft.com # 微软IPv6相关域名
   - DOMAIN-SUFFIX,xboxlive.com # Xbox相关域名
   - DOMAIN-SUFFIX,rewards.bing.com # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
-  - DOMAIN-SUFFIX,api.onedrive.com # 微软OneDrive个人版，现已被划分到GFW
+  - DOMAIN-SUFFIX,api.onedrive.com # 微软OneDrive个人版的桌面应用，现已被划分到GFW会跑流量，实际上可以直连
 
   #################### Stun
   - DOMAIN-SUFFIX,stun.isp.net.au
