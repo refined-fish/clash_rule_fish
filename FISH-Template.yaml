@@ -97,8 +97,8 @@ dns:
     - "geosite:cn" # cn可访问域名，为了兼容V2ray的cn标志，包括geolocation-cn和tld-cn
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
-    - "geosite:win-extra" # 微软附加的隐私跟踪域名
     - "geosite:win-update" # 微软更新域名
+    - "geosite:sharepoint" # 微软商业版onedrive
     - "geosite:tailscale" # tailscale域名
     - "geosite:tracker,category-pt" # BT/PT域名
     - "geosite:synology" # 群晖域名
@@ -392,8 +392,8 @@ rules:
   - GEOSITE,category-pt,DIRECT # 必须直连，否则PT代理下载会被标记盒子
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
-  - GEOSITE,win-extra,Ⓜ️微软服务 # 微软附加隐私跟踪域名
   - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
+  - GEOSITE,sharepoint,🌐默认直连 # 微软商业版onedrive
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
   - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
   # openAI相关
