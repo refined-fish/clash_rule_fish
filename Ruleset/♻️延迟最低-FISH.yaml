@@ -11,6 +11,7 @@ payload:
   - DOMAIN-SUFFIX,git.openwrt.org # openwrt源码库
   - DOMAIN-SUFFIX,sources.cdn.openwrt.org # openwrt源码库
   - DOMAIN-SUFFIX,mirror2.openwrt.org # openwrt源码库
+  - DOMAIN-SUFFIX,www.lwfinger.com # openwrt工具链之一
 
   #################### 机场
   - DOMAIN-SUFFIX,web.coo.wiki # COO机场
