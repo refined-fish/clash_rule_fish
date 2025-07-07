@@ -100,7 +100,7 @@ dns:
     - "geosite:win-update" # 微软更新域名
     - "geosite:sharepoint" # 微软商业版onedrive
     - "geosite:tailscale" # tailscale域名
-    - "geosite:tracker,category-pt" # BT/PT域名
+    - "geosite:tracker" # tracker域名，最好不要加pt站域名，CF加速容易无法访问
     - "geosite:synology" # 群晖域名
     - "geosite:category-ntp" # NTP域名
   # redir-host配置段
@@ -389,7 +389,7 @@ rules:
   # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale代理打洞
   - GEOSITE,tracker,DIRECT # 必须直连，否则BT直连代理下载
-  - GEOSITE,category-pt,DIRECT # 必须直连，否则PT代理下载会被标记盒子
+  #- GEOSITE,category-pt,DIRECT # 必须直连，否则PT代理下载会被标记盒子
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
   - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
