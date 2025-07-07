@@ -322,6 +322,11 @@ proxy-groups:
     <<: *default-direct
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft.png
 
+  - name: 🔐PT网站
+    type: select
+    <<: *default-proxy
+    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/PT.png
+
   ##################################
   - name: 🇭🇰香港节点
     type: url-test
@@ -389,7 +394,7 @@ rules:
   # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale代理打洞
   - GEOSITE,tracker,DIRECT # 必须直连，否则BT直连代理下载
-  #- GEOSITE,category-pt,DIRECT # 必须直连，否则PT代理下载会被标记盒子
+  - GEOSITE,category-pt,🔐PT网站 # CF加速的站点容易无法访问，但需要注意下载代理问题
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
   - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
