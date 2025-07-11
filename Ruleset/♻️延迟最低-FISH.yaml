@@ -14,7 +14,7 @@ payload:
   - DOMAIN-SUFFIX,www.lwfinger.com # openwrt工具链之一
 
   #################### 机场
-  - DOMAIN-SUFFIX,web.coo.wiki # COO机场
+  - DOMAIN-SUFFIX,coo.wiki # COO机场
   - DOMAIN-SUFFIX,xn--4gq62f52gdss.ink # 一元机场
 
   #################### 论坛
