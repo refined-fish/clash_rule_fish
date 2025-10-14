@@ -7,6 +7,7 @@ payload:
   - DOMAIN-SUFFIX,bam.nr-data.net # NewRelic数据上报，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,sentry.io # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,qing-yu.top # CDN
+  - DOMAIN-SUFFIX,cd120.info # 华医通使用的域名后缀，Fakeip可能导致登录失败的问题
 
   #################### 谷歌
   # 谷歌商店使用送中节点后会被返回大陆域名，但无法完成全部数据交互导致无法下载
