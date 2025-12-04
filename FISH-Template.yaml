@@ -42,7 +42,7 @@ external-ui-url: "https://ghfast.top/https://github.com/Zephyruso/zashboard/rele
 
 ## 外部资源下载设置---------------------------------------------------------------------------------------------------
 global-client-fingerprint: random # 全局客户端指纹，优先级低于其他处的声明
-global-ua: mihomo # 全局UA，默认为clash.meta
+global-ua: clash.meta # 全局UA，默认为clash.meta
 etag-support: true # 资源下载的 ETag 支持
 geodata-mode: true # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但有设备不支持
 geodata-loader: standard # GEO文件加载模式，默认memconservative（小内存设备模式，即分段加载geo数据而不是全部加载）
