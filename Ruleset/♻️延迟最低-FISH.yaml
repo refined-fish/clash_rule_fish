@@ -10,6 +10,8 @@ payload:
   # 以下节点需要强制代理，参考https://www.0z.gs/android/2077.html
   #- DOMAIN-SUFFIX,play.googleapis.com # 谷歌商店API，已存在于GFW中
   #- DOMAIN-SUFFIX,android.clients.google.com # 谷歌商店客户端，已存在于GFW中
+  - DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名
 
   #################### HomeAssistant
   - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN榆蒙，不代理加载缓慢，其原始服务已被GFW包含
