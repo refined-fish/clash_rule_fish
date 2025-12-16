@@ -16,15 +16,15 @@ payload:
   # 彻底解决的方案只有采用强制直连方案，无论节点如何都采用国内服务器下载，此时
   # 以下节点需要强制直连
   #- DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
-  - DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试，已存在于gfw中
-  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，避免被分配到中国以外的服务器
-  - DOMAIN-SUFFIX,services.googleapis.com # 已存在于GFW之中
+  #- DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试，已存在于gfw中
+  #- DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，避免被分配到中国以外的服务器
+  #- DOMAIN-SUFFIX,services.googleapis.com # 已存在于GFW之中
 
   #################### 微软
   # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
   - DOMAIN-SUFFIX,wns.windows.com # Windows推送服务，包括更新等消息通知
-  - DOMAIN-SUFFIX,msftconnecttest.com # 微软连接测试
-  - DOMAIN-SUFFIX,msftncsi.com # 微软网络连接状态指示器
+  - DOMAIN-SUFFIX,msftconnecttest.com # 微软连接测试，已位于connectivity-check
+  - DOMAIN-SUFFIX,msftncsi.com # 微软网络连接状态指示器，已位于connectivity-check
   - DOMAIN-SUFFIX,ipv6.microsoft.com # 微软IPv6相关域名
   - DOMAIN-SUFFIX,xboxlive.com # Xbox相关域名
   - DOMAIN-SUFFIX,rewards.bing.com # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
