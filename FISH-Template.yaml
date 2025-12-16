@@ -47,7 +47,7 @@ etag-support: true # 资源下载的 ETag 支持
 geodata-mode: true # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但有设备不支持
 geodata-loader: standard # GEO文件加载模式，默认memconservative（小内存设备模式，即分段加载geo数据而不是全部加载）
 geo-auto-update: true # GEO文件自动更新
-geo-update-interval: 24 # 更新间隔，小时
+geo-update-interval: 168 # 更新间隔，小时
 geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的数据库不会被下载
   geoip: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
   geosite: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
@@ -185,7 +185,7 @@ tun:
 ## 代理提供者设置---------------------------------------------------------------------------------------------------
 proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
   type: http # 类型，可选http/file/inline
-  interval: 86400 # 更新间隔，单位秒
+  interval: 259200 # 更新间隔，单位秒
   proxy: 🌐默认直连 # http类型更新时使用的代理组，不建议设置代理，如果你的机场需要代理才能订阅，那先有鸡还是先有蛋？
   size-limit: 0 # 文件大小限制，0为不限制
   #exclude-filter: "(?i)官网|每月刷新订阅|机场|到期|https://|剩余流量"
