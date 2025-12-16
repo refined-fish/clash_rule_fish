@@ -411,7 +411,7 @@ rules:
   - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
   # 其他
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
-  #- GEOSITE,category-porn,✅默认代理 # X服务，上游出现了mihomo不支持的语法，暂时注释
+  - GEOSITE,category-porn,✅默认代理 # X服务，上游出现了mihomo不支持的语法，暂时注释
 
   #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
