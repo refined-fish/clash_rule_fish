@@ -90,16 +90,17 @@ dns:
   # fakeip配置段
   fake-ip-range: 198.18.0.1/16 # fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
-  fake-ip-filter: # fakeip过滤，以下域名将使用redir-host模式，填入无需代理的内容
+  fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连
     - "rule-set:🌐Direct-FISH" # 个人收集直连域名，不能直接用GEOSITE引用的零散域名
     - "geosite:category-ads-all" # 广告域名
-    - "geosite:cn" # cn可访问域名，为了兼容V2ray的cn标志，包括geolocation-cn和tld-cn
+    - "geosite:cn" # cn可访问域名，包括geolocation-cn和tld-cn，为了兼容V2ray的cn标志增加的
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
     - "geosite:tailscale" # tailscale域名
     - "geosite:category-public-tracker" # 公共tracker域名，最好不要加pt站域名，CF加速容易无法访问
     - "geosite:synology" # 群晖域名
     - "geosite:category-ntp" # NTP域名
+    - "geosite:win-update" # Windows操作系统升级域名
 
   # redir-host配置段
   default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
@@ -384,12 +385,13 @@ rules:
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
 
-  # 广告拦截与私有地址绕过块
+  # 私有地址绕过块
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
 
   #### 代理规则块，按照使用频率/规则集大小排序
   # 其他
+  - GEOSITE,win-update,DIRECT # Windows操作系统升级，直连以节省流量
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
   - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
   - GEOSITE,category-pt,🔐PT网站 # 大多数PT站采用CF加速，容易无法访问故代理，但需要注意有的PT站Tracker也是http域名，要避免下载代理问题
