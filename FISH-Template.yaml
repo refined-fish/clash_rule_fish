@@ -1,5 +1,3 @@
-## 带🔴标记的配置项为一般代理软件强制覆写的项目，需要在代理软件配置相应项目
-
 ## 入站端口配置 ---------------------------------------------------------------------------------------------------
 mixed-port: 7890 # HTTP+Socks4混合，Win下的系统代理端口
 socks-port: 1080 # Socks5，代理端口
@@ -15,23 +13,23 @@ log-level: warning # 日志级别
 ipv6: true # 是否接受ipv6流量
 tcp-concurrent: true # TCP并发
 #interface-name: en0  # clash流量出站接口，即接口绑定
-find-process-mode: strict # 进程匹配（off:关闭，alwas:开启，strict自动），tun模式下无效
-#lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
-#- 0.0.0.0/0
-#- ::/0
-#lan-disallowed-ips: # 禁止连接的IP，优先级高于allow白名单
-#- ~
-#authentication: # http(s)/socks/mixed 的用户验证，格式："user1:pass1"，不写则禁止全部用户
-#- ~
-#skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
-#- ~
-#unified-delay: false # 统一延迟计算，没啥卵用，就是界面好看，会对延迟自动选择策略造成影响
+find-process-mode: strict # 进程匹配模式（off:关闭，alwas:开启，strict自动），tun模式下无效
+lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
+  - 0.0.0.0/0
+  - ::/0
+lan-disallowed-ips: # 禁止连接的IP，优先级高于allow白名单
+  - ~
+authentication: # http(s)/socks/mixed 的用户验证，格式："user1:pass1"，不写则禁止全部用户
+  - ~
+skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
+  - ~
+unified-delay: false # 统一延迟计算，没啥卵用，就是界面好看，会对延迟自动选择策略造成影响
 #routing-mark: 6666  # 非linux无效，路由标记，为流量提供标记以供其他应用进行流量处理
 
 ## TCP-KeepA-live配置 ------------------------------------------------------------------------------------------
 keep-alive-idle: 30 # 触发心跳包的链路无活动阈值，无活动后发送心跳包检测对端是否存活
 keep-alive-interval: 30 # 发送心跳包的间隔，无回应则最多重发9次后判断链路关闭
-disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在，目前安卓端强制true
+disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在，安卓端会强制设定为true
 
 ## API面板设置---------------------------------------------------------------------------------------------------
 external-controller: "[::]:9090" # API面板监听地址
@@ -40,24 +38,24 @@ external-ui: ui # API面板静态资源路径
 external-ui-name: zashboard # API面板名，配合路径拼接成路径，例如/ui/metacubexd
 external-ui-url: "https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip" # API面板下载地址
 
+## 缓存设置
+profile:
+  store-selected: true # 缓存 API面板 对策略组的选择
+  store-fake-ip: true # 缓存 fakeip 映射表
+
 ## 外部资源下载设置---------------------------------------------------------------------------------------------------
 global-client-fingerprint: random # 全局客户端指纹，优先级低于其他处的声明
 global-ua: clash.meta # 全局UA，默认为clash.meta
-etag-support: true # 资源下载的 ETag 支持
+etag-support: true # 资源下载的 ETag 支持，使重复资源不会重复下载
 geodata-mode: true # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但有设备不支持
 geodata-loader: standard # GEO文件加载模式，默认memconservative（小内存设备模式，即分段加载geo数据而不是全部加载）
 geo-auto-update: true # GEO文件自动更新
 geo-update-interval: 168 # 更新间隔，小时
 geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的数据库不会被下载
-  geoip: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
-  asn: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
-
-## 缓存设置
-profile:
-  store-selected: true # 缓存 API面板 对策略组的选择
-  store-fake-ip: true # 缓存 fakeip 映射表
+  geoip: "https://ghfast.top/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
+  geosite: "https://ghfast.top/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+  #mmdb: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  #asn: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
 
 ## fakeip下的DNS设置---------------------------------------------------------------------------------------------------
 # 客户端发起网址A的DNS，到达mihomo的DNS模块，mihomo会使用下方的配置进行DNS
@@ -87,7 +85,8 @@ dns:
   ipv6: true # 是否解析ipv6地址，否则返回空结果
   use-hosts: true # 查询配置文件中的 hosts
   use-system-hosts: true # 查询系统的 hosts
-  #respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题
+  respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题，强烈不建议和perfer-h3一起使用
+
   # fakeip配置段
   fake-ip-range: 198.18.0.1/16 # fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
@@ -97,12 +96,11 @@ dns:
     - "geosite:cn" # cn可访问域名，为了兼容V2ray的cn标志，包括geolocation-cn和tld-cn
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
-    - "geosite:win-update" # 微软更新域名
-    - "geosite:sharepoint" # 微软商业版onedrive
     - "geosite:tailscale" # tailscale域名
-    - "geosite:tracker" # tracker域名，最好不要加pt站域名，CF加速容易无法访问
+    - "geosite:category-public-tracker" # 公共tracker域名，最好不要加pt站域名，CF加速容易无法访问
     - "geosite:synology" # 群晖域名
     - "geosite:category-ntp" # NTP域名
+
   # redir-host配置段
   default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
   proxy-server-nameserver: *secure-dns # 解析代理节点域名的DNS，不填则遵循namepolicy
@@ -393,12 +391,10 @@ rules:
   #### 代理规则块，按照使用频率/规则集大小排序
   # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
-  - GEOSITE,tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
+  - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
   - GEOSITE,category-pt,🔐PT网站 # 大多数PT站采用CF加速，容易无法访问故代理，但需要注意有的PT站Tracker也是http域名，要避免下载代理问题
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
-  - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
-  - GEOSITE,sharepoint,🌐默认直连 # 微软商业版onedrive，一般可以满速直连下载
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
   - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
   # openAI相关
