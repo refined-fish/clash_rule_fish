@@ -93,7 +93,7 @@ dns:
   fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连
     - "rule-set:🌐Direct-FISH" # 个人收集直连域名，不能直接用GEOSITE引用的零散域名
     - "geosite:category-ads-all" # 广告域名
-    - "geosite:cn" # cn可访问域名，包括geolocation-cn和tld-cn，为了兼容V2ray的cn标志增加的
+    - "geosite:cn" # cn可访问域名，包括geolocation-cn和tld-cn，为了兼容V2ray的cn标志增加的，内含services.googleapis.cn，这导致谷歌下载只能采用直连方案
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
     - "geosite:tailscale" # tailscale域名

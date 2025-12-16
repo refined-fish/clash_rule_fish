@@ -14,9 +14,11 @@ payload:
   # 导致在数据交互认证过程中，有些可以直连，有些需要代理，最终表现为商店应用下载失败，卡进度条等
   # 如果采用强制代理方案，有些送中节点仍然会因为质量低下导致被海外服务器拒绝
   # 彻底解决的方案只有采用强制直连方案，无论节点如何都采用国内服务器下载，此时
-  # 以下节点需要强制直连，xn--ngstr-lra8j.com不要做基于域名的匹配，交给谷歌自行匹配
+  # 以下节点需要强制直连
   #- DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
   - DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试，已存在于gfw中
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，避免被分配到中国以外的服务器
+  - DOMAIN-SUFFIX,services.googleapis.com # 已存在于GFW之中
 
   #################### 微软
   # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
