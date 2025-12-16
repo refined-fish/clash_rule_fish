@@ -392,13 +392,13 @@ rules:
 
   #### 代理规则块，按照使用频率/规则集大小排序
   # 其他
-  - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale代理打洞
-  - GEOSITE,tracker,DIRECT # 必须直连，否则BT直连代理下载
-  - GEOSITE,category-pt,🔐PT网站 # CF加速的站点容易无法访问，但需要注意下载代理问题
+  - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
+  - GEOSITE,tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
+  - GEOSITE,category-pt,🔐PT网站 # 大多数PT站采用CF加速，容易无法访问故代理，但需要注意有的PT站Tracker也是http域名，要避免下载代理问题
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
   - GEOSITE,win-update,Ⓜ️微软服务 # 微软更新域名
-  - GEOSITE,sharepoint,🌐默认直连 # 微软商业版onedrive
+  - GEOSITE,sharepoint,🌐默认直连 # 微软商业版onedrive，一般可以满速直连下载
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
   - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
   # openAI相关
@@ -411,7 +411,7 @@ rules:
   - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
   # 其他
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
-  #- GEOSITE,category-porn,✅默认代理 # X服务，上游出现了mihomo不支持的语法，暂时注释
+  - GEOSITE,category-porn,✅默认代理 # X网站
 
   #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底

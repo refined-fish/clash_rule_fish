@@ -8,11 +8,11 @@ payload:
   # 如果采用强制代理方案，有些送中节点仍然会因为质量低下导致被海外服务器拒绝
   # 彻底解决的方案只有采用强制直连方案，无论节点如何都采用国内服务器下载，此时
   # 以下节点需要强制代理，参考https://www.0z.gs/android/2077.html
-  - DOMAIN-SUFFIX,play.googleapis.com
-  - DOMAIN-SUFFIX,android.clients.google.com
+  #- DOMAIN-SUFFIX,play.googleapis.com
+  #- DOMAIN-SUFFIX,android.clients.google.com
 
   #################### HomeAssistant
-  - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN，不代理加载缓慢，其原始服务已被GFW包含
+  - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN榆蒙，不代理加载缓慢，其原始服务已被GFW包含
   - DOMAIN-SUFFIX,home-assistant.io # 社区，论坛等，不代理加载缓慢
 
   #################### openWRT
