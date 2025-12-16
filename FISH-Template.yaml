@@ -146,7 +146,7 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
     - dlg.io.mi.com
     - "+.oray.com"
     - "+.sunlogin.net"
-    - geosite:cn
+    - geosite:geolocation-cn
   #skip-src-address: # 需要跳过嗅探的源地址
   #skip-dst-address: # 需要跳过嗅探的目的地址
 
@@ -382,7 +382,7 @@ rules:
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   # 禁用QUIC，防止速度不佳和IP泄露，不包括国内
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,geolocation-cn))),REJECT
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
 
   # 私有地址绕过块
