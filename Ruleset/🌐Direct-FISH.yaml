@@ -16,7 +16,8 @@ payload:
   # 彻底解决的方案只有采用强制直连方案，无论节点如何都采用国内服务器下载，此时
   # 以下节点需要强制直连
   - DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试
-  - DOMAIN-SUFFIX,services.googleapis.cn # Google Play商店中国地区返回的下载域名
+  - DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # Google Play商店中国地区返回的下载域名
 
   #################### 微软
   # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
