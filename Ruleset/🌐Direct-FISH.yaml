@@ -10,10 +10,13 @@ payload:
   - DOMAIN-SUFFIX,cd120.info # 华医通使用的域名后缀，Fakeip可能导致登录失败的问题
 
   #################### 谷歌
-  # 谷歌商店使用送中节点后会被返回大陆域名，但无法完成全部数据交互导致无法下载
-  # 如果采用直连策略，需要将以下GFW的域名强制直连，以及CN域名services.googleapis.cn直连
-  - DOMAIN-SUFFIX,connectivitycheck.gstatic.com # 谷歌连接测试
-  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # Google Play商店中国地区返回的下载域名
+  # 使用送中节点访问谷歌商店，会被标记为中国访问，进而分配中国数据服务器，但该部分服务器长期缺乏维护
+  # 导致在数据交互认证过程中，有些可以直连，有些需要代理，最终表现为商店应用下载失败，卡进度条等
+  # 如果采用强制代理方案，有些送中节点仍然会因为质量低下导致被海外服务器拒绝
+  # 彻底解决的方案只有采用强制直连方案，无论节点如何都采用国内服务器下载，此时
+  # 以下节点需要强制直连
+  - DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试
+  - DOMAIN-SUFFIX,services.googleapis.cn # Google Play商店中国地区返回的下载域名
 
   #################### 微软
   # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理

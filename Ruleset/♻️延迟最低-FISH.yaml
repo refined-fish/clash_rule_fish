@@ -2,6 +2,15 @@ payload:
   #################### wiki
   - DOMAIN-SUFFIX,wiki.movie-pilot.org # Moviepilot的文档
 
+  #################### 谷歌
+  # 使用送中节点访问谷歌商店，会被标记为中国访问，进而分配中国数据服务器，但该部分服务器长期缺乏维护
+  # 导致在数据交互认证过程中，有些可以直连，有些需要代理，最终表现为商店应用下载失败，卡进度条等
+  # 如果采用强制代理方案，有些送中节点仍然会因为质量低下导致被海外服务器拒绝
+  # 彻底解决的方案只有采用强制直连方案，无论节点如何都采用国内服务器下载，此时
+  # 以下节点需要强制代理，参考https://www.0z.gs/android/2077.html
+  - DOMAIN-SUFFIX,play.googleapis.com
+  - DOMAIN-SUFFIX,android.clients.google.com
+
   #################### HomeAssistant
   - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN，不代理加载缓慢，其原始服务已被GFW包含
   - DOMAIN-SUFFIX,home-assistant.io # 社区，论坛等，不代理加载缓慢
