@@ -51,7 +51,7 @@ geodata-mode: true # GEOIP数据模式，false:mmdb，true:dat，mmdb更新但�
 geodata-loader: standard # GEO文件加载模式，默认memconservative（小内存设备模式，即分段加载geo数据而不是全部加载）
 geo-auto-update: true # GEO文件自动更新
 geo-update-interval: 168 # 更新间隔，小时
-geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的数据库不会被下载
+geox-url: # GEO数据库下载地址，内核会按需下载，未被使用的数据库不会被下载，采用star最多的v2ray项目，修bug很快
   geoip: "https://ghfast.top/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
   geosite: "https://ghfast.top/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
   #mmdb: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
@@ -95,9 +95,9 @@ dns:
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
   fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连
     - "rule-set:🌐Direct-FISH" # 个人收集的直连域名，不能直接用GEOSITE引用的零散域名
-    - "geosite:category-ads-all" # 广告域名
+    - "geosite:category-ads-all" # 广告域名，交给redirect-host返回空结果
+    - "geosite:cn" # 国内域名，包括了谷歌在中国的域名，直连会导致商店下载问题，需要手动设置谷歌商店直连；使用geolocation-cn不包括谷歌，但会导致很多中国域名未被分流，需要手动设置商店代理
     - "geosite:category-cas" # 证书颁发机构域名
-    - "geosite:geolocation-cn" # 位于中国的域名，未采用cn是因为cn包括geolocation-cn和tld-cn，而tld-cn包含谷歌域名
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
     - "geosite:tailscale" # tailscale域名
@@ -105,6 +105,7 @@ dns:
     - "geosite:synology" # 群晖域名
     - "geosite:category-ntp" # NTP域名
     - "geosite:win-update" # Windows操作系统升级域名
+    #- "geosite:tracker" # 各类tracker域名，v2ray的geo不支持此字段，meta支持
 
   # redir-host配置段
   default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
@@ -386,8 +387,8 @@ rules:
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   # 禁用QUIC，防止速度不佳和IP泄露，不包括国内网站
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,geolocation-cn))),REJECT
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
 
   # 私有地址绕过块
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
@@ -395,10 +396,10 @@ rules:
 
   #### 代理规则块，按照使用频率/规则集大小排序
   # 其他
-  - GEOSITE,category-cas,DIRECT # 证书颁发机构，直连以防止证书错误
-  - GEOSITE,win-update,DIRECT # Windows操作系统升级，直连以节省流量
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
   - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
+  - GEOSITE,category-cas,🌐默认直连 # 证书颁发机构，直连以防止证书错误
+  - GEOSITE,win-update,🌐默认直连 # Windows操作系统升级，直连以节省流量
   - GEOSITE,category-pt,🔐PT网站 # 大多数PT站采用CF加速，容易无法访问故代理，但需要注意有的PT站Tracker也是http域名，要避免下载代理问题
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
   # 微软相关
@@ -420,6 +421,6 @@ rules:
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
-  - GEOSITE,geolocation-cn,🌐默认直连 # 中国域名
+  - GEOSITE,cn,🌐默认直连 # 中国域名
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼

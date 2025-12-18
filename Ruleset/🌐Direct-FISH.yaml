@@ -20,10 +20,11 @@ payload:
   # 如果采用强制代理方案，有些送中节点仍然会因为质量低下导致被海外服务器拒绝
   # 理论上彻底解决的方案只有采用强制直连方案，无论节点是否送中都采用国内服务器下载，此时
   # 以下节点需要强制直连
-  #- DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
-  #- DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试，已存在于gfw中
+  #- DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中，已使用geo的无需声明
+  - DOMAIN,connectivitycheck.gstatic.com # 谷歌连接测试，已存在于gfw中，需要单独声明
   # 但是实测发现还是会卡下载，尚未发现问题所在，故采用强制代理方案，这样除非节点质量极差，都能下载
   # 此时需要一些域名强制代理
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，已位于gfw中
 
   #################### 微软
   # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
