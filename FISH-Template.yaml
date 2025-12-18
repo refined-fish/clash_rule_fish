@@ -93,7 +93,7 @@ dns:
   # fakeip配置段
   fake-ip-range: 198.18.0.1/16 # fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
-  fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连，填入不怕DNS污染的域名和需要直连的域名
+  fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连，填入不怕DNS污染的域名和必须直连的域名
     - "rule-set:🌐Direct-FISH" # 个人收集的直连域名，包含GeoSite未分类的零散域名
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:category-ntp" # NTP域名
@@ -441,5 +441,6 @@ rules:
   - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
   - GEOSITE,cn,🌐默认直连 # 中国域名
+  - GEOSITE,geolocation-!cn@cn,🌐默认直连 # 有中国CDN的国外域名
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
