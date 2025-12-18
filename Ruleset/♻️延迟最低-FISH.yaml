@@ -3,18 +3,16 @@ payload:
   - DOMAIN-SUFFIX,wiki.movie-pilot.org # Moviepilot的文档
 
   #################### 谷歌
-  # 参考https://www.0z.gs/android/2077.html
-  # 使用送中节点访问谷歌商店，会被标记为中国访问，进而分配中国数据服务器，但该部分服务器长期缺乏维护
-  # 导致在数据交互认证过程中，有些可以直连，有些需要代理，最终表现为商店应用下载失败，卡进度条等
-  # 如果采用强制代理方案，有些送中节点仍然会因为质量低下导致被海外服务器拒绝
-  # 理论上彻底解决的方案只有采用强制直连方案，无论节点是否送中都采用国内服务器下载，此时
-  # 以下节点需要强制代理
-  #- DOMAIN-SUFFIX,play.googleapis.com # 谷歌商店API，已存在于GFW中，无需重复添加
-  #- DOMAIN-SUFFIX,android.clients.google.com # 谷歌商店客户端，已存在于GFW中，无需重复添加
-  # 但是实测发现还是会卡下载，尚未发现问题所在，故采用强制代理方案，这样除非节点质量极差，都能下载
-  # 此时需要一些域名强制代理，其他域名因为在gfw中无需重复添加
-  #- DOMAIN-SUFFIX,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
-  #- DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，已位于gfw中
+  # 参考https://www.0z.gs/android/2077.html ， https://www.yetpage.com/archives/278
+  # 对于普通的谷歌服务来说，会用到的域名为play.googleapis.com，这个域名属于GFW，不会有代理问题
+  # 但是国内手机的谷歌服务普遍是魔改过的，使用的域名为play.googleapis.cn，属于国内镜像站点
+  # 而实际上这个镜像站点是无法访问的，需要代理，这会导致如果开启了绕过大陆功能，这个流量永远无法代理
+  # 与之相关的域名xn--ngstr-lra8j.com也同样属于国内镜像，为了解决这个问题，必须将这两个国内域名交给远程解析
+  # 以获得海外IP来防止绕过大陆，所以不能使用geosite:cn来书写国内解析规则，否则这两个域名将返回国内地址
+  # 因此采用了geolocation-cn来替代，geolocation-cn包含了所有地理位置在中国的域名，但不包括谷歌在中国的域名
+  # 与此同时，需要将这两个域名写入代理规则，因为他们本来不属于GFW，会匹配到漏网之鱼
+  - DOMAIN,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，已位于gfw中
 
   #################### HomeAssistant
   - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN榆蒙，不代理加载缓慢，其原始服务已被GFW包含

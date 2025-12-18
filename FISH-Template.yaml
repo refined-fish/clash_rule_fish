@@ -98,14 +98,14 @@ dns:
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:category-ntp" # NTP域名
     - "geosite:tailscale" # Tailscale域名，包括P2P打洞过程
-    - "geosite:synology" # 群晖域名，包括群辉QC服务
-    - "geosite:apple" # 苹果域名
-    - "geosite:category-cas" # 证书颁发机构域名
+    - "geosite:synology" # 群晖域名，包括群辉QuickConnect服务
+    - "geosite:apple" # 苹果域名，配合双WAN分流可以避免长链接耗电问题
+    - "geosite:category-cas" # 各类证书颁发机构域名
     #- "geosite:tracker" # 各类tracker域名，v2ray的geo不支持此字段，meta支持
     - "geosite:category-public-tracker" # 公共tracker域名
     - "geosite:win-update" # Windows操作系统升级域名
-    - "geosite:cn" # 国内域名，包括了谷歌在中国的域名，直连会导致商店下载问题，需要手动设置谷歌商店直连；使用geolocation-cn不包括谷歌，但会导致很多中国域名未被分流，需要手动设置商店代理
-    - "geolocation-!cn@cn" # 国外域名中具有国内加速的部分，包括steam的国内CDN，涵盖cn的不足
+    - "geosite:geolocation-cn" # 地理位置在中国的域名，不包括谷歌在中国的域名避免谷歌商店下载问题，关于谷歌商店下载，详见♻️延迟最低文件内容
+    - "geosite:geolocation-!cn@cn" # 地理位置不在中国的域名中具有国内CDN的部分，包括Steam在的国内CDN
     - "geosite:category-ads-all" # 广告域名，交给redirect-host模块返回空结果
 
   # redir-host配置段
@@ -121,40 +121,6 @@ dns:
 ## hosts设置---------------------------------------------------------------------------------------------------
 hosts: # 自定义hosts映射，可以在此处手动指定一些Fakeip地址以强制分流
   "mihomo.mihomo": 127.0.0.1
-  "services.googleapis.cn": # 由于域名包含在cn规则中，直接解析会得到cnIP导致开启绕过大陆后绕过内核，谷歌商店无法下载
-    - 180.163.151.34
-    - 64.233.185.94
-    - 142.250.71.163
-    - 142.250.71.131
-    - 142.250.198.35
-    - 142.250.66.35
-    - 142.250.197.163
-    - 142.250.196.3
-    - 142.250.196.131
-    - 142.251.38.131
-    - 142.250.71.227
-    - 142.250.196.227
-    - 172.253.118.94
-    - 142.250.189.227
-    - 142.250.191.35
-    - 142.250.199.35
-  "connectivitycheck.gstatic.com": # 由于域名包含在cn规则中，直接解析会得到cnIP导致开启绕过大陆后绕过内核，谷歌商店无法下载
-    - 142.250.198.99
-    - 142.250.198.131
-    - 142.250.199.195
-    - 173.194.219.94
-    - 142.250.197.35
-    - 142.250.197.131
-    - 172.217.19.3
-    - 142.251.15.94
-    - 216.58.220.99
-    - 142.250.76.227
-    - 142.250.189.163
-    - 142.250.189.195
-    - 142.250.76.3
-    - 142.250.207.99
-    - 142.250.196.35
-    - 74.125.130.94
 
 ## 嗅探设置---------------------------------------------------------------------------------------------------
 sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS的IP请求的域名，来匹配域名规则
@@ -186,8 +152,8 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
     - dlg.io.mi.com
     - "+.oray.com"
     - "+.sunlogin.net"
-    - "geosite:cn"
-    - "geolocation-!cn@cn"
+    - "geosite:geolocation-cn"
+    - "geosite:geolocation-!cn@cn"
   #skip-src-address: # 需要跳过嗅探的源地址
   #skip-dst-address: # 需要跳过嗅探的目的地址
 
@@ -218,7 +184,7 @@ tun:
     - com.MobileTicket # 铁路12306
     - com.chinamworld.main # 中国建设银行
     - com.jd.jrapp # 京东金融
-  #auto-redirect: true # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true
+  #auto-redirect: true # 仅Linux有效，自动配置 iptables/nftables 以重定向 TCP 连接，需要auto-route: true，与插件设置冲突
   #strict-route: false # 将所有连接路由到 tun 来防止泄漏，但你的设备将无法其他设备被访问，严重拖慢Windows访问速度，可能造成虚拟机运行异常
   #endpoint-independent-nat: false # 独立于端点的 NAT，性能可能下降，不建议不需要时开启
 
@@ -422,8 +388,8 @@ rules:
   - RULE-SET,♻️延迟最低-FISH,✅默认代理 # FISH自定义代理
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
-  # 禁用QUIC，防止速度不佳和IP泄露，不包括国内网站
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
+  # 禁用所有代理的QUIC，防止速度不佳和IP泄露，不包括国内网站
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,geolocation-cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,cn))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
 
   # 私有地址绕过块
@@ -457,7 +423,7 @@ rules:
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
-  - GEOSITE,cn,🌐默认直连 # 中国域名
-  - GEOSITE,geolocation-!cn@cn,🌐默认直连 # 有中国CDN的国外域名
+  - GEOSITE,geolocation-cn,🌐默认直连 # 地理位置在中国的域名，不包括谷歌在中国的域名避免谷歌商店下载问题
+  - GEOSITE,geolocation-!cn@cn,🌐默认直连 # 地理位置不在中国的域名中具有国内CDN的部分，包括Steam在的国内CDN
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
