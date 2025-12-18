@@ -28,7 +28,7 @@ unified-delay: false # 统一延迟计算，没啥卵用，就是界面好看，
 
 ## TCP-KeepA-live配置 ------------------------------------------------------------------------------------------
 keep-alive-idle: 30 # 触发心跳包的链路无活动阈值，无活动后发送心跳包检测对端是否存活
-keep-alive-interval: 30 # 发送心跳包的间隔，无回应则最多重发9次后判断链路关闭
+keep-alive-interval: 15 # 发送心跳包的间隔，无回应则最多重发9次后判断链路关闭
 disable-keep-alive: false # 禁用 keep alive，即允许长链接一直存在，安卓端会强制设定为true
 
 ## API面板设置---------------------------------------------------------------------------------------------------
@@ -164,8 +164,8 @@ tun:
   enable: false # 启用Tun接口，tun性能低开销大，除非必须否则不建议使用
   stack: mixed # TUN 堆栈模式,建议 mixed（TCP：system，UDP：Gvisor），对于Windows开启防火墙后需要手动放行内核，否则只能使用Gvisor
   device: utun0 # TUN 网卡名，MacOS 只能 utun 开头
-  auto-route: false # 自动设置全局路由，自动将全局流量路由进 tun
-  auto-detect-interface: false # 自动选择流量的出接口（默认wan口）
+  auto-route: false # 核心自动设置全局路由防火墙规则，会与插件的防火墙规则冲突，导致无法正常上网/代理
+  auto-detect-interface: false # 核心自动选择流量的出接口（默认wan口），会与插件冲突
   dns-hijack: # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则默认 udp://
     - any:53
     - tcp://any:53
