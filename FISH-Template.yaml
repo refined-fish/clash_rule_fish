@@ -100,7 +100,6 @@ dns:
     - "geosite:tailscale" # Tailscale域名，包括P2P打洞过程
     - "geosite:synology" # 群晖域名，包括群辉QC服务
     - "geosite:apple" # 苹果域名
-    - "geosite:connectivity-check" # 联网检测域名，防止因Fakeip无法ping而显示无网络
     - "geosite:category-cas" # 证书颁发机构域名
     #- "geosite:tracker" # 各类tracker域名，v2ray的geo不支持此字段，meta支持
     - "geosite:category-public-tracker" # 公共tracker域名
