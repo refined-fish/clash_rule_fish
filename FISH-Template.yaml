@@ -96,7 +96,7 @@ dns:
   fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连
     - "rule-set:🌐Direct-FISH" # 个人收集的直连域名，不能直接用GEOSITE引用的零散域名
     - "geosite:category-ads-all" # 广告域名，交给redirect-host返回空结果
-    - "geosite:cn" # 国内域名，包括了谷歌在中国的域名，直连会导致商店下载问题，需要手动设置谷歌商店直连；使用geolocation-cn不包括谷歌，但会导致很多中国域名未被分流，需要手动设置商店代理
+    - "geosite:geolocation-cn" # 国内域名，包括了谷歌在中国的域名，直连会导致商店下载问题，需要手动设置谷歌商店直连；使用geolocation-cn不包括谷歌，但会导致很多中国域名未被分流，需要手动设置商店代理
     - "geosite:category-cas" # 证书颁发机构域名
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
@@ -152,7 +152,7 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
     - dlg.io.mi.com
     - "+.oray.com"
     - "+.sunlogin.net"
-    - "geosite:cn"
+    - "geosite:geolocation-cn"
   #skip-src-address: # 需要跳过嗅探的源地址
   #skip-dst-address: # 需要跳过嗅探的目的地址
 
@@ -388,7 +388,7 @@ rules:
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   # 禁用QUIC，防止速度不佳和IP泄露，不包括国内网站
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,geolocation-cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
 
   # 私有地址绕过块
@@ -422,6 +422,6 @@ rules:
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
-  - GEOSITE,cn,🌐默认直连 # 中国域名
+  - GEOSITE,geolocation-cn,🌐默认直连 # 中国域名
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
