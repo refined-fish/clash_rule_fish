@@ -8,6 +8,10 @@ payload:
   - DOMAIN-SUFFIX,sentry.io # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,qing-yu.top # CDN
   - DOMAIN-SUFFIX,cd120.info # 华医通使用的域名后缀，Fakeip可能导致登录失败的问题
+  - DOMAIN-SUFFIX,mqtt.xbase.cloud # HASS.Agent客户端使用的MQTT服务器
+
+  #################### 下载
+  - DOMAIN-SUFFIX,router.bittorrent.com # tracker
 
   #################### 谷歌
   # 参考https://www.0z.gs/android/2077.html

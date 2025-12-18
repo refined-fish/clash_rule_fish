@@ -96,6 +96,7 @@ dns:
   fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连
     - "rule-set:🌐Direct-FISH" # 个人收集的直连域名，不能直接用GEOSITE引用的零散域名
     - "geosite:category-ads-all" # 广告域名
+    - "geosite:category-cas" # 证书颁发机构域名
     - "geosite:geolocation-cn" # 位于中国的域名，未采用cn是因为cn包括geolocation-cn和tld-cn，而tld-cn包含谷歌域名
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:apple" # 苹果域名
@@ -394,6 +395,7 @@ rules:
 
   #### 代理规则块，按照使用频率/规则集大小排序
   # 其他
+  - GEOSITE,category-cas,DIRECT # 证书颁发机构，直连以防止证书错误
   - GEOSITE,win-update,DIRECT # Windows操作系统升级，直连以节省流量
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
   - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
