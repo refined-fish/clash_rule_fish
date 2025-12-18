@@ -93,19 +93,21 @@ dns:
   # fakeip配置段
   fake-ip-range: 198.18.0.1/16 # fakeip 的 IP 段，tun接口的默认 IPV4 地址 也使用此值作为参考
   fake-ip-filter-mode: blacklist # 黑/白名单模式，黑名单下，filter内容将使用redir-host模式解析
-  fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连
-    - "rule-set:🌐Direct-FISH" # 个人收集的直连域名，不能直接用GEOSITE引用的零散域名
-    - "geosite:category-ads-all" # 广告域名，交给redirect-host返回空结果
-    - "geosite:geolocation-cn" # 国内域名，包括了谷歌在中国的域名，直连会导致商店下载问题，需要手动设置谷歌商店直连；使用geolocation-cn不包括谷歌，但会导致很多中国域名未被分流，需要手动设置商店代理
-    - "geosite:category-cas" # 证书颁发机构域名
+  fake-ip-filter: # fakeip过滤，以下域名将跳过Fakeip使用下方的redir模块解析真实IP，双WAN分流则可直接直连，填入不怕DNS污染的域名和需要直连的域名
+    - "rule-set:🌐Direct-FISH" # 个人收集的直连域名，包含GeoSite未分类的零散域名
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
-    - "geosite:apple" # 苹果域名
-    - "geosite:tailscale" # tailscale域名
-    - "geosite:category-public-tracker" # 公共tracker域名，最好不要加pt站域名，CF加速容易无法访问
-    - "geosite:synology" # 群晖域名
     - "geosite:category-ntp" # NTP域名
-    - "geosite:win-update" # Windows操作系统升级域名
+    - "geosite:tailscale" # Tailscale域名，包括P2P打洞过程
+    - "geosite:synology" # 群晖域名，包括群辉QC服务
+    - "geosite:apple" # 苹果域名
+    - "geosite:connectivity-check" # 联网检测域名，防止因Fakeip无法ping而显示无网络
+    - "geosite:category-cas" # 证书颁发机构域名
     #- "geosite:tracker" # 各类tracker域名，v2ray的geo不支持此字段，meta支持
+    - "geosite:category-public-tracker" # 公共tracker域名
+    - "geosite:win-update" # Windows操作系统升级域名
+    - "geosite:cn" # 国内域名，包括了谷歌在中国的域名，直连会导致商店下载问题，需要手动设置谷歌商店直连；使用geolocation-cn不包括谷歌，但会导致很多中国域名未被分流，需要手动设置商店代理
+    - "geolocation-!cn@cn" # 国外域名中具有国内加速的部分，包括steam的国内CDN，涵盖cn的不足
+    - "geosite:category-ads-all" # 广告域名，交给redirect-host模块返回空结果
 
   # redir-host配置段
   default-nameserver: *secure-dns # 解析DNS服务器域名的DNS，可以加密但必须为IP，如果不用DNS服务器的域名则无需配置
@@ -124,7 +126,7 @@ hosts: # 自定义hosts映射，可以在此处手动指定一些Fakeip地址以
 
 ## 嗅探设置---------------------------------------------------------------------------------------------------
 sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS的IP请求的域名，来匹配域名规则
-  enable: true # 启用sniffer
+  enable: false # 启用sniffer，除非使用非mihomo的DNS，否则无需启用
   force-dns-mapping: true # 对redir-host类型识别的流量进行强制嗅探
   parse-pure-ip: true # 对所有未获取到域名的流量进行强制嗅探
   override-destination: true # 是否使用嗅探结果作为实际访问，默认为 true
@@ -146,13 +148,14 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
     - "+.nflxvideo.net"
     - "+.amazonaws.com"
     - "+.media.dssott.com"
-  skip-domain: # 需要跳过嗅探的域名，主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备
+  skip-domain: # 需要跳过嗅探的域名，主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备，也可针对使用内核进行DNS的域名节省开销（这些由内核解析的域名因为保存有对照表，无需嗅探）
     - "+.apple.com"
     - Mijia Cloud
     - dlg.io.mi.com
     - "+.oray.com"
     - "+.sunlogin.net"
-    - "geosite:geolocation-cn"
+    - "geosite:cn"
+    - "geolocation-!cn@cn"
   #skip-src-address: # 需要跳过嗅探的源地址
   #skip-dst-address: # 需要跳过嗅探的目的地址
 
@@ -388,8 +391,8 @@ rules:
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   # 禁用QUIC，防止速度不佳和IP泄露，不包括国内网站
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,geolocation-cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
-  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOSITE,cn))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,cn))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
 
   # 私有地址绕过块
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
@@ -422,6 +425,6 @@ rules:
   - GEOSITE,gfw,🧱GFW # GFW兜底
   - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
-  - GEOSITE,geolocation-cn,🌐默认直连 # 中国域名
+  - GEOSITE,cn,🌐默认直连 # 中国域名
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
