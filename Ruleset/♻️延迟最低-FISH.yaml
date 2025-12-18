@@ -4,15 +4,18 @@ payload:
 
   #################### 谷歌
   # 参考https://www.0z.gs/android/2077.html ， https://www.yetpage.com/archives/278
-  # 对于普通的谷歌服务来说，会用到的域名为play.googleapis.com，这个域名属于GFW，不会有代理问题
-  # 但是国内手机的谷歌服务普遍是魔改过的，使用的域名为play.googleapis.cn，属于国内镜像站点
-  # 而实际上这个镜像站点是无法访问的，需要代理，这会导致如果开启了绕过大陆功能，这个流量永远无法代理
-  # 与之相关的域名xn--ngstr-lra8j.com也同样属于国内镜像，为了解决这个问题，必须将这两个国内域名交给远程解析
+  # 对于普通的谷歌服务来说，商店下载会用到的域名为
+  # services.googleapis.com / android.apis.google.com / android.clients.google.com
+  # play.googleapis.com / connectivitycheck.gstatic.com
+  # 以上域名属于GFW，使用起来自动代理，不会遇到问题
+  # 但是国内手机的谷歌服务普遍是魔改过的，使用的域名为 services.googleapis.com ，其他域名都一样
+  # 这个域名和 connectivitycheck.gstatic.com 在GEO数据库中属于 cn分类，这会导致DNS使用国内解析，得到国内IP
+  # 而实际上这个国内站点是无法完全直连访问的，需要部分代理，这会导致如果开启了绕过大陆功能，这个国内IP无法代理
+  # 这会导致无法与下载服务器完成交互，无法完成下载，为了解决这个问题，必须将这两个域名交给代理远程解析
   # 以获得海外IP来防止绕过大陆，所以不能使用geosite:cn来书写国内解析规则，否则这两个域名将返回国内地址
   # 因此采用了geolocation-cn来替代，geolocation-cn包含了所有地理位置在中国的域名，但不包括谷歌在中国的域名
   # 与此同时，需要将这两个域名写入代理规则，因为他们本来不属于GFW，会匹配到漏网之鱼
-  - DOMAIN,services.googleapis.cn # 谷歌服务中国镜像，已存在于geosite:cn中
-  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com # 谷歌商店下载域名，已位于gfw中
+  - DOMAIN,services.googleapis.cn # 谷歌服务中国镜像，存在于geosite:cn中
 
   #################### HomeAssistant
   - DOMAIN-SUFFIX,basemaps.cartocdn.com # 地图的CDN榆蒙，不代理加载缓慢，其原始服务已被GFW包含
