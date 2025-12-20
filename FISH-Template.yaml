@@ -98,11 +98,10 @@ dns:
     - "geosite:private" # 私有地址，包括stun，lan，路由器后台网址等域名
     - "geosite:category-ntp" # NTP域名
     - "geosite:tailscale" # Tailscale域名，包括P2P打洞过程
-    - "geosite:synology" # 群晖域名，包括群辉QuickConnect服务
     - "geosite:apple" # 苹果域名，配合双WAN分流可以避免长链接耗电问题
     - "geosite:category-cas" # 各类证书颁发机构域名
-    #- "geosite:tracker" # 各类tracker域名，v2ray的geo不支持此字段，meta支持
     - "geosite:category-public-tracker" # 公共tracker域名
+    - "rule-set,🔐PT-Tracker,DIRECT" # PT tracker，必须直连，否则会代理上传下载
     - "geosite:win-update" # Windows操作系统升级域名
     - "geosite:category-game-platforms-download" # 各类游戏平台下载域名，包括steam下载
     - "geosite:geolocation-cn" # 地理位置在中国的域名，不包括谷歌在中国的域名避免谷歌商店下载问题，关于谷歌商店下载，详见♻️延迟最低文件内容
@@ -382,6 +381,11 @@ rule-providers:
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/Ⓜ️微软Copilot-FISH.yaml
     path: ./providers/rule/rule-provider_Ⓜ️微软Copilot-FISH.yaml
 
+  🔐PT-Tracker:
+    <<: *rule-providers-general
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker.yaml
+    path: ./providers/rule/rule-provider_🔐PT-Tracker.yaml
+
 ## 路由规则设置---------------------------------------------------------------------------------------------------
 rules:
   #### 对于必须直连者直接使用direct写死，其他尽可能使用代理组以方便面板控制以及切换测试
@@ -401,26 +405,26 @@ rules:
   # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
   - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
-  - GEOSITE,category-cas,🌐默认直连 # 证书颁发机构，直连以防止证书错误
-  - GEOSITE,win-update,🌐默认直连 # Windows操作系统升级，直连以节省流量
-  - GEOSITE,category-pt,🔐PT网站 # 大多数PT站采用CF加速，容易无法访问故代理，但需要注意有的PT站Tracker也是http域名，要避免下载代理问题
+  - GEOSITE,category-cas,DIRECT # 证书颁发机构，直连以防止证书错误
+  - GEOSITE,win-update,DIRECT # Windows操作系统升级，直连以节省流量
+  - RULE-SET,🔐PT-Tracker,DIRECT # PT tracker，必须直连，否则会代理上传下载
+  # 游戏相关
+  - GEOSITE,category-game-platforms-download,🌐默认直连 # 各类游戏平台下载域名，包括steam下载
+  # 影视相关
+  - GEOSITE,category-pt,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
   - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
+  - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
+  - GEOSITE,category-porn,✅默认代理 # X网站
   # 微软相关
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
-  - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
   # openAI相关
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
-  # 游戏相关
-  - GEOSITE,category-game-platforms-download,DIRECT # 各类游戏平台下载域名，包括steam下载
   # 编程相关
   - GEOSITE,category-container,✅默认代理 # 各种容器服务
   - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
   # telegram相关
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
-  # 其他
-  - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
-  - GEOSITE,category-porn,✅默认代理 # X网站
 
   #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
