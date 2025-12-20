@@ -104,6 +104,7 @@ dns:
     #- "geosite:tracker" # 各类tracker域名，v2ray的geo不支持此字段，meta支持
     - "geosite:category-public-tracker" # 公共tracker域名
     - "geosite:win-update" # Windows操作系统升级域名
+    - "geosite:category-game-platforms-download" # 各类游戏平台下载域名，包括steam下载
     - "geosite:geolocation-cn" # 地理位置在中国的域名，不包括谷歌在中国的域名避免谷歌商店下载问题，关于谷歌商店下载，详见♻️延迟最低文件内容
     - "geosite:geolocation-!cn@cn" # 地理位置不在中国的域名中具有国内CDN的部分，包括Steam在的国内CDN
     - "geosite:category-ads-all" # 广告域名，交给redirect-host模块返回空结果
@@ -409,12 +410,14 @@ rules:
   - GEOSITE,synology,🌐默认直连 # 群晖服务，包括QC
   # openAI相关
   - GEOSITE,openai,⏣OpenAi # OpenAi服务
-  # telegram相关
-  - GEOSITE,telegram,✈️Telegram # Telegram服务
-  - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
+  # 游戏相关
+  - GEOSITE,category-game-platforms-download,DIRECT # 各类游戏平台下载域名，包括steam下载
   # 编程相关
   - GEOSITE,category-container,✅默认代理 # 各种容器服务
   - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
+  # telegram相关
+  - GEOSITE,telegram,✈️Telegram # Telegram服务
+  - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   # 其他
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   - GEOSITE,category-porn,✅默认代理 # X网站
