@@ -196,14 +196,14 @@ proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
   size-limit: 0 # 文件大小限制，0为不限制
   exclude-filter: "(?i)官网|每月刷新订阅|机场|到期|https://|剩余流量"
   override:
-    tfo: false # 启用TCP Fast Open，一般都不支持
-    mptcp: false # 启用TCP Multi Path，一般都不支持
-    udp: true # 启用UDP
-    udp-over-tcp: false # 启用UDP over TCP
-    skip-cert-verify: false # 跳过证书验证
+    #tfo: false # 启用TCP Fast Open，一般都不支持
+    #mptcp: false # 启用TCP Multi Path，一般都不支持
+    #udp: true # 启用UDP
+    #udp-over-tcp: false # 启用UDP over TCP
+    #skip-cert-verify: false # 跳过证书验证
     #down: "50 Mbps" # 下行限速
     #up: "10 Mbps" # 上行限速
-    ip-version: dual # 可选dual/ipv4/ipv6/ipv4-prefer/ipv6-prefer，即优先v4或v6，仅v4或v6
+    #ip-version: dual # 可选dual/ipv4/ipv6/ipv4-prefer/ipv6-prefer，即优先v4或v6，仅v4或v6
 
 proxy-providers:
   #❗provider占位1
