@@ -228,12 +228,22 @@ health-check-general: &health-check-general # 代理组健康检查通用配置
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
 
-default-proxy: &default-proxy # 默认代理组
+default-proxy-低倍: &default-proxy-低倍 # 默认代理组
   proxies:
-    - ✅默认代理
     - ♻️延迟最低（低倍节点）
-    - ♻️延迟最低
-    - ⚠️故障切换
+    - ♻️延迟最低（优质节点）
+    - 🖐️手动切换
+    - 🇭🇰香港节点
+    - 🇨🇳台湾节点
+    - 🇸🇬狮城节点
+    - 🇯🇵日本节点
+    - 🇺🇲美国节点
+    - DIRECT
+
+default-proxy-优质: &default-proxy-优质 # 默认代理组
+  proxies:
+    - ♻️延迟最低（优质节点）
+    - ♻️延迟最低（低倍节点）
     - 🖐️手动切换
     - 🇭🇰香港节点
     - 🇨🇳台湾节点
@@ -247,8 +257,7 @@ default-direct: &default-direct # 默认直连组
     - DIRECT
     - ✅默认代理
     - ♻️延迟最低（低倍节点）
-    - ♻️延迟最低
-    - ⚠️故障切换
+    - ♻️延迟最低（优质节点）
     - 🖐️手动切换
     - 🇭🇰香港节点
     - 🇨🇳台湾节点
@@ -263,12 +272,9 @@ proxy-groups:
     filter: '\[0\.\d+\]'
     <<: *health-check-general
 
-  - name: ♻️延迟最低
+  - name: ♻️延迟最低（优质节点）
     type: url-test
-    <<: *health-check-general
-
-  - name: ⚠️故障切换
-    type: fallback
+    exclude-filter: '\[0\.\d+\]'
     <<: *health-check-general
 
   - name: 🖐️手动切换
@@ -278,17 +284,7 @@ proxy-groups:
   ##################################
   - name: ✅默认代理
     type: select
-    proxies:
-      - ♻️延迟最低（低倍节点）
-      - ♻️延迟最低
-      - ⚠️故障切换
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - DIRECT
+    <<: *default-proxy-低倍
 
   - name: 🌐默认直连
     type: select
@@ -298,25 +294,24 @@ proxy-groups:
     type: select
     <<: *default-direct
 
+  - name: 🤖国外AI
+    type: select
+    <<: *default-proxy-优质
+
   ##################################
   - name: Ⓜ️微软Copilot
     type: select
-    <<: *default-proxy
+    <<: *default-proxy-优质
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
-
-  - name: ⏣OpenAi
-    type: select
-    <<: *default-proxy
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Chat_GPT.png
 
   - name: ✈️Telegram
     type: select
-    <<: *default-proxy
+    <<: *default-proxy-低倍
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
-    <<: *default-proxy
+    <<: *default-proxy-低倍
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
 
   - name: 📺巴哈姆特
@@ -338,7 +333,7 @@ proxy-groups:
 
   - name: 🔐PT网站
     type: select
-    <<: *default-proxy
+    <<: *default-proxy-低倍
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/PT.png
 
   ##################################
@@ -409,7 +404,7 @@ rules:
   - GEOIP,private,DIRECT,no-resolve # 私有地址直连
   - GEOSITE,private,DIRECT # 私有地址直连
 
-  #### 代理规则块，按照使用频率/规则集大小排序
+  #### 代理规则块，按照使用频率/规则集大小/包含关系排序
   # 其他
   - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
   - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
@@ -425,8 +420,8 @@ rules:
   - GEOSITE,category-porn,✅默认代理 # X网站
   # 微软相关
   - RULE-SET,Ⓜ️微软Copilot-FISH,Ⓜ️微软Copilot # 微软copilot服务
-  # openAI相关
-  - GEOSITE,openai,⏣OpenAi # OpenAi服务
+  # AI相关
+  - GEOSITE,category-ai-!cn,🤖国外AI # 国外AI服务
   # 编程相关
   - GEOSITE,category-container,✅默认代理 # 各种容器服务
   - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
