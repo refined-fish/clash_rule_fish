@@ -195,7 +195,7 @@ proxy-providers-general: &proxy-providers-general # 代理提供者通用配置
   proxy: 🌐默认直连 # http类型更新时使用的代理组，不建议设置代理，如果你的机场需要代理才能订阅，那先有鸡还是先有蛋？
   size-limit: 0 # 文件大小限制，0为不限制
   exclude-filter: "(?i)官网|每月刷新订阅|机场|到期|https://|剩余流量"
-  override:
+  override: # 同名覆盖
     #tfo: false # 启用TCP Fast Open，一般都不支持
     #mptcp: false # 启用TCP Multi Path，一般都不支持
     #udp: true # 启用UDP
@@ -228,7 +228,7 @@ health-check-general: &health-check-general # 代理组健康检查通用配置
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
 
-default-proxy-低倍: &default-proxy-低倍 # 默认代理组
+default-proxy-low: &default-proxy-low # 默认代理-低倍节点
   proxies:
     - ♻️延迟最低（低倍节点）
     - ♻️延迟最低（优质节点）
@@ -240,7 +240,7 @@ default-proxy-低倍: &default-proxy-低倍 # 默认代理组
     - 🇺🇲美国节点
     - DIRECT
 
-default-proxy-优质: &default-proxy-优质 # 默认代理组
+default-proxy-good: &default-proxy-good # 默认代理-优质节点
   proxies:
     - ♻️延迟最低（优质节点）
     - ♻️延迟最低（低倍节点）
@@ -284,7 +284,7 @@ proxy-groups:
   ##################################
   - name: ✅默认代理
     type: select
-    <<: *default-proxy-低倍
+    <<: *default-proxy-low
 
   - name: 🌐默认直连
     type: select
@@ -296,22 +296,22 @@ proxy-groups:
 
   - name: 🤖国外AI
     type: select
-    <<: *default-proxy-优质
+    <<: *default-proxy-good
 
   ##################################
   - name: Ⓜ️微软Copilot
     type: select
-    <<: *default-proxy-优质
+    <<: *default-proxy-good
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: ✈️Telegram
     type: select
-    <<: *default-proxy-低倍
+    <<: *default-proxy-low
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
-    <<: *default-proxy-低倍
+    <<: *default-proxy-low
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
 
   - name: 📺巴哈姆特
@@ -333,7 +333,7 @@ proxy-groups:
 
   - name: 🔐PT网站
     type: select
-    <<: *default-proxy-低倍
+    <<: *default-proxy-low
     icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/PT.png
 
   ##################################
