@@ -273,6 +273,7 @@ proxy-groups:
 
   - name: ♻️延迟最低（优质节点）
     type: url-test
+    filter: "(?i)港|HK|Hong|台|TW|Tai|日|JP|Japan|新|坡|狮|SG|Singapore|美|US|States|韩|KR|Korea|澳|AU|Australia"
     exclude-filter: '\[0\.\d+\]'
     <<: *health-check-general
 
