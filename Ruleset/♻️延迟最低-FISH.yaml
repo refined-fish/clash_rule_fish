@@ -8,7 +8,7 @@ payload:
   # services.googleapis.com / android.apis.google.com / android.clients.google.com
   # play.googleapis.com / connectivitycheck.gstatic.com
   # 以上域名属于GFW，使用起来自动代理，不会遇到问题
-  # 但是国内手机的谷歌服务普遍是魔改过的，使用的域名为 services.googleapis.com ，其他域名都一样
+  # 但是国内手机的谷歌服务普遍是魔改过的，使用的域名为 services.googleapis.cn ，其他域名都一样
   # 这个域名和 connectivitycheck.gstatic.com 在GEO数据库中属于 cn分类，这会导致DNS使用国内解析，得到国内IP
   # 而实际上这个国内站点是无法完全直连访问的，需要部分代理，这会导致如果开启了绕过大陆功能，这个国内IP无法代理
   # 这会导致无法与下载服务器完成交互，无法完成下载，为了解决这个问题，必须将这两个域名交给代理远程解析
