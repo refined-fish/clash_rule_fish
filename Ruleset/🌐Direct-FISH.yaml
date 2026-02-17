@@ -9,7 +9,7 @@ payload:
   - DOMAIN-SUFFIX,qing-yu.top # CDN
   - DOMAIN-SUFFIX,cd120.info # 华医通使用的域名后缀，Fakeip可能导致登录失败的问题
   - DOMAIN,mqtt.xbase.cloud # HASS.Agent客户端使用的MQTT服务器
-  - DOMAIN,duoqin.com # 多亲域名，用于多亲系列手机守护软件
+  - DOMAIN-SUFFIX,duoqin.com # 多亲域名，用于多亲系列手机守护软件
 
   #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
