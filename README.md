@@ -4,7 +4,7 @@
 
   > 当然直接引用也可以😂
 
-仓库提供的 [配置文件模板](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml) 无法直接导入代理软件运行，因为缺少必要的机场订阅链接，请自行修改后使用。（修改 [教程](https://github.com/refined-fish/clash_rule_fish#mihomo-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9%E6%95%99%E7%A8%8B) 见下文）
+仓库提供的 [配置文件模板](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml) 无法直接导入代理软件运行，因为缺少必要的订阅链接，请自行修改后使用。（修改 [教程](https://github.com/refined-fish/clash_rule_fish#mihomo-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9%E6%95%99%E7%A8%8B) 见下文）
 
 **关于路由规则**： 非必要时更推荐各位朋友直接使用 **GEO数据库** ，减少外部依赖，简化配置文件，提升使用体验❤️
 
@@ -28,7 +28,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
   
   ![image](https://github.com/user-attachments/assets/9fbfd5f6-fe80-4745-8ba0-e1716ccce26f)
 
-## 三、如何使用本仓库配置文件模板（机场订阅版）
+## 三、如何使用本仓库配置文件模板（订阅版）
 
 1. 下载[配置文件模板](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml)，找到模板中 `代理提供者` 部分
 
@@ -40,13 +40,13 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
       #❗provider占位4
     ```
 
-2. 将 `#❗provider占位` 修改为包含自己机场订阅地址的内容，有几个机场订阅修改几个占位符，以下是示例，注意缩进和引用不可遗漏！：
+2. 将 `#❗provider占位` 修改为包含自己订阅地址的内容，有几个订阅修改几个占位符，以下是示例，注意缩进和引用不可遗漏！：
 
     ```yaml
     proxy-providers:
       provider1:
         <<: *proxy-providers-general  # 引用上文的yaml锚点
-        url: "你的机场订阅地址"
+        url: "你的订阅地址"
         override:  #可选，覆写设置，不需要可以删除
           additional-prefix: "provider1|"  # 可选，给订阅添加前缀，不需要可以删除
         path: ./providers/proxy/proxy-provider1.yaml  # 可选，指定下载路径，不需要可以删除
@@ -89,7 +89,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
   正式开始：
 
   1. 用自己的 `nginx反向代理服务器` 反向代理本仓库的模板文件。
-  2. 在反向代理中使用 `nginx_http_sub` 子模块的 `sub_filter` 功能，自动替换模板中的 `❗占位符` 字段为自己的 `机场订阅` 字段，注意替换中的换行符 `\n` 不可遗漏！更要注意下方可能由于 **引号嵌套** 需要使用的 **转义引号** ！！！
+  2. 在反向代理中使用 `nginx_http_sub` 子模块的 `sub_filter` 功能，自动替换模板中的 `❗占位符` 字段为自己的 `订阅` 字段，注意替换中的换行符 `\n` 不可遗漏！更要注意下方可能由于 **引号嵌套** 需要使用的 **转义引号** ！！！
 
       ```nginx
       server {
@@ -105,7 +105,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
           # 只匹配替换一次（否则全文匹配全部替换）
           sub_filter_once on;
           # 替换内容，有多个订阅可以自己复制多个替换
-          sub_filter '#❗provider占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "当前订阅的自定义前缀|"\n    url: "你的机场订阅连接"\n    path: ./providers/proxy/proxy-provider1.yaml';
+          sub_filter '#❗provider占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "当前订阅的自定义前缀|"\n    url: "你的订阅连接"\n    path: ./providers/proxy/proxy-provider1.yaml';
           sub_filter '#❗use-provider占位1' '- provider1';
         }
       }
