@@ -32,6 +32,7 @@ payload:
   - DOMAIN-SUFFIX,coo.wiki # COO机场
   - DOMAIN-SUFFIX,xn--4gq62f52gdss.ink # 一元机场
   - DOMAIN-SUFFIX,paoluz.link # 跑路云
+  - DOMAIN-SUFFIX,xn--mes358aby2apfg.com # 赔钱机场
 
   #################### 论坛
   - DOMAIN-SUFFIX,v2rayssr.com # V2RaySSR综合网，禁止大陆IP访问，内有一些教程交流贴
