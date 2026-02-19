@@ -267,13 +267,13 @@ proxy-groups:
   ##################################
   - name: ♻️延迟最低（低倍节点）
     type: url-test
-    filter: '\[0\.\d+\]'
+    filter: '\[0\.\d+\]|0\.\d+倍'
     <<: *health-check-general
 
   - name: ♻️延迟最低（优质节点）
     type: url-test
     filter: "(?i)港|HK|hk|Hong Kong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia"
-    exclude-filter: '\[0\.\d+\]'
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
     <<: *health-check-general
 
   - name: 🖐️手动切换
