@@ -310,39 +310,39 @@ proxy-groups:
   - name: Ⓜ️微软Copilot
     type: select
     <<: *default-proxy-good
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
 
   - name: ✈️Telegram
     type: select
     <<: *default-proxy-low
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
     <<: *default-proxy-low
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
 
   - name: 📺巴哈姆特
     type: select
     proxies:
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
 
   - name: 🎮Steam
     type: select
     <<: *default-direct
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
 
   - name: Ⓜ️微软服务
     type: select
     <<: *default-direct
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft.png
 
   - name: 🔐PT网站
     type: select
     <<: *default-proxy-low
-    icon: https://ghfast.top/https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/PT.png
+    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/PT.png
 
   ##################################
   - name: 🇭🇰香港节点
