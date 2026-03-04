@@ -21,6 +21,9 @@ payload:
   - DOMAIN,basemaps.cartocdn.com # 地图的CDN，不代理加载缓慢，其原始服务已被GFW包含
   - DOMAIN-SUFFIX,home-assistant.io # 社区，论坛等，不代理加载缓慢
 
+  #################### PT站点，不包括tracker
+  - DOMAIN,kp.m-team.cc # 馒头，国内访问较慢，代理提高访问体验
+
   #################### openWRT
   - DOMAIN-SUFFIX,openwrt.ai # 在线固件定制-kiddin9
   - DOMAIN,git.openwrt.org # openwrt源码库
