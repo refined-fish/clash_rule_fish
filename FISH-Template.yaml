@@ -310,65 +310,70 @@ proxy-groups:
   - name: Ⓜ️微软Copilot
     type: select
     <<: *default-proxy-good
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft_365_Copilot.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft_365_Copilot.png
 
   - name: ✈️Telegram
     type: select
     <<: *default-proxy-low
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Telegram.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Telegram.png
 
   - name: 🧱GFW
     type: select
     <<: *default-proxy-low
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/GFW.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
 
   - name: 📺巴哈姆特
     type: select
     proxies:
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/巴哈姆特.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/巴哈姆特.png
 
   - name: 🎮Steam
     type: select
     <<: *default-direct
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Steam.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Steam.png
 
   - name: Ⓜ️微软服务
     type: select
     <<: *default-direct
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/Microsoft.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft.png
 
   - name: 🔐PT网站
     type: select
     <<: *default-proxy-low
-    icon: https://github.com/refined-fish/clash_rule_fish/blob/main/Icons/PT.png
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   ##################################
   - name: 🇭🇰香港节点
     type: url-test
     <<: *health-check-general
     filter: "港|HK|hk|Hong Kong|HongKong|hongkong"
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
 
   - name: 🇯🇵日本节点
     type: url-test
     <<: *health-check-general
     filter: "日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan"
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
 
   - name: 🇺🇲美国节点
     type: url-test
     <<: *health-check-general
     filter: "美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States"
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
 
   - name: 🇨🇳台湾节点
     type: url-test
     <<: *health-check-general
     filter: "台|新北|彰化|TW|Taiwan"
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
 
   - name: 🇸🇬狮城节点
     type: url-test
     <<: *health-check-general
     filter: "新加坡|坡|狮城|SG|Singapore"
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
 
 ## 规则提供者设置---------------------------------------------------------------------------------------------------
 rule-providers-general: &rule-providers-general
