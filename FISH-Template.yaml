@@ -397,6 +397,11 @@ rule-providers:
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/Ⓜ️微软Copilot-FISH.yaml
     path: ./providers/rule/rule-provider_Ⓜ️微软Copilot-FISH.yaml
 
+  🔐PT-Web-FISH:
+    <<: *rule-providers-general
+    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🔐PT-Web-FISH.yaml
+    path: ./providers/rule/rule-provider_🔐PT-Web-FISH.yaml
+
   🔐PT-Tracker:
     <<: *rule-providers-general
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker.yaml
@@ -435,8 +440,9 @@ rules:
   - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
   - GEOSITE,category-cas,DIRECT # 证书颁发机构，直连以防止证书错误
   - GEOSITE,win-update,DIRECT # Windows操作系统升级，直连以节省流量
+  - RULE-SET,🔐PT-Web-FISH,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
+  - GEOSITE,category-pt,DIRECT # PT tracker，必须直连，否则会代理上传下载
   - RULE-SET,🔐PT-Tracker,DIRECT # PT tracker，必须直连，否则会代理上传下载
-  - GEOSITE,category-pt,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
 
   #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
