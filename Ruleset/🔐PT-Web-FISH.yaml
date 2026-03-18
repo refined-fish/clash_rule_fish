@@ -1,2 +1,3 @@
 payload:
-  # 🔐PT网站
+  # 🔐PT网站，不包括tracker
+  - DOMAIN,kp.m-team.cc # 馒头，国内访问较慢，代理提高访问体验

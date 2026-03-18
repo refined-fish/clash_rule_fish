@@ -17,9 +17,8 @@ payload:
   #################### 微软
   # 微软部分直连域名，不使用GEO是因为部分微软域名需要代理
   - DOMAIN,wns.windows.com # Windows推送服务，包括更新等消息通知
-  - DOMAIN-SUFFIX,msftconnecttest.com # 微软连接测试，已位于connectivity-check
+  - DOMAIN-SUFFIX,msftconnecttest.com # 微软连接测试，已位于connectivity-check，由于谷歌问题无法直接使用connectivity-check
   - DOMAIN-SUFFIX,msftncsi.com # 微软网络连接状态指示器，已位于connectivity-check
-  - DOMAIN,ipv6.microsoft.com # 微软IPv6相关域名
   - DOMAIN-SUFFIX,xboxlive.com # Xbox相关域名
   - DOMAIN,rewards.bing.com # 微软bing积分兑换，绑定地区，开代理兑换容易黑号
   - DOMAIN,api.onedrive.com # 微软OneDrive个人版的桌面应用，现已被划分到GFW会跑流量，实际上可以直连
@@ -35,11 +34,6 @@ payload:
   - DOMAIN,stun.syncthing.net
   - DOMAIN,stun.hot-chilli.net
   - DOMAIN,stun.fitauto.ru
-
-  #################### github代理加速
-  - DOMAIN-SUFFIX,ghproxy.net
-  - DOMAIN-SUFFIX,gh-proxy.com
-  - DOMAIN-SUFFIX,ghfast.top
 
   #################### 科研网站，不允许代理访问
   - DOMAIN,ncbi.nlm.nih.gov
