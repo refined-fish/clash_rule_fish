@@ -107,14 +107,12 @@ dns:
     - rule-set,🪜Proxy-FISH,fake-ip # 个人收集的代理域名，包含GeoSite未分类或分类到cn的零散域名
     - geosite,cn,real-ip # 中国域名
     - geosite,category-ads-all,real-ip # 广告域名，交给redirect-host模块返回空结果
-    - geosite,win-update,real-ip # Windows操作系统升级域名
     - rule-set,🔐PT-Tracker,real-ip # PT tracker，必须直连，否则会代理上传下载
     - geosite,category-public-tracker,real-ip # 公共tracker域名
     - geosite,category-ntp,real-ip # NTP域名
     - geosite,apple,real-ip # 苹果域名，配合双WAN分流可以避免长链接耗电问题
     - geosite,category-game-platforms-download,real-ip # 各类游戏平台下载域名，包括steam下载
     - geosite,tailscale,real-ip # Tailscale域名，包括P2P打洞过程
-    - rule-set,🌐Direct-FISH,real-ip # 个人收集的直连域名，包含GeoSite未分类的零散域名
     - geosite,category-cas,real-ip # 各类证书颁发机构域名
     - MATCH,fake-ip # 因cn集较小，因此采用未匹配的全部fakeip
   #fake-ip-ttl: 600 # fakeip查询返回的TTL，非必要情况下请勿修改
@@ -278,6 +276,68 @@ default-direct: &default-direct # 默认直连组
     - 🇺🇲美国节点
 
 proxy-groups:
+  - name: ✅默认代理
+    type: select
+    <<: *default-proxy-low
+
+  - name: 🌐默认直连
+    type: select
+    <<: *default-direct
+
+  - name: 🐟漏网之鱼
+    type: select
+    <<: *default-direct
+  ##################################
+  - name: 🤖国外AI
+    type: select
+    proxies:
+      - 🇨🇳台湾节点
+      - ♻️延迟最低（优质节点）
+      - ♻️延迟最低（低倍节点）
+      - 🖐️手动切换
+      - 🇭🇰香港节点
+      - 🇸🇬狮城节点
+      - 🇯🇵日本节点
+      - 🇺🇲美国节点
+      - DIRECT
+
+  - name: 🧱GFW
+    type: select
+    <<: *default-proxy-low
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
+
+  - name: ✈️Telegram
+    type: select
+    <<: *default-proxy-low
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Telegram.png
+
+  - name: 📺巴哈姆特
+    type: select
+    proxies:
+      - 🇭🇰香港节点
+      - 🇨🇳台湾节点
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/巴哈姆特.png
+
+  - name: 🎮Steam
+    type: select
+    <<: *default-direct
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Steam.png
+
+  - name: ☁️微软云盘
+    type: select
+    <<: *default-direct
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/onedrive.png
+
+  - name: Ⓜ️微软服务
+    type: select
+    <<: *default-direct
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft.png
+
+  - name: 🔐PT网站
+    type: select
+    <<: *default-proxy-low
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
+
   ##################################
   - name: ♻️延迟最低（低倍节点）
     type: smart
@@ -293,65 +353,6 @@ proxy-groups:
   - name: 🖐️手动切换
     type: select
     <<: *use-all-proxy-providers
-
-  ##################################
-  - name: ✅默认代理
-    type: select
-    <<: *default-proxy-low
-
-  - name: 🌐默认直连
-    type: select
-    <<: *default-direct
-
-  - name: 🐟漏网之鱼
-    type: select
-    <<: *default-direct
-
-  - name: 🤖国外AI
-    type: select
-    proxies:
-      - 🇨🇳台湾节点
-      - ♻️延迟最低（优质节点）
-      - ♻️延迟最低（低倍节点）
-      - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - DIRECT
-
-  ##################################
-  - name: ✈️Telegram
-    type: select
-    <<: *default-proxy-low
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Telegram.png
-
-  - name: 🧱GFW
-    type: select
-    <<: *default-proxy-low
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
-
-  - name: 📺巴哈姆特
-    type: select
-    proxies:
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/巴哈姆特.png
-
-  - name: 🎮Steam
-    type: select
-    <<: *default-direct
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Steam.png
-
-  - name: Ⓜ️微软服务
-    type: select
-    <<: *default-direct
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft.png
-
-  - name: 🔐PT网站
-    type: select
-    <<: *default-proxy-low
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   ##################################
   - name: 🇭🇰香港节点
@@ -401,11 +402,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🌐Direct-FISH.yaml
     path: ./providers/rule/rule-provider_🌐Direct-FISH.yaml
 
-  Ⓜ️微软Copilot-FISH:
-    <<: *rule-providers-general
-    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/Ⓜ️微软Copilot-FISH.yaml
-    path: ./providers/rule/rule-provider_Ⓜ️微软Copilot-FISH.yaml
-
   🔐PT-Web-FISH:
     <<: *rule-providers-general
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🔐PT-Web-FISH.yaml
@@ -428,8 +424,6 @@ rules:
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   #### 代理规则块，按照使用频率/包含关系排序
-  # 微软相关
-  - RULE-SET,Ⓜ️微软Copilot-FISH,🤖国外AI # 微软copilot服务
   # AI相关
   - GEOSITE,category-ai-!cn,🤖国外AI # 国外AI服务
   # 游戏相关
@@ -445,21 +439,21 @@ rules:
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   - GEOSITE,category-porn,✅默认代理 # X网站
   # 其他
-  - GEOSITE,tailscale,DIRECT # 必须直连，否则tailscale无法成功直连打洞
-  - GEOSITE,category-public-tracker,DIRECT # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
-  - GEOSITE,category-cas,DIRECT # 证书颁发机构，直连以防止证书错误
-  - GEOSITE,win-update,DIRECT # Windows操作系统升级，直连以节省流量
+  - GEOSITE,tailscale,🌐默认直连 # 必须直连，否则tailscale无法成功直连打洞
+  - GEOSITE,category-public-tracker,🌐默认直连 # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
+  - GEOSITE,category-cas,🌐默认直连 # 证书颁发机构，直连以防止证书错误
   - RULE-SET,🔐PT-Web-FISH,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
-  - GEOSITE,category-pt,DIRECT # PT tracker，必须直连，否则会代理上传下载
-  - RULE-SET,🔐PT-Tracker,DIRECT # PT tracker，必须直连，否则会代理上传下载
+  - RULE-SET,🔐PT-Tracker,🌐默认直连 # PT tracker，必须直连，否则会代理上传下载
+  - GEOSITE,category-pt,🌐默认直连 # PT tracker，必须直连，否则会代理上传下载
 
   #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
+  - GEOSITE,onedrive,☁️微软云盘 # 微软云盘，放于微软服务前是因为可能特定情况需要代理
   - GEOSITE,microsoft,Ⓜ️微软服务 # 微软服务，放于GFW后是因为github等在GFW中需要代理
   - GEOSITE,steam,🎮Steam # Steam，默认直连，换区时修改此处，放于GFW之后是因创意工坊需始终代理
   # 私有地址绕过块
-  - GEOIP,private,DIRECT,no-resolve # 私有地址直连
-  - GEOSITE,private,DIRECT # 私有地址直连
+  - GEOIP,private,🌐默认直连,no-resolve # 私有地址直连
+  - GEOSITE,private,🌐默认直连 # 私有地址直连
   - GEOSITE,cn,🌐默认直连 # 地理位置在中国的域名，不包括谷歌在中国的域名避免谷歌商店下载问题
   - GEOIP,cn,🌐默认直连,no-resolve # 中国IP
   - MATCH,🐟漏网之鱼 # 漏网之鱼
