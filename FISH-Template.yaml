@@ -234,16 +234,12 @@ health-check-general: &health-check-general # 自动选择通用配置
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
   ############################ smart 内核 #################################
-  # 策略优先级配置
-  #policy-priority: "Premium:0.9;SG:1.3"
-  # 启用 LightGBM 模型预测
-  uselightgbm: true
-  # 启用数据收集用于模型训练
-  collectdata: true
-  # 数据采样率（0-1）
-  sample-rate: 1
-  # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策
-  prefer-asn: true
+  #strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
+  #policy-priority: "Premium:0.9;SG:1.3" # 策略优先级配置
+  uselightgbm: true # 启用 LightGBM 模型预测
+  collectdata: true # 启用数据收集用于模型训练
+  sample-rate: 1 # 数据采样率（0-1）
+  prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策
 
 default-proxy-low: &default-proxy-low # 默认代理-低倍节点
   proxies:
