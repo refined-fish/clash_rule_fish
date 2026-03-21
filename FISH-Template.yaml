@@ -233,7 +233,7 @@ health-check-general: &health-check-general # 自动选择通用配置
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
   ############################ smart 内核 #################################
   #strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
-  #policy-priority: "Premium:0.9;SG:1.3" # 策略优先级配置
+  policy-priority: "跑路:1.3" # 策略优先级配置
   uselightgbm: true # 启用 LightGBM 模型预测
   collectdata: true # 启用数据收集用于模型训练
   sample-rate: 1 # 数据采样率（0-1）
@@ -241,8 +241,9 @@ health-check-general: &health-check-general # 自动选择通用配置
 
 default-proxy-low: &default-proxy-low # 默认代理-低倍节点
   proxies:
-    - ♻️延迟最低（低倍节点）
-    - ♻️延迟最低（优质节点）
+    - 🟢智能选择（低倍节点）
+    - 🟡智能选择（常规节点）
+    - 🔴智能选择（高倍节点）
     - 🖐️手动切换
     - 🇭🇰香港节点
     - 🇨🇳台湾节点
@@ -251,10 +252,11 @@ default-proxy-low: &default-proxy-low # 默认代理-低倍节点
     - 🇺🇲美国节点
     - DIRECT
 
-default-proxy-good: &default-proxy-good # 默认代理-优质节点
+default-proxy-normal: &default-proxy-normal # 默认代理-常规节点
   proxies:
-    - ♻️延迟最低（优质节点）
-    - ♻️延迟最低（低倍节点）
+    - 🟡智能选择（常规节点）
+    - 🟢智能选择（低倍节点）
+    - 🔴智能选择（高倍节点）
     - 🖐️手动切换
     - 🇭🇰香港节点
     - 🇨🇳台湾节点
@@ -266,8 +268,9 @@ default-proxy-good: &default-proxy-good # 默认代理-优质节点
 default-direct: &default-direct # 默认直连组
   proxies:
     - DIRECT
-    - ♻️延迟最低（低倍节点）
-    - ♻️延迟最低（优质节点）
+    - 🟢智能选择（低倍节点）
+    - 🟡智能选择（常规节点）
+    - 🔴智能选择（高倍节点）
     - 🖐️手动切换
     - 🇭🇰香港节点
     - 🇨🇳台湾节点
@@ -292,8 +295,9 @@ proxy-groups:
     type: select
     proxies:
       - 🇨🇳台湾节点
-      - ♻️延迟最低（优质节点）
-      - ♻️延迟最低（低倍节点）
+      - 🟡智能选择（常规节点）
+      - 🟢智能选择（低倍节点）
+      - 🔴智能选择（高倍节点）
       - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇸🇬狮城节点
@@ -339,15 +343,20 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   ##################################
-  - name: ♻️延迟最低（低倍节点）
+  - name: 🟢智能选择（低倍节点）
     type: smart
     filter: '\[0\.\d+\]|0\.\d+倍'
     <<: *health-check-general
 
-  - name: ♻️延迟最低（优质节点）
+  - name: 🟡智能选择（常规节点）
     type: smart
     filter: "(?i)港|HK|hk|Hong Kong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia"
-    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
+    exclude-filter: '\[0\.\d+\]|0\.\d+倍|\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍'
+    <<: *health-check-general
+
+  - name: 🔴智能选择（高倍节点）
+    type: smart
+    filter: '(?i)(港|HK|hk|Hong Kong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia).*(\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍)'
     <<: *health-check-general
 
   - name: 🖐️手动切换
@@ -359,31 +368,31 @@ proxy-groups:
     type: smart
     <<: *health-check-general
     filter: "港|HK|hk|Hong Kong|HongKong|hongkong"
-    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
+    exclude-filter: '\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍'
 
   - name: 🇯🇵日本节点
     type: smart
     <<: *health-check-general
     filter: "日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan"
-    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
+    exclude-filter: '\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍'
 
   - name: 🇺🇲美国节点
     type: smart
     <<: *health-check-general
     filter: "美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States"
-    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
+    exclude-filter: '\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍'
 
   - name: 🇨🇳台湾节点
     type: smart
     <<: *health-check-general
     filter: "台|新北|彰化|TW|Taiwan"
-    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
+    exclude-filter: '\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍'
 
   - name: 🇸🇬狮城节点
     type: smart
     <<: *health-check-general
     filter: "新加坡|坡|狮城|SG|Singapore"
-    exclude-filter: '\[0\.\d+\]|0\.\d+倍'
+    exclude-filter: '\[(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)\]|(1\.[1-9]\d*|[2-9](\.\d+)?|\d{2,}(\.\d+)?)倍'
 
 ## 规则提供者设置---------------------------------------------------------------------------------------------------
 rule-providers-general: &rule-providers-general
