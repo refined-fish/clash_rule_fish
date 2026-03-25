@@ -1,3 +1,10 @@
+## 注意❗
+
+近期本项目切换到了[Smart](https://github.com/vernesong/OpenClash/releases/tag/mihomo)内核（内核特点见[Smart内核工作原理](https://clashparty.org/docs/guide/smart-core-principles)），因此配置文件中的url-test均更换成了Smart策略，如还在使用原本内核，那么需要手动修改一下才可以继续使用，或者跟随本项目切换到Smart内核
+
+  >如果你是自建的代理，那么smart内核对你来说是没有区别的，不需要更换。如果你是用杂牌节点，普遍质量不高，那么smart内核可以给你带来更好的使用体验
+
+
 # Clash_Rule_FISH 简介
 
 这是一个 `Mihomo` 的 `配置文件` + `Ruleset` 仓库，但 **个人色彩** 比较重，更推荐作为参考而不是直接引用。

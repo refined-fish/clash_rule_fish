@@ -25,6 +25,7 @@ payload:
   #################### openWRT
   - DOMAIN-SUFFIX,openwrt.ai # 在线固件定制-kiddin9
   - DOMAIN,git.openwrt.org # openwrt源码库
+  - DOMAIN,openwrt.org # openwrt官网
   - DOMAIN,sources.cdn.openwrt.org # openwrt源码库
   - DOMAIN,mirror2.openwrt.org # openwrt源码库
   - DOMAIN,www.lwfinger.com # openwrt工具链之一
