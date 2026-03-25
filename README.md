@@ -1,43 +1,36 @@
-## 注意❗
-
-近期本项目切换到了[Smart](https://github.com/vernesong/OpenClash/releases/tag/mihomo)内核（内核特点见[Smart内核工作原理](https://clashparty.org/docs/guide/smart-core-principles)），因此配置文件中的url-test均更换成了Smart策略，如还在使用原本内核，那么需要手动修改一下才可以继续使用，或者跟随本项目切换到Smart内核
-
-  >如果你是自建的代理，那么smart内核对你来说是没有区别的，不需要更换。如果你是用杂牌节点，普遍质量不高，那么smart内核可以给你带来更好的使用体验
-
-
 # Clash_Rule_FISH 简介
 
-这是一个 `Mihomo` 的 `配置文件` + `Ruleset` 仓库，但 **个人色彩** 比较重，更推荐作为参考而不是直接引用。
+这是一个 `Mihomo` 的 `yaml配置文件` + `Rule-Provider` 仓库，但个人色彩很重，更推荐作为参考而不是直接引用。
 
-  > 当然直接引用也可以😂
+  > 当然直接引用也可以😂，只是不那么方便
 
-仓库提供的 [配置文件模板](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml) 无法直接导入代理软件运行，因为缺少必要的订阅链接，请自行修改后使用。（修改 [教程](https://github.com/refined-fish/clash_rule_fish#mihomo-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9%E6%95%99%E7%A8%8B) 见下文）
+仓库提供的配置文件模板 [FISH-Template.yaml](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml) 无法直接导入代理软件运行，因为缺少必要的订阅链接等个性化内容，请自行修改补齐后使用。（修改 [教程](https://github.com/refined-fish/clash_rule_fish#mihomo-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9%E6%95%99%E7%A8%8B) 见下文）
+
+## 注意❗
+
+近期本项目切换到了 [官改Smart](https://github.com/vernesong/OpenClash/releases/tag/mihomo) 内核（内核特点见 [Smart内核工作原理](https://clashparty.org/docs/guide/smart-core-principles) ），因此配置文件中的`url-test`/`load-balance`均更换成了`Smart`策略，如还在使用mihomo官方内核，那么需要手动改回后继续使用，或者跟随本项目切换到Smart内核
+
+  >如果你是自建的稳定出口，那么Smart内核对你来说是没有区别的，不需要更换。如果你是用杂牌节点，普遍质量不高，那么Smart内核可以给你带来更好的使用体验，自动选择尽量最优秀的流量出口
 
 ## Some Tips
 
-**关于路由规则**： 非必要时更推荐各位朋友直接使用 `GEO数据库` ，减少外部依赖，简化配置文件，提升使用体验❤️
+**关于Rule**： 非必要时更推荐各位朋友直接使用 `GEO数据库` ，减少外部依赖，简化配置文件，提升使用体验❤️
 
-**关于Fake-IP**：Fakeip的很多优势是redir-host无法比拟的，而且实际上不存在以前仓库下面描述的问题，对于喜欢redir-host模式的朋友，仓库也保留了原来redir-host模式的备份可供参考。
-
-> **（原）关于Fake-IP**：~~我没有感受Fakeip到明显的访问加速，但却感受到了许多问题，例如安全软件不支持Fakeip，BT下载、游戏也受到影响。需要额外配置过滤来规避这些影响，增加维护复杂度并且不能一劳永逸。所以本仓库直接全面放弃，但在注释中保留了相关内容，有需要的人可以自行研究。~~
+**关于Fake-IP**：Fakeip的很多优势是redir-host无法比拟的，而且rule模式也能让会受到影响的流量回退到real-ip模式消除不利影响。对于喜欢redir-host模式的朋友，仓库也保留了原来redir-host模式的备份可供参考，但不再更新。
 
 **关于订阅转换**： 由于最常用的订阅转换工具 [**`subconverter`**](https://github.com/tindy2013/subconverter) 不能灵活支持配置 **`mihomo`** 的全部字段，因此本仓库没有提供订阅转换模板。本仓库的模板也不能直接变成 **`subconverter`** 的 `远程配置` 使用。如果你想用本仓库的模板实现远程订阅，自动同步仓库更新，此处提供一种较为复杂的 [方案](https://github.com/refined-fish/clash_rule_fish#%E5%B0%86%E6%9C%AC%E4%BB%93%E5%BA%93%E4%BD%9C%E4%B8%BA%E8%BF%9C%E7%A8%8B%E8%AE%A2%E9%98%85%E4%BD%BF%E7%94%A8) 见下文。
 
 **最后** ：欢迎各位在 `issue` 友善🙌讨论，我看到了都会抽时间回复。**值得注意的是**，无论你有什么问题，我都建议你先查看 **mihomo [官方文档](https://wiki.metacubex.one/config/general/)**，以及学会 **`yaml`** 的一般语法，否则你既不能学会 mihomo 的使用，也可能浪费自己和大家的时间🥲
 
-## 一、Ruleset
+---
 
-**`♻️自动选择-FISH`** ：此规则收录的主要是 `geosite:gfw` 以外，必须代理或者是代理后体验更好的域名。
-
-**`🌐Direct-FISH`** ：此规则收录的是被包括在 `一般代理规则集` 内，但是实际可以直连或者是直连后体验更好的域名。
-
-## 二、Icon
+## Icon
 
 mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收集了部分icon图标以供引用，效果如下
   
   ![image](https://github.com/user-attachments/assets/9fbfd5f6-fe80-4745-8ba0-e1716ccce26f)
 
-## 三、如何使用本仓库配置文件模板（订阅版）
+## 直接使用本仓库配置文件模板
 
 1. 下载[配置文件模板](https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/FISH-Template.yaml)，找到模板中 `代理提供者` 部分
 
@@ -88,7 +81,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
 
 5. 然后就可以将修改后的yaml文件导入代理软件中当做配置文件使用了。
 
-## 四、如何将本仓库作为远程订阅
+## 将本仓库作为远程订阅
 
   若想将本仓库模板变成远程订阅，需要以下前置条件（或者你能看懂原理，自己用其他能达到效果的方法也可以）：
 
