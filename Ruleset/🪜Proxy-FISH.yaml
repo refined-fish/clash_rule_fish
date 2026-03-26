@@ -43,6 +43,7 @@ payload:
   - DOMAIN-SUFFIX,thunderstore.io # mod下载站，steam游戏mod下载站
   - DOMAIN-SUFFIX,pegasus-frontend.org # 天马G主页
   - DOMAIN-SUFFIX,prodkeys.net # NS密钥下载
+  - DOMAIN-SUFFIX,switch618.com # 知名游戏破解站Switch618
   - DOMAIN,v3.stardew.info # 星露谷物语在线编辑器
   - DOMAIN-SUFFIX,simcitybuildit.com # 模拟城市天际线-ipad版，可以直连但是卡顿，代理提高访问体验
   - DOMAIN,git.citron-emu.org # Citron模拟器源码仓库
