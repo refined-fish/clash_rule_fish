@@ -114,6 +114,7 @@ dns:
     - geosite,category-game-platforms-download,real-ip # 各类游戏平台下载域名，包括steam下载
     - geosite,tailscale,real-ip # Tailscale域名，包括P2P打洞过程
     - geosite,category-cas,real-ip # 各类证书颁发机构域名
+    - rule-set,🌐Direct-FISH,real-ip # 个人收集的直连域名，包含GeoSite未分类或分类到非cn的零散域名
     - MATCH,fake-ip # 因cn集较小，因此采用未匹配的全部fakeip
   #fake-ip-ttl: 600 # fakeip查询返回的TTL，非必要情况下请勿修改
 
