@@ -226,7 +226,7 @@ use-all-proxy-providers: &use-all-proxy-providers # 代理组通用配置
 
 health-check-general: &health-check-general # 自动选择通用配置
   <<: *use-all-proxy-providers
-  url: http://www.gstatic.com/generate_204
+  url: https://www.gstatic.com/generate_204
   interval: 30 # 健康检查间隔
   tolerance: 100 # 延迟容忍度，单位ms
   lazy: true # 未选中当前组时不进行测试
