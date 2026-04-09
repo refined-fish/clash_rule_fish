@@ -447,6 +447,7 @@ rules:
   - GEOSITE,category-game-platforms-download,🌐默认直连 # 各类游戏平台下载域名，包括steam下载
   # 编程相关
   - GEOSITE,category-container,⬇️大文件代理 # 各种容器服务
+  - GEOSITE,docker,⬇️大文件代理 # docker容器服务
   - GEOSITE,python,🧱GFW # Python服务，例如pip直连下载较慢
   # telegram相关
   - GEOSITE,telegram,✈️Telegram # Telegram服务
