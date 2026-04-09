@@ -291,6 +291,10 @@ proxy-groups:
   - name: 🐟漏网之鱼
     type: select
     <<: *default-direct
+
+  - name: ⬇️大文件代理
+    type: select
+    <<: *default-proxy-low
   ##################################
   - name: 🤖国外AI
     type: select
@@ -433,6 +437,7 @@ rules:
   # FISH自定义规则块
   - RULE-SET,🪜Proxy-FISH,🧱GFW # FISH自定义代理
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
+  - RULE-SET,🪜Download-FISH,⬇️大文件代理 # FISH自定义大文件代理
 
   #### 代理规则块，按照使用频率/包含关系排序
   # AI相关

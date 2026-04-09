@@ -1,0 +1,4 @@
+payload:
+  ## 无论何时必须被代理，而且为大容量下载的域名列表
+  #################### wiki
+  - DOMAIN,release-assets.githubusercontent.com # GitHub release资源
