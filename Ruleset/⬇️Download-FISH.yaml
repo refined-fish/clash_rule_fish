@@ -1,4 +1,37 @@
 payload:
   ## 无论何时必须被代理，而且为大容量下载的域名列表
-  #################### wiki
+  #################### 软件资源下载
   - DOMAIN,release-assets.githubusercontent.com # GitHub release资源
+  - DOMAIN,raw.githubusercontent.com # GitHub资源
+  - DOMAIN,production.cloudflare.docker.com # Docker Hub资源
+
+  #################### openWRT
+  - DOMAIN,git.openwrt.org # openwrt源码库
+  - DOMAIN,sources.cdn.openwrt.org # openwrt源码库
+  - DOMAIN,mirror2.openwrt.org # openwrt源码库
+  - DOMAIN,www.lwfinger.com # openwrt工具链之一
+
+  #################### 💻CodeSource，程序源码规则集，一般用于编译或下载程序资源/更新等
+  - DOMAIN,artifacts.bitwarden.com # bitwarden安装程序资源下载网址，不代理的话bitwarden安装过程要10+分钟
+  - DOMAIN,www.python.org # Python源码相关分发
+  - DOMAIN,cdn.kernel.org # Linux内核下载地址
+  - DOMAIN-SUFFIX,sourceware.org # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,ftpmirror.gnu.org # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,mirror.lyrahosting.com # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,ftp.nluug.nl # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,ftp.wayne.edu # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,mirror.cyberbits.eu # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,static.rust-lang.org # 代码托管服务器，包括大部分GNU工具链，编译openwrt会用到
+  - DOMAIN,cache.ruby-lang.org # ruby代码分发
+  - DOMAIN,git.codelinaro.org # codelinaro代码分发
+  - DOMAIN,mirror.csclub.uwaterloo.ca # 滑铁卢大学代码分发镜像加速
+  - DOMAIN,mirror.netcologne.de # 德国科隆电信公司分发服务器
+  - DOMAIN,www.busybox.net # busybox源码
+  - DOMAIN,repo.jellyfin.org # Jellyfin仓库，亚太地区的CDN，用于下载更新/插件等等
+  - DOMAIN,sgp1.mirror.jellyfin.org # Jellyfin仓库，亚太地区的CDN，用于下载更新/插件等等
+  - DOMAIN,deb.debian.org # debian仓库
+
+  #################### Game
+  - DOMAIN,git.citron-emu.org # Citron模拟器源码仓库
+  - DOMAIN,git.ryujinx.app # Ryujinx模拟器源码仓库
+  - DOMAIN,git.eden-emu.dev # Eden模拟器源码仓库

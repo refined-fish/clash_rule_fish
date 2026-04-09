@@ -280,10 +280,6 @@ default-direct: &default-direct # 默认直连组
     - 🇺🇲美国节点
 
 proxy-groups:
-  - name: ✅默认代理
-    type: select
-    <<: *default-proxy-low
-
   - name: 🌐默认直连
     type: select
     <<: *default-direct
@@ -296,6 +292,11 @@ proxy-groups:
     type: select
     <<: *default-proxy-low
   ##################################
+  - name: 🧱GFW
+    type: select
+    <<: *default-proxy-normal
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
+
   - name: 🤖国外AI
     type: select
     proxies:
@@ -309,11 +310,6 @@ proxy-groups:
       - 🇯🇵日本节点
       - 🇺🇲美国节点
       - DIRECT
-
-  - name: 🧱GFW
-    type: select
-    <<: *default-proxy-normal
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
 
   - name: ✈️Telegram
     type: select
@@ -450,15 +446,15 @@ rules:
   # 游戏相关
   - GEOSITE,category-game-platforms-download,🌐默认直连 # 各类游戏平台下载域名，包括steam下载
   # 编程相关
-  - GEOSITE,category-container,✅默认代理 # 各种容器服务
-  - GEOSITE,python,✅默认代理 # Python服务，例如pip直连下载较慢
+  - GEOSITE,category-container,⬇️大文件代理 # 各种容器服务
+  - GEOSITE,python,🧱GFW # Python服务，例如pip直连下载较慢
   # telegram相关
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   # 影视相关
-  - GEOSITE,tmdb,✅默认代理 # TMDB服务，影视刮削，直连访问缓慢经常失败
+  - GEOSITE,tmdb,🧱GFW # TMDB服务，影视刮削，直连访问缓慢经常失败
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
-  - GEOSITE,category-porn,✅默认代理 # X网站
+  - GEOSITE,category-porn,⬇️大文件代理 # X网站
   # 其他
   - GEOSITE,tailscale,🌐默认直连 # 必须直连，否则tailscale无法成功直连打洞
   - GEOSITE,category-public-tracker,🌐默认直连 # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
