@@ -443,6 +443,7 @@ rules:
   #### 代理规则块，按照使用频率/包含关系排序
   # AI相关
   - GEOSITE,category-ai-!cn,🤖国外AI # 国外AI服务
+  - DOMAIN,www.google.com,🤖国外AI # Gemini会因此判定访问IP，不一致时触发风控
   # 游戏相关
   - GEOSITE,category-game-platforms-download,🌐默认直连 # 各类游戏平台下载域名，包括steam下载
   # 编程相关
