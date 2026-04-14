@@ -1,5 +1,8 @@
 payload:
   ## 无论何时必须被代理，而且为大容量下载的域名列表
+  #################### 下载服务商
+  - GEOSITE,mega # Mega.nz下载服务商，提供云存储和文件共享服务，常用于大文件的分发和下载
+
   #################### 软件资源下载
   - DOMAIN,release-assets.githubusercontent.com # GitHub release资源
   - DOMAIN,raw.githubusercontent.com # GitHub资源
