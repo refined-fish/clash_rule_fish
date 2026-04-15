@@ -444,26 +444,16 @@ rules:
   # AI相关
   - GEOSITE,category-ai-!cn,🤖国外AI # 国外AI服务
   - DOMAIN,www.google.com,🤖国外AI # Gemini会因此判定访问IP，不一致时触发风控
-  # 游戏相关
-  - GEOSITE,category-game-platforms-download,🌐默认直连 # 各类游戏平台下载域名，包括steam下载
-  # 编程相关
-  - GEOSITE,category-container,⬇️大文件代理 # 各种容器服务
-  - GEOSITE,docker,⬇️大文件代理 # docker容器服务
-  - GEOSITE,python,🧱GFW # Python服务，例如pip直连下载较慢
   # telegram相关
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   # 影视相关
   - GEOSITE,tmdb,🧱GFW # TMDB服务，影视刮削，直连访问缓慢经常失败
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
-  - GEOSITE,category-porn,⬇️大文件代理 # X网站
   # 其他
-  - GEOSITE,tailscale,🌐默认直连 # 必须直连，否则tailscale无法成功直连打洞
-  - GEOSITE,category-public-tracker,🌐默认直连 # 必须直连，否则BT会向Tracker上报代理IP，代理下载上传
-  - GEOSITE,category-cas,🌐默认直连 # 证书颁发机构，直连以防止证书错误
   - RULE-SET,🔐PT-Web-FISH,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
-  - RULE-SET,🔐PT-Tracker,🌐默认直连 # PT tracker，必须直连，否则会代理上传下载
-  - GEOSITE,category-pt,🌐默认直连 # PT tracker，必须直连，否则会代理上传下载
+  - RULE-SET,🔐PT-Tracker,🌐默认直连 # 需要放在PT-Web规则之后，PT tracker，必须直连，否则会代理上传下载
+  - GEOSITE,category-pt,🌐默认直连 # 需要放在PT-Web规则之后，PT tracker，必须直连，否则会代理上传下载
 
   #### 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
