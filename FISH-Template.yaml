@@ -36,7 +36,8 @@ external-controller: "[::]:9090" # API面板监听地址
 secret: "hd54RIm0LiUpyu" #🔴API面板访问密钥
 external-ui: ui # API面板静态资源路径
 external-ui-name: zashboard # API面板名，配合路径拼接成路径，例如/ui/metacubexd
-external-ui-url: "https://v6.gh-proxy.org/https://github.com/Zephyruso/zashboard/releases/latest/download/dist-no-fonts.zip" # API面板下载地址
+external-ui-url: "https://v6.gh-proxy.org/https://github.com/Zephyruso/zashboar\
+  d/releases/latest/download/dist-no-fonts.zip" # API面板下载地址
 
 ## 缓存设置
 profile:
@@ -44,11 +45,12 @@ profile:
   store-fake-ip: true # 缓存 fakeip 映射表
   ################################## smart设置 ####################################
   # 使用非smart内核时这些配置会被忽略
-  smart-collector-size: 30 # 数据收集文件大小限制（MB）
+  smart-collector-size: 100 # 数据收集文件大小限制（MB）
 
 lgbm-auto-update: true # 启用模型自动更新
 lgbm-update-interval: 72 # 模型更新间隔（小时）
-lgbm-url: "https://v6.gh-proxy.org/https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin" # 模型下载地址
+lgbm-url: "https://v6.gh-proxy.org/https://github.com/vernesong/mihomo/releases\
+  /download/LightGBM-Model/Model.bin" # 模型下载地址
 ################################## smart设置 ####################################
 
 ## 其他设置
@@ -64,10 +66,14 @@ geo-auto-update: true # GEO文件自动更新
 geo-update-interval: 168 # 更新间隔，小时
 geox-url:
   # GEO数据库下载地址，内核会按需下载，未被使用的数据库不会被下载，采用star最多的v2ray项目，修bug很快
-  geoip: "https://v6.gh-proxy.org/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
-  geosite: "https://v6.gh-proxy.org/https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
-  mmdb: "https://v6.gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
-  asn: "https://v6.gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+  geoip: "https://v6.gh-proxy.org/https://github.com/Loyalsoldier/v2ray-rules-dat\
+    /releases/latest/download/geoip.dat"
+  geosite: "https://v6.gh-proxy.org/https://github.com/Loyalsoldier/v2ray-rules-d\
+    at/releases/latest/download/geosite.dat"
+  mmdb: "https://v6.gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/rele\
+    ases/download/latest/country.mmdb"
+  asn: "https://v6.gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/relea\
+    ses/download/latest/GeoLite2-ASN.mmdb"
 global-ua: clash.meta # 全局UA，默认为clash.meta
 etag-support: true # 资源下载的 ETag 支持，使重复资源不会重复下载
 
@@ -377,13 +383,17 @@ proxy-groups:
 
   - name: 🟡智能选择（常规节点）
     type: smart
-    filter: "(?i)港|HK|hk|HongKong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
+    filter: "(?i)港|HK|hk|HongKong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉\
+      日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|\
+      洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia"
+    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[\
+      1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
     <<: *health-check-general
 
   - name: 🔴智能选择（高倍节点）
     type: smart
-    filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)倍"
+    filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)\\]|(1\\.[1-9]\\\
+      d*|[2-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)倍"
     exclude-filter: "\\[0\\.\\d+\\]|0\\.\\d+倍"
     <<: *health-check-general
 
@@ -396,31 +406,36 @@ proxy-groups:
     type: smart
     <<: *health-check-general
     filter: "港|HK|hk|Hong Kong|HongKong|hongkong"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
+    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[\
+      1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
 
   - name: 🇯🇵日本节点
     type: smart
     <<: *health-check-general
     filter: "日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
+    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[\
+      1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
 
   - name: 🇺🇲美国节点
     type: smart
     <<: *health-check-general
     filter: "美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
+    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[\
+      1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
 
   - name: 🇨🇳台湾节点
     type: smart
     <<: *health-check-general
     filter: "台|新北|彰化|TW|Taiwan"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
+    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[\
+      1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
 
   - name: 🇸🇬狮城节点
     type: smart
     <<: *health-check-general
     filter: "新加坡|坡|狮城|SG|Singapore"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
+    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)\\]|(1\\.[\
+      1-9]\\d*|[2-9](\\.\\d+)?|\\d{2,}(\\.\\d+)?)倍"
 
 ## 规则提供者设置---------------------------------------------------------------------------------------------------
 rule-providers-general: &rule-providers-general
