@@ -36,6 +36,9 @@ payload:
   - DOMAIN,repo.jellyfin.org # Jellyfin仓库，亚太地区的CDN，用于下载更新/插件等等
   - DOMAIN,sgp1.mirror.jellyfin.org # Jellyfin仓库，亚太地区的CDN，用于下载更新/插件等等
   - DOMAIN,deb.debian.org # debian仓库
+  - DOMAIN,launchpad.proxy.ustclug.org # launchpad仓库，提供Ubuntu和Debian的软件包和源代码
+  - DOMAIN,ftp.gwdg.de # 
+  - DOMAIN,www.nic.funet.fi
 
   #################### Game
   - DOMAIN,git.citron-emu.org # Citron模拟器源码仓库
