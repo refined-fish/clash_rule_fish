@@ -15,6 +15,7 @@ payload:
   - DOMAIN,router.bittorrent.com # tracker
   - GEOSITE,category-game-platforms-download # 游戏平台下载
   - GEOSITE,category-public-tracker
+  - DOMAIN,v6.gh-proxy.org # GitHub等国外站点的下载加速服务，直连可以获得更快的下载速度
 
   #################### Stun
   - GEOSITE,tailscale
