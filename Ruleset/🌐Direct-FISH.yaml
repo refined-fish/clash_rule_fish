@@ -11,8 +11,9 @@ payload:
   - DOMAIN-SUFFIX,duoqin.com # 多亲域名，用于多亲系列手机守护软件
   - GEOSITE,category-cas # 证书颁发机构，直连以防止证书错误
   - DOMAIN-SUFFIX,tmspk.net # teamspeak语音聊天
+  - DOMAIN-SUFFIX,teamspeak.com # teamspeak语音聊天
 
-  #################### 下载
+  -  #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
   - GEOSITE,category-game-platforms-download # 游戏平台下载
   - GEOSITE,category-public-tracker
