@@ -10,6 +10,7 @@ payload:
   - DOMAIN,mqtt.xbase.cloud # HASS.Agent客户端使用的MQTT服务器
   - DOMAIN-SUFFIX,duoqin.com # 多亲域名，用于多亲系列手机守护软件
   - GEOSITE,category-cas # 证书颁发机构，直连以防止证书错误
+  - DOMAIN-SUFFIX,tmspk.net # teamspeak语音聊天
 
   #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
