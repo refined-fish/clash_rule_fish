@@ -12,6 +12,7 @@ payload:
   - GEOSITE,category-cas # 证书颁发机构，直连以防止证书错误
   - DOMAIN-SUFFIX,tmspk.net # teamspeak语音聊天
   - DOMAIN-SUFFIX,teamspeak.com # teamspeak语音聊天
+  - DOMAIN-SUFFIX,myteamspeak.com # teamspeak服务器列表
 
   -  #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
