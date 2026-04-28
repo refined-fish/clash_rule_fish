@@ -118,10 +118,9 @@ dns:
   fake-ip-range6: fdfe:dcba:9876::1/64 # fakeip 的 IPv6 段
   fake-ip-filter-mode: rule # 工作模式，blacklist/whitelist/rule，黑名单下，filter内容将使用redir-host模式解析
   fake-ip-filter:
-    # fakeip规则列表，按照命中频率进行排序
-    - geosite,google,fake-ip # 谷歌域名，因存在中国业务故部分域名被包含到cn中，须指明Fakeip
+    # fakeip规则列表，按照命中频率、优先级和包含关系进行排序
+    - geosite,google,fake-ip # 谷歌域名，部分域名因存在中国业务名被包含到cn中直连而出现商店下载问题，须指明Fakeip匹配规则
     - rule-set,🪜Proxy-FISH,fake-ip # 个人收集的代理域名，包含GeoSite未分类或分类到cn的零散域名
-    - geosite,cn,real-ip # 中国域名
     - geosite,category-ads-all,real-ip # 广告域名，交给redirect-host模块返回空结果
     - rule-set,🔐PT-Tracker,real-ip # PT tracker，必须直连，否则会代理上传下载
     - geosite,category-public-tracker,real-ip # 公共tracker域名
@@ -131,6 +130,7 @@ dns:
     - geosite,tailscale,real-ip # Tailscale域名，包括P2P打洞过程
     - geosite,category-cas,real-ip # 各类证书颁发机构域名
     - rule-set,🌐Direct-FISH,real-ip # 个人收集的直连域名，包含GeoSite未分类或分类到非cn的零散域名
+    - geosite,cn,real-ip # 中国域名
     - MATCH,fake-ip # 因cn集较小，因此采用未匹配的全部fakeip
   #fake-ip-ttl: 600 # fakeip查询返回的TTL，非必要情况下请勿修改
 
