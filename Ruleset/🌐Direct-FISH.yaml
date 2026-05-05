@@ -1,7 +1,7 @@
 payload:
   ## 无论何时必须被直连的域名列表
   #################### 杂项
-  # CN域名
+  - DOMAIN-SUFFIX,steelseries.com # 赛睿官网，可以直连访问获取最新的驱动程序和固件更新
   - DOMAIN,api.ipify.org # ip查询
   - DOMAIN,bam.nr-data.net # NewRelic数据上报，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
   - DOMAIN-SUFFIX,sentry.io # sentry错误上报程序，很多程序都包含了此功能用于开发者追踪错误，频繁上报者会使用很多流量故强制直连
@@ -14,7 +14,7 @@ payload:
   - DOMAIN-SUFFIX,teamspeak.com # teamspeak语音聊天
   - DOMAIN-SUFFIX,myteamspeak.com # teamspeak服务器列表
 
-  -  #################### 下载
+  #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
   - GEOSITE,category-game-platforms-download # 游戏平台下载
   - GEOSITE,category-public-tracker
