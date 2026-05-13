@@ -34,7 +34,7 @@ payload:
   - DOMAIN,stun.fitauto.ru
 
   #################### 🚫Porn-FISH
-  - DOMAIN,hanime1.me # 代理访问会导致无法加载，直连访问正常
+  #- DOMAIN,hanime1.me # 代理访问会导致无法加载，直连访问正常
 
   #################### 科研网站，不允许代理访问
   - DOMAIN,ncbi.nlm.nih.gov
