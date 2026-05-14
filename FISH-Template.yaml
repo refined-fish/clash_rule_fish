@@ -264,7 +264,7 @@ health-check-general:
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
   ############################ smart 内核 #################################
   #strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
-  policy-priority: "跑路:1.2" # 策略优先级配置
+  #policy-priority: "跑路:1.2" # 策略优先级配置
   uselightgbm: true # 启用 LightGBM 模型预测
   collectdata: true # 启用数据收集用于模型训练
   sample-rate: 1 # 数据采样率（0-1）
