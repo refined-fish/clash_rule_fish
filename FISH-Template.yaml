@@ -213,7 +213,7 @@ tun:
 # 代理提供者通用配置
 proxy-providers-general: &proxy-providers-general
   type: http # 类型，可选http/file/inline
-  interval: 259200 # 更新间隔，单位秒（259200=3天）
+  interval: 86400 # 更新间隔，单位秒（86400=1天，259200=3天）一般垃圾机场建议1天
   proxy: 🌐默认直连 # http类型更新时使用的代理组，不建议设置代理，如果你的订阅需要代理才能订阅，那先有鸡还是先有蛋？
   size-limit: 0 # 文件大小限制，0为不限制
   exclude-filter: "(?i)官网|每月刷新订阅|到期|https://|剩余流量" # 排除的节点名称
