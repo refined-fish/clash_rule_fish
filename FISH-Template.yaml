@@ -42,9 +42,9 @@ external-ui-url: "https://v6.gh-proxy.org/https://github.com/Zephyruso/zashboard
 profile:
   store-selected: true # 缓存 API面板 对策略组的选择
   store-fake-ip: true # 缓存 fakeip 映射表
-  ################################## smart设置 ####################################
+################################## smart设置 ####################################
   # 使用非smart内核时这些配置会被忽略
-  smart-collector-size: 100 # 数据收集文件大小限制（MB）
+  smart-collector-size: 100 # 数据收集文件大小限制（MB），到达限制后不会计入新的数据，节点轮换太频繁可能需要手动删除重建
 
 lgbm-auto-update: true # 启用模型自动更新
 lgbm-update-interval: 72 # 模型更新间隔（小时）
@@ -249,16 +249,17 @@ health-check-general: &health-check-general
   url: https://www.gstatic.com/generate_204
   interval: 30 # 健康检查间隔
   tolerance: 100 # 延迟容忍度，单位ms
-  lazy: true # 未选中当前组时不进行测试
+  lazy: false # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
   ############################ smart 内核 #################################
-  #strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
-  policy-priority: "三毛:0.5" # 策略优先级配置< 1：提高优先级（降低延迟权重）> 1：降低优先级（增加延迟权重），= 0：总是优先使用（不推荐）
+  strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
+  policy-priority: "三毛:2" # 策略优先级配置> 1：提高优先级；< 1：降低优先级，默认权重为1
   uselightgbm: true # 启用 LightGBM 模型预测
   collectdata: true # 启用数据收集用于模型训练
   sample-rate: 1 # 数据采样率（0-1）
   prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策
+  ############################ smart 内核 #################################
 
 # 默认代理-低倍节点
 default-proxy-low: &default-proxy-low
@@ -339,6 +340,21 @@ proxy-groups:
     <<: *default-proxy-low
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Telegram.png
 
+  - name: 📺Youtube
+    type: select
+    proxies:
+      - 🇭🇰香港节点
+      - 🇨🇳台湾节点
+      - 🇸🇬狮城节点
+      - 🇯🇵日本节点
+      - 🇺🇲美国节点
+      - 🟢智能选择（低倍节点）
+      - 🟡智能选择（常规节点）
+      - 🔴智能选择（高倍节点）
+      - 🖐️手动切换
+      - DIRECT
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Youtube.png
+
   - name: 📺巴哈姆特
     type: select
     proxies:
@@ -363,7 +379,7 @@ proxy-groups:
 
   - name: 🔐PT网站
     type: select
-    <<: *default-proxy-low
+    <<: *default-proxy-normal
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   ##################################
@@ -475,6 +491,7 @@ rules:
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
   # 影视相关
   - GEOSITE,tmdb,🧱GFW # TMDB服务，影视刮削，直连访问缓慢经常失败
+  - GEOSITE,youtube,📺Youtube # Youtube服务
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   # 其他
   - RULE-SET,🔐PT-Web-FISH,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
