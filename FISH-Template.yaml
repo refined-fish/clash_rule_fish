@@ -45,8 +45,7 @@ profile:
   smart-collector-size: 100 # 数据收集文件大小限制（MB），到达限制后不会计入新的数据，节点轮换太频繁可能需要手动删除重建
 lgbm-auto-update: true # 启用模型自动更新
 lgbm-update-interval: 72 # 模型更新间隔（小时）
-lgbm-url: "https://v6.gh-proxy.org/https://github.com/vernesong/mihomo/releases\
-  /download/LightGBM-Model/Model.bin" # 模型下载地址
+lgbm-url: "https://v6.gh-proxy.org/https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin" # 模型下载地址
 # -------- Smart配置 --------
 
 ## 其他设置
@@ -112,6 +111,7 @@ dns:
   fake-ip-filter-mode: rule # 工作模式，blacklist/whitelist/rule，黑名单下，filter内容将使用redir-host模式解析
   fake-ip-filter:
     # fakeip规则列表，按照命中频率、优先级和包含关系进行排序
+    - GEOSITE,private,real-ip # 私有网络，直接返回真实IP，防止访问局域网设备进入内核处理
     - GEOSITE,google,fake-ip # 谷歌部分域名有中国业务，被包含到cn中直连，出现商店下载问题，须指明Fakeip引导进入内核匹配规则
     - RULE-SET,🪜Proxy-FISH,fake-ip # 个人收集的代理域名，包含GeoSite未分类或分类到cn的零散域名
     - GEOSITE,category-ads-all,real-ip # 广告域名，交给redirect-host模块返回空结果
