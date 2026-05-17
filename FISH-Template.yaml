@@ -106,8 +106,8 @@ dns:
   listen: "[::]:1053" # DNS监听端口，支持udp,tcp
   ipv6: true # 是否解析ipv6地址，否则返回空结果
   enhanced-mode: fake-ip # DNS处理模式：redir-host/fake-ip，fake-ip更快但可能引入问题（缓存fakeip后无法故障切换）
-  use-hosts: true # 查询配置文件中的 hosts
-  use-system-hosts: true # 查询系统的 hosts
+  use-hosts: true # 查询配置文件中的 hosts，默认true
+  use-system-hosts: true # 查询系统的 hosts，默认true
   respect-rules: false # DNS请求遵循路由规则，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题，强烈不建议和perfer-h3一起使用
 
   ## fakeip配置段
@@ -140,7 +140,7 @@ dns:
     # 优先级高于nameserver，匹配完成之后再去匹配nameserver和fallback
     "geosite:category-ads-all": rcode://success # 匹配广告域名，返回空结果
   nameserver: *public-dns # 兜底默认DNS组，未命中 nameserver-policy 时启用
-  #fallback: # 过时的配置，已被 nameserver-policy 取代，使用时100%产生DNS泄露
+  #fallback: # 过时的配置，使用时100%产生DNS泄露，已被 nameserver-policy 取代
 
   ################################ hosts配置 ---------------------------------------------------------------
 hosts:
@@ -475,12 +475,12 @@ rules:
   #### 对于必须直连者直接使用direct写死，其他尽可能使用代理组以方便面板控制以及切换测试
   # 禁用所有代理的QUIC，防止速度不佳和IP泄露，不包括国内网站
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOSITE,cn)))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,cn)))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,cn,no-resolve)))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
 
   # FISH自定义规则块
-  - RULE-SET,🪜Proxy-FISH,🧱GFW # FISH自定义代理
-  - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
-  - RULE-SET,⬇️Download-FISH,⬇️大文件代理 # FISH自定义大文件代理
+  - RULE-SET,🪜Proxy-FISH,🧱GFW,no-resolve # FISH自定义代理
+  - RULE-SET,🌐Direct-FISH,🌐默认直连,no-resolve # FISH自定义直连
+  - RULE-SET,⬇️Download-FISH,⬇️大文件代理,no-resolve # FISH自定义大文件代理
 
   #### 代理规则块，按照使用频率/包含关系排序
   # AI相关
@@ -494,8 +494,8 @@ rules:
   - GEOSITE,youtube,📺Youtube # Youtube服务
   - GEOSITE,bahamut,📺巴哈姆特 # 巴哈姆特服务
   # 其他
-  - RULE-SET,🔐PT-Web-FISH,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
-  - RULE-SET,🔐PT-Tracker,🌐默认直连 # 需要放在PT-Web规则之后，PT tracker，必须直连，否则会代理上传下载
+  - RULE-SET,🔐PT-Web-FISH,🔐PT网站,no-resolve # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
+  - RULE-SET,🔐PT-Tracker,🌐默认直连,no-resolve # 需要放在PT-Web规则之后，PT tracker，必须直连，否则会代理上传下载
   - GEOSITE,category-pt,🌐默认直连 # 需要放在PT-Web规则之后，PT tracker，必须直连，否则会代理上传下载
 
   #### 兜底规则块，一般精细的分流规则应在其上
