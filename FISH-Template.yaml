@@ -244,7 +244,7 @@ use-all-proxy-providers: &use-all-proxy-providers
 
 # 自动选择通用配置
 health-check-general: &health-check-general
-  <<: *use-all-proxy-providers
+  << : *use-all-proxy-providers # 引用嵌套必须全部都是锚点引用才可以嵌套
   url: https://www.gstatic.com/generate_204
   interval: 30 # 健康检查间隔
   tolerance: 100 # 延迟容忍度，单位ms
@@ -260,10 +260,67 @@ health-check-general: &health-check-general
   prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策
   ############################ smart 内核 #################################
 
+# 默认直连
+default-direct: &default-direct
+    - DIRECT
+    - 🟢智能选择（低倍节点）
+    - 🟡智能选择（常规节点）
+    - 🔴智能选择（高倍节点）
+    - 🖐️手动切换
+    - 🇭🇰香港节点
+    - 🇨🇳台湾节点
+    - 🇸🇬狮城节点
+    - 🇯🇵日本节点
+    - 🇺🇲美国节点
+
+# 默认代理-低倍节点
+default-proxy-low: &default-proxy-low
+    - 🟢智能选择（低倍节点）
+    - 🟡智能选择（常规节点）
+    - 🔴智能选择（高倍节点）
+    - 🖐️手动切换
+    - 🇭🇰香港节点
+    - 🇨🇳台湾节点
+    - 🇸🇬狮城节点
+    - 🇯🇵日本节点
+    - 🇺🇲美国节点
+    - DIRECT
+
+# 默认代理-常规节点
+default-proxy-normal: &default-proxy-normal
+    - 🟡智能选择（常规节点）
+    - 🟢智能选择（低倍节点）
+    - 🔴智能选择（高倍节点）
+    - 🖐️手动切换
+    - 🇭🇰香港节点
+    - 🇨🇳台湾节点
+    - 🇸🇬狮城节点
+    - 🇯🇵日本节点
+    - 🇺🇲美国节点
+    - DIRECT
+
 proxy-groups:
-  - name: 📦代理组模板 # 嵌套引用到其他组中的模板
+  - name: 🌐默认直连
+    type: select
+    proxies: *default-direct
+
+  - name: 🐟漏网之鱼
+    type: select
+    proxies: *default-direct
+
+  - name: ⬇️大文件代理
+    type: select
+    proxies: *default-proxy-low
+  ##################################
+  - name: 🧱GFW
+    type: select
+    proxies: *default-proxy-normal
+    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
+
+  - name: 🤖国外AI
     type: select
     proxies:
+      - 🇨🇳台湾节点
       - 🟢智能选择（低倍节点）
       - 🟡智能选择（常规节点）
       - 🔴智能选择（高倍节点）
@@ -275,49 +332,25 @@ proxy-groups:
       - 🇺🇲美国节点
       - DIRECT
 
-  - name: 🌐默认直连
-    type: select
-    proxies:
-      - DIRECT
-      - 📦代理组模板
-
-  - name: 🐟漏网之鱼
-    type: select
-    proxies:
-      - DIRECT
-      - 📦代理组模板
-
-  - name: ⬇️大文件代理
-    type: select
-    proxies:
-      - 🟢智能选择（低倍节点）
-      - 📦代理组模板
-  ##################################
-  - name: 🧱GFW
-    type: select
-    proxies:
-      - 🟡智能选择（常规节点）
-      - 📦代理组模板
-    icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
-
-  - name: 🤖国外AI
-    type: select
-    proxies:
-      - 🇨🇳台湾节点
-      - 📦代理组模板
-
   - name: ✈️Telegram
     type: select
-    proxies:
-      - 🟢智能选择（低倍节点）
-      - 📦代理组模板
+    proxies: *default-proxy-low
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Telegram.png
 
   - name: 📺Youtube
     type: select
     proxies:
       - 🇭🇰香港节点
-      - 📦代理组模板
+      - 🟢智能选择（低倍节点）
+      - 🟡智能选择（常规节点）
+      - 🔴智能选择（高倍节点）
+      - 🖐️手动切换
+      - 🇭🇰香港节点
+      - 🇨🇳台湾节点
+      - 🇸🇬狮城节点
+      - 🇯🇵日本节点
+      - 🇺🇲美国节点
+      - DIRECT
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Youtube.png
 
   - name: 📺巴哈姆特
@@ -330,30 +363,22 @@ proxy-groups:
 
   - name: 🎮Steam
     type: select
-    proxies:
-      - DIRECT
-      - 📦代理组模板
+    proxies: *default-direct
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Steam.png
 
   - name: ☁️微软云盘
     type: select
-    proxies:
-      - DIRECT
-      - 📦代理组模板
+    proxies: *default-direct
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/onedrive.png
 
   - name: Ⓜ️微软服务
     type: select
-    proxies:
-      - DIRECT
-      - 📦代理组模板
+    proxies: *default-direct
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft.png
 
   - name: 🔐PT网站
     type: select
-    proxies:
-      - DIRECT
-      - 📦代理组模板
+    proxies: *default-direct
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   ##################################
