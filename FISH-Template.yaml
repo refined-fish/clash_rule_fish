@@ -137,7 +137,7 @@ dns:
   nameserver-policy:
     # 优先级高于nameserver，匹配完成之后再去匹配nameserver和fallback
     "geosite:category-ads-all": rcode://success # 匹配广告域名，返回空结果
-    "geosite:geolocation-!cn": rcode://success # 匹配非中国地理位置域名，返回空结果，这些解析不应该发生在本地
+    "geosite:gfw": rcode://success # 匹配gfw域名，返回空结果，这些解析不应该发生在本地
   nameserver: *public-dns # 兜底默认DNS组，未命中 nameserver-policy 时启用
   #fallback: # 过时的配置，使用时100%产生DNS泄露，已被 nameserver-policy 取代
 
