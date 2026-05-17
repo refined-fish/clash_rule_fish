@@ -259,7 +259,7 @@ health-check-general: &health-check-general
   uselightgbm: true # 启用 LightGBM 模型预测
   collectdata: true # 启用数据收集用于模型训练
   sample-rate: 1 # 数据采样率（0-1）
-  prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策
+  #prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策，会导致本地解析，出现DNS泄露
   ############################ smart 内核 #################################
 
 # 默认直连
@@ -477,7 +477,7 @@ rules:
   #### 任何涉及到IP或者可能涉及到IP的规则，必须添加no-reslove防止本地DNS解析的发生
   # 禁用所有代理的QUIC，防止速度不佳和IP泄露，不包括国内网站
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOSITE,cn)))),REJECT # 禁用域名的QUIC，防止速度不佳和IP泄露
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,cn,no-resolve)))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,cn)))),REJECT # 禁用IP的QUIC，防止速度不佳和IP泄露
 
   # FISH自定义规则块
   - RULE-SET,🪜Proxy-FISH,🧱GFW,no-resolve # FISH自定义代理
