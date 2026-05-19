@@ -11,12 +11,17 @@
 ## 允许局域网
 allow-lan: true # 允许局域网连接
 bind-address: "*" # 绑定地址，仅允许其他设备通过这个地址访问，*为绑定所有地址
-lan-allowed-ips: [0.0.0.0/0, ::/0] # 允许连接的客户端IP，默认允许全部
-lan-disallowed-ips: [] # 禁止连接的 IP 地址段，黑名单优先级高于白名单，默认值为空
+lan-allowed-ips: # 允许连接的客户端IP，默认允许全部
+  - 0.0.0.0/0
+  - ::/0
+lan-disallowed-ips: # 禁止连接的 IP 地址段，黑名单优先级高于白名单，默认值为空
+  - ~
 
 ## 用户验证
-authentication: [] # http(s)/socks/mixed 的用户验证，格式："user1:pass1"，不写则禁止全部用户
-skip-auth-prefixes: [] # 白名单，允许跳过用户验证的IP
+authentication: # http(s)/socks/mixed 的用户验证，格式："user1:pass1"，不写则禁止全部用户
+  - ~
+skip-auth-prefixes: # 白名单，允许跳过用户验证的IP
+  - ~
 
 ## 其他设置
 mode: rule # 运行模式，rule（规则）/ global（全局）/ direct（直连）
