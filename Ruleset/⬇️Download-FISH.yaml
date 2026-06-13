@@ -7,6 +7,7 @@ payload:
   - DOMAIN,release-assets.githubusercontent.com # GitHub release资源
   - DOMAIN,raw.githubusercontent.com # GitHub资源
   - DOMAIN,pkg-containers.githubusercontent.com # GitHub Container Registry资源
+  - DOMAIN,productionresultssa7.blob.core.windows.net # github artifact资源下载
 
   #################### openWRT
   - DOMAIN,git.openwrt.org # openwrt源码库
