@@ -13,6 +13,7 @@ payload:
   - DOMAIN-SUFFIX,tmspk.net # teamspeak语音聊天
   - DOMAIN-SUFFIX,teamspeak.com # teamspeak语音聊天
   - DOMAIN-SUFFIX,myteamspeak.com # teamspeak服务器列表
+  - DOMAIN,sc.350303.xyz # Breeze的API中转站
 
   #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
