@@ -10,14 +10,12 @@ payload:
   - DOMAIN,mqtt.xbase.cloud # HASS.Agent客户端使用的MQTT服务器
   - DOMAIN-SUFFIX,duoqin.com # 多亲域名，用于多亲系列手机守护软件
   - GEOSITE,category-cas # 证书颁发机构，直连以防止证书错误
+  - GEOSITE,bitwarden # bitwarden相关服务，推送功能FakeIP会导致问题
   - DOMAIN-SUFFIX,tmspk.net # teamspeak语音聊天
   - DOMAIN-SUFFIX,teamspeak.com # teamspeak语音聊天
   - DOMAIN-SUFFIX,myteamspeak.com # teamspeak服务器列表
   - DOMAIN,sc.350303.xyz # Breeze的API中转站
   - DOMAIN,api.zipimg.cn # Breeze的API中转站，直连可以获得更快的速度
-  - DOMAIN,identity.bitwarden.com # bitwarden登录推送域名，直连获取真实IP
-  - DOMAIN,identity.bitwarden.eu # bitwarden登录推送域名，直连获取真实IP
-  - DOMAIN,api.bitwarden.eu # bitwarden登录推送域名，直连获取真实IP
 
   #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
