@@ -15,6 +15,9 @@ payload:
   - DOMAIN-SUFFIX,myteamspeak.com # teamspeak服务器列表
   - DOMAIN,sc.350303.xyz # Breeze的API中转站
   - DOMAIN,api.zipimg.cn # Breeze的API中转站，直连可以获得更快的速度
+  - DOMAIN,identity.bitwarden.com # bitwarden登录推送域名，直连获取真实IP
+  - DOMAIN,identity.bitwarden.eu # bitwarden登录推送域名，直连获取真实IP
+  - DOMAIN,api.bitwarden.eu # bitwarden登录推送域名，直连获取真实IP
 
   #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
