@@ -252,7 +252,7 @@ health-check-general: &health-check-general
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
 # -------- Smart配置 --------
   strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
-  policy-priority: "三毛:2" # 策略优先级配置> 1：提高优先级；< 1：降低优先级，默认权重为1，多个用分号间隔
+  policy-priority: "跑路:0.6" # 策略优先级配置> 1：提高优先级；< 1：降低优先级，默认权重为1，多个用分号间隔
   uselightgbm: true # 启用 LightGBM 模型预测
   #collectdata: true # 启用数据收集用于模型训练，如果你要训练自己的模型，可以开启之后拿数据，否则不用开
   sample-rate: 1 # 数据采样率（0-1），具体作用暂时未知
@@ -357,7 +357,6 @@ proxy-groups:
       "(?i)港|HK|hk|HongKong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉\
       日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|\
       洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia"
-    exclude-filter: "\\[(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)\\]|(1\\.[1-9]\\d*|[2-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)([倍xX])"
     <<: *health-check-general
 
 
