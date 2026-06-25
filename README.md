@@ -8,15 +8,15 @@
 
 ## 注意❗
 
-近期本项目切换到了 [官改Smart](https://github.com/vernesong/OpenClash/releases/tag/mihomo) 内核（内核特点见 [Smart内核工作原理](https://clashparty.org/docs/guide/smart-core-principles) ），因此配置文件中的`url-test`/`load-balance`均更换成了`Smart`策略，如还在使用mihomo官方内核，那么需要手动改回后继续使用，或者跟随本项目切换到Smart内核
+本项目切换到了 [官改Smart](https://github.com/vernesong/OpenClash/releases/tag/mihomo) 内核，点击链接可到作者发布页查看内核特点，因此配置文件中的`url-test`/`load-balance`均更换成了`smart`策略，如还在使用mihomo官方内核，那么需要手动将所有的`smart`改回`url-test`/`load-balance`后继续使用，否则会报错。如果你认为smart内核也适合你，那么你可以考虑跟随本项目切换到Smart内核。
 
-  >如果你是自建的稳定出口，那么Smart内核对你来说是没有区别的，不需要更换。如果你是用杂牌节点，普遍质量不高，那么Smart内核可以给你带来更好的使用体验，自动选择尽量最优秀的流量出口
+  >如果你是自建的稳定出口，或者高价稳定代理，那么Smart内核对你来说是没有帮助的。如果你是用杂牌代理，普遍质量不高，那么Smart内核可以给你带来更好的使用体验，`smart`策略选择节点优于`url-test`/`load-balance`
 
 ## Some Tips
 
 **关于Rule**： 非必要时更推荐各位朋友直接使用 `GEO数据库` ，减少外部依赖，简化配置文件，提升使用体验❤️
 
-**关于Fake-IP**：Fakeip的很多优势是redir-host无法比拟的，而且rule模式也能让会受到影响的流量回退到real-ip模式消除不利影响。对于喜欢redir-host模式的朋友，仓库也保留了原来redir-host模式的备份可供参考，但不再更新。
+**关于Fake-IP**：Fakeip的很多优势是redir-host无法比拟的，而且`dns-rule`模式也能让会受到影响的流量回退到real-ip模式消除不利影响。对于喜欢redir-host模式的朋友，仓库也保留了原来redir-host模式的备份可供参考，但不再更新。
 
 **关于订阅转换**： 由于最常用的订阅转换工具 [**`subconverter`**](https://github.com/tindy2013/subconverter) 不能灵活支持配置 **`mihomo`** 的全部字段，因此本仓库没有提供订阅转换模板。本仓库的模板也不能直接变成 **`subconverter`** 的 `远程配置` 使用。如果你想用本仓库的模板实现远程订阅，自动同步仓库更新，此处提供一种较为复杂的 [方案](https://github.com/refined-fish/clash_rule_fish#%E5%B0%86%E6%9C%AC%E4%BB%93%E5%BA%93%E4%BD%9C%E4%B8%BA%E8%BF%9C%E7%A8%8B%E8%AE%A2%E9%98%85%E4%BD%BF%E7%94%A8) 见下文。
 
@@ -24,7 +24,7 @@
 
 ---
 
-## Icon
+## icon
 
 mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收集了部分icon图标以供引用，效果如下
   
@@ -36,13 +36,13 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
 
     ```yaml
     proxy-providers:
-      #❗provider占位1
-      #❗provider占位2
-      #❗provider占位3
-      #❗provider占位4
+      ##__provider__占位1
+      ##__provider__占位2
+      ##__provider__占位3
+      ##__provider__占位4
     ```
 
-2. 将 `#❗provider占位` 修改为包含自己订阅地址的内容，有几个订阅修改几个占位符，以下是有一个订阅时的示例，注意缩进和引用不可遗漏！：
+2. 将 `##__provider__占位` 修改为包含自己订阅地址的内容，有几个订阅修改几个占位符，以下是有一个订阅时的示例，注意缩进和引用不可遗漏！：
 
     ```yaml
     proxy-providers:
@@ -52,9 +52,9 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
         override:  #可选，覆写设置，不需要可以删除
           additional-prefix: "provider1|"  # 可选，写下的内容会原封不动添加到这个订阅节点的名字前面以方便区分，不需要可以删除这一行
         path: ./providers/proxy/proxy-provider1.yaml  # 可选，指定下载路径，不需要可以删除这一行
-      #❗provider占位2
-      #❗provider占位3
-      #❗provider占位4
+      ##__provider__占位2
+      ##__provider__占位3
+      ##__provider__占位4
     ```
 
 3. 再找到 `代理组` 部分
@@ -62,21 +62,21 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
     ```yaml
     use-all-proxy-providers: &use-all-proxy-providers
       use:
-        #❗use-provider占位1
-        #❗use-provider占位2
-        #❗use-provider占位3
-        #❗use-provider占位4
+        ##__use__占位1
+        ##__use__占位2
+        ##__use__占位3
+        ##__use__占位4
     ```
 
-4. 将第 `2` 步修改过的 `#❗provider占位` 引用进去，同上，你写了几个订阅就改几个引用，注意不要遗漏 `-` 短横线，下面是写了一个订阅的修改示例
+4. 将第 `2` 步修改过的 `##__provider__占位` 引用进去，同上，你写了几个订阅就改几个引用，注意不要遗漏 `-` 短横线，下面是写了一个订阅的修改示例
 
     ```yaml
     use-all-proxy-providers: &use-all-proxy-providers
       use:
         - provider1
-        #❗use-provider占位2
-        #❗use-provider占位3
-        #❗use-provider占位4
+        ##__use__占位2
+        ##__use__占位3
+        ##__use__占位4
     ```
 
 5. 然后就可以将修改后的yaml文件导入代理软件中当做配置文件使用了。
@@ -91,7 +91,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
   **正式开始** ：
 
   1. 用自己的 `nginx` 反向代理本仓库的模板文件。
-  2. 在反向代理中使用 `nginx_http_sub` 子模块的 `sub_filter` 功能，自动替换模板中的 `❗占位符` 字段为自己的 `订阅` 字段，注意替换中的换行符 `\n` 不可遗漏！更要注意下方可能由于 **引号嵌套** 需要使用的 **转义引号** ！！！
+  2. 在反向代理中使用 `nginx_http_sub` 子模块的 `sub_filter` 功能，自动替换模板中的 `## 占位符` 字段为自己的 `订阅` 字段，注意替换中的换行符 `\n` 不可遗漏！更要注意下方可能由于 **引号嵌套** 需要使用的 **转义引号** ！！！
   3. 以下是 `nginx` 的server块示例，如果遇到问题，请查询Nginx日志报错，一般会跟Nginx的host，dns设置有关
 
       ```nginx
@@ -108,8 +108,8 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
           # 只匹配替换一次（否则全文匹配全部替换）
           sub_filter_once on;
           # 替换内容，有多个订阅可以自己复制多个替换
-          sub_filter '#❗provider占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "自定义前缀|"\n    url: "此处填写你的订阅链接"\n    path: ./providers/proxy/proxy-provider1.yaml';
-          sub_filter '#❗use-provider占位1' '- provider1';
+          sub_filter '##__provider__占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "自定义前缀|"\n    url: "此处填写你的订阅链接"\n    path: ./providers/proxy/proxy-provider1.yaml';
+          sub_filter '##__use__占位1' '- provider1';
         }
       }
       ```
