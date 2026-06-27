@@ -246,7 +246,6 @@ template-fallback: &template-fallback
   lazy: true # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
-  include-all: true # 引入所有代理集合，出站代理节点
 
 # 模板-节点筛选规则
 FilterLow: &FilterLow '\\[0\\.\\d+\\]|0\\.\\d+([倍xX])'
@@ -259,6 +258,7 @@ FilterTW: &FilterTW '^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|T
 FilterUK: &FilterUK '^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(排除1|排除2|5x)).*$'
 
 # 模板-代理列表模板
+template-proxies: &template-proxies [🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点, DIRECT]
 template-direct: &template-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点]
 template-proxy: &template-proxy [🪜默认代理, 🖐️手动切换, 🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点, DIRECT]
 
@@ -332,23 +332,13 @@ proxy-groups:
     proxies: *template-proxy
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
-  - name: 🟢智能选择（低倍节点）
-    filter: *FilterLow
-    <<: *template-smart
-
-  - name: 🟡智能选择（常规节点）
-    filter:
-      "(?i)港|HK|hk|HongKong|HongKong|hongkong|台|新北|彰化|TW|Taiwan|日本|川日|东京|大阪|泉\
-      日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|\
-      洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|韩|KR|Korea|澳|AU|Australia"
-    <<: *template-smart
-
   - name: 🖐️手动切换
     type: select
     include-all: true # 引入所有代理集合，出站代理节点
 
   - name: 🪜默认代理
     <<: *template-fallback
+    proxies: *template-proxies
 
   - name: 🇭🇰香港节点
     <<: *template-smart
