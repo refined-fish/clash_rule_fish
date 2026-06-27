@@ -232,7 +232,7 @@ template-smart: &template-smart
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
   strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
   include-all: true # 引入所有代理集合，出站代理节点
-  policy-priority: "跑路:0.8" # 策略优先级配置> 1：提高优先级；< 1：降低优先级，默认权重为1，多个用分号间隔
+  policy-priority: "优:1.2;中:1.0;差:0.8" # 策略优先级配置> 1：提高优先级；< 1：降低优先级，默认权重为1，多个用分号间隔
   uselightgbm: true # 启用 LightGBM 模型预测
   sample-rate: 1 # 数据采样率（0-1），具体作用暂时未知
   #prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策，会导致本地解析，出现DNS泄露
@@ -249,13 +249,13 @@ template-fallback: &template-fallback
 
 # 模板-节点筛选规则
 FilterLow: &FilterLow "\\[0\\.\\d+\\]|0\\.\\d+([倍xX])"
-FilterHK: &FilterHK "^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(排除1|排除2|5x)).*$"
-FilterSG: &FilterSG "^(?=.*(?i)(坡|狮城|🇸🇬|SG|Sing|SIN|XSP))(?!.*(排除1|排除2|5x)).*$"
-FilterJP: &FilterJP "^(?=.*(?i)(日|东京|大阪|埼玉|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(尼日利亚|排除2|5x)).*$"
-FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|South))(?!.*(排除1|排除2|5x)).*$"
-FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(Plus|Australia|5x)).*$"
-FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(排除1|排除2|5x)).*$"
-FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(排除1|排除2|5x)).*$"
+FilterHK: &FilterHK "^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(5倍|5x)).*$"
+FilterSG: &FilterSG "^(?=.*(?i)(坡|狮城|🇸🇬|SG|Sing|SIN|XSP))(?!.*(5倍|5x)).*$"
+FilterJP: &FilterJP "^(?=.*(?i)(日|东京|大阪|埼玉|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(尼日利亚|5倍|5x)).*$"
+FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|South))(?!.*(5倍|5x)).*$"
+FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
+FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
+FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(5倍|5x)).*$"
 
 # 模板-代理列表模板
 template-proxies: &template-proxies [🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点, DIRECT]
@@ -266,7 +266,7 @@ proxy-groups:
   - name: 🤖国外AI
     type: select
     proxies:
-      - 🇺🇲美国节点
+      - 🇨🇳台湾节点
       - 🖐️手动切换
       - 🇭🇰香港节点
       - 🇨🇳台湾节点
