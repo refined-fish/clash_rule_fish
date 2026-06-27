@@ -210,7 +210,7 @@ template-providers: &template-providers
   interval: 86400 # 更新间隔，单位秒（86400=1天，259200=3天）一般垃圾机场建议1天
   proxy: 🌐默认直连 # http类型更新时使用的代理组，不建议设置代理，如果你的订阅需要代理才能订阅，那先有鸡还是先有蛋？
   size-limit: 0 # 文件大小限制，0为不限制
-  exclude-filter: "(?i)官网|每月刷新订阅|到期|https://|剩余流量" # 排除的节点名称
+  exclude-filter: "^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))" # 排除的节点名称
 
 proxy-providers:
   ##__provider__占位1
@@ -248,14 +248,14 @@ template-fallback: &template-fallback
   max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
 
 # 模板-节点筛选规则
-FilterLow: &FilterLow '\\[0\\.\\d+\\]|0\\.\\d+([倍xX])'
-FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(排除1|排除2|5x)).*$'
-FilterSG: &FilterSG '^(?=.*(?i)(坡|狮城|🇸🇬|SG|Sing|SIN|XSP))(?!.*(排除1|排除2|5x)).*$'
-FilterJP: &FilterJP '^(?=.*(?i)(日|东京|大阪|埼玉|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(尼日利亚|排除2|5x)).*$'
-FilterKR: &FilterKR '^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|South))(?!.*(排除1|排除2|5x)).*$'
-FilterUS: &FilterUS '^(?=.*(?i)(美||波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(Plus|Australia|5x)).*$'
-FilterTW: &FilterTW '^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(排除1|排除2|5x)).*$'
-FilterUK: &FilterUK '^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(排除1|排除2|5x)).*$'
+FilterLow: &FilterLow "\\[0\\.\\d+\\]|0\\.\\d+([倍xX])"
+FilterHK: &FilterHK "^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(排除1|排除2|5x)).*$"
+FilterSG: &FilterSG "^(?=.*(?i)(坡|狮城|🇸🇬|SG|Sing|SIN|XSP))(?!.*(排除1|排除2|5x)).*$"
+FilterJP: &FilterJP "^(?=.*(?i)(日|东京|大阪|埼玉|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(尼日利亚|排除2|5x)).*$"
+FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|South))(?!.*(排除1|排除2|5x)).*$"
+FilterUS: &FilterUS "^(?=.*(?i)(美||波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(Plus|Australia|5x)).*$"
+FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(排除1|排除2|5x)).*$"
+FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(排除1|排除2|5x)).*$"
 
 # 模板-代理列表模板
 template-proxies: &template-proxies [🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点, DIRECT]
