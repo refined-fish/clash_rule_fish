@@ -57,29 +57,7 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
       ##__provider__占位4
     ```
 
-3. 再找到 `代理组` 部分
-
-    ```yaml
-    use-all-proxy-providers: &use-all-proxy-providers
-      use:
-        ##__use__占位1
-        ##__use__占位2
-        ##__use__占位3
-        ##__use__占位4
-    ```
-
-4. 将第 `2` 步修改过的 `##__provider__占位` 引用进去，同上，你写了几个订阅就改几个引用，注意不要遗漏 `-` 短横线，下面是写了一个订阅的修改示例
-
-    ```yaml
-    use-all-proxy-providers: &use-all-proxy-providers
-      use:
-        - provider1
-        ##__use__占位2
-        ##__use__占位3
-        ##__use__占位4
-    ```
-
-5. 然后就可以将修改后的yaml文件导入代理软件中当做配置文件使用了。
+3. 然后就可以将修改后的yaml文件导入代理软件中当做配置文件使用了。
 
 ## 将本仓库作为远程订阅
 
@@ -109,7 +87,6 @@ mihomo 支持为代理组设置icon字段来让显示更漂亮直观，此处收
           sub_filter_once on;
           # 替换内容，有多个订阅可以自己复制多个替换
           sub_filter '##__provider__占位1' 'provider1:\n    <<: *proxy-providers-general\n    override:\n      additional-prefix: "自定义前缀|"\n    url: "此处填写你的订阅链接"\n    path: ./providers/proxy/proxy-provider1.yaml';
-          sub_filter '##__use__占位1' '- provider1';
         }
       }
       ```
