@@ -210,7 +210,7 @@ template-providers: &template-providers
   interval: 86400 # 更新间隔，单位秒（86400=1天，259200=3天）一般垃圾机场建议1天
   proxy: 🌐默认直连 # http类型更新时使用的代理组，不建议设置代理，如果你的订阅需要代理才能订阅，那先有鸡还是先有蛋？
   size-limit: 0 # 文件大小限制，0为不限制
-  exclude-filter: "^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))" # 排除的节点名称
+  exclude-filter: "(?i)官网|每月|到期|https://|剩余|重置" # 排除的节点名称
 
 proxy-providers:
   ##__provider__占位1
