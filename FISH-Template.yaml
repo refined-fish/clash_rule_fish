@@ -146,7 +146,7 @@ dns:
 #                  嗅探配置
 # =============================================
 sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS的IP请求的域名，匹配域名规则
-  enable: enable # 启用sniffer，mihomo的DNS不在第一级时必须启用，在第一级时可以覆盖少量不带域名的请求
+  enable: true # 启用sniffer，mihomo的DNS不在第一级时必须启用，在第一级时可以覆盖少量不带域名的请求
 #  force-dns-mapping: true # 对redir-host类型识别的流量进行强制嗅探，fakeip模式下可以不用开
 #  parse-pure-ip: true # 对所有未获取到域名的流量进行强制嗅探
   override-destination: true # 是否使用嗅探结果作为实际访问，默认为 true，解决多CDN优选问题
