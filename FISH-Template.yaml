@@ -256,25 +256,26 @@ FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|S
 FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
 FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
 FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(5倍|5x)).*$"
+ExcludeHigh: &ExcludeHigh "\\[(2\\.[0-9]*[1-9]\\d*|[3-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)\\]|(2\\.[0-9]*[1-9]\\d*|[3-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)([倍xX])"
 
 # 模板-代理列表模板
-template-proxies: &template-proxies [🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点, DIRECT]
-template-direct: &template-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点]
-template-proxy: &template-proxy [🪜默认代理, 🖐️手动切换, 🇭🇰香港节点, 🇨🇳台湾节点, 🇸🇬狮城节点, 🇯🇵日本节点, 🇺🇲美国节点, 🇬🇧英国节点, 🇰🇷韩国节点, DIRECT]
+template-proxies: &template-proxies [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
+template-direct: &template-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能]
+template-proxy: &template-proxy [🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
 
 proxy-groups:
   - name: 🤖国外AI
     type: select
     proxies:
-      - 🇨🇳台湾节点
+      - 🇨🇳台湾智能
       - 🖐️手动切换
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
-      - 🇸🇬狮城节点
-      - 🇯🇵日本节点
-      - 🇺🇲美国节点
-      - 🇬🇧英国节点
-      - 🇰🇷韩国节点
+      - 🇭🇰香港智能
+      - 🇨🇳台湾智能
+      - 🇸🇬狮城智能
+      - 🇯🇵日本智能
+      - 🇺🇲美国智能
+      - 🇬🇧英国智能
+      - 🇰🇷韩国智能
       - DIRECT
 
   - name: 🌐默认直连
@@ -307,8 +308,8 @@ proxy-groups:
   - name: 📺巴哈姆特
     type: select
     proxies:
-      - 🇭🇰香港节点
-      - 🇨🇳台湾节点
+      - 🇭🇰香港智能
+      - 🇨🇳台湾智能
       - DIRECT
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/巴哈姆特.png
 
@@ -340,33 +341,40 @@ proxy-groups:
     <<: *template-fallback
     proxies: *template-proxies
 
-  - name: 🇭🇰香港节点
+  - name: 🇭🇰香港智能
     <<: *template-smart
     filter: *FilterHK
+    exclude-filter: *ExcludeHigh
 
-  - name: 🇨🇳台湾节点
+  - name: 🇨🇳台湾智能
     <<: *template-smart
     filter: *FilterTW
+    exclude-filter: *ExcludeHigh
 
-  - name: 🇸🇬狮城节点
+  - name: 🇸🇬狮城智能
     <<: *template-smart
     filter: *FilterSG
+    exclude-filter: *ExcludeHigh
 
-  - name: 🇯🇵日本节点
+  - name: 🇯🇵日本智能
     <<: *template-smart
     filter: *FilterJP
+    exclude-filter: *ExcludeHigh
 
-  - name: 🇺🇲美国节点
+  - name: 🇺🇲美国智能
     <<: *template-smart
     filter: *FilterUS
+    exclude-filter: *ExcludeHigh
 
-  - name: 🇬🇧英国节点
+  - name: 🇬🇧英国智能
     <<: *template-smart
     filter: *FilterUK
+    exclude-filter: *ExcludeHigh
 
-  - name: 🇰🇷韩国节点
+  - name: 🇰🇷韩国智能
     <<: *template-smart
     filter: *FilterKR
+    exclude-filter: *ExcludeHigh
 
 # =============================================
 #                  规则提供者
@@ -411,9 +419,6 @@ rules:
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
 
   ## 代理规则块，按照使用频率/包含关系排序
-  # AI相关
-  - GEOSITE,category-ai-!cn,🤖国外AI # 国外AI服务
-  - GEOSITE,google,🤖国外AI # Gemini会使用其他谷歌域名判定访问IP，不一致时触发风控
   # telegram相关
   - GEOSITE,telegram,✈️Telegram # Telegram服务
   - GEOIP,telegram,✈️Telegram,no-resolve # Telegram服务IP
@@ -424,6 +429,9 @@ rules:
   # 其他
   - RULE-SET,🔐PT-Web-FISH,🔐PT网站 # PT网页多用cloudFlare，污染严重故代理，需注意有的PT站网页域名也是tracker！
   - GEOSITE,tracker,🌐默认直连 # 需要放在PT-Web规则之后，PT tracker，必须直连，否则会代理上传下载
+  # AI相关
+  - GEOSITE,category-ai-!cn,🤖国外AI # 国外AI服务
+  - GEOSITE,google,🤖国外AI # Gemini会使用其他谷歌域名判定访问IP，不一致时触发风控
 
   ## 兜底规则块，一般精细的分流规则应在其上
   - GEOSITE,gfw,🧱GFW # GFW兜底
