@@ -13,8 +13,6 @@ payload:
   - DOMAIN-SUFFIX,tmspk.net # teamspeak语音聊天
   - DOMAIN-SUFFIX,teamspeak.com # teamspeak语音聊天
   - DOMAIN-SUFFIX,myteamspeak.com # teamspeak服务器列表
-  - DOMAIN,sc.350303.xyz # Breeze的API中转站
-  - DOMAIN,api.zipimg.cn # Breeze的API中转站，直连可以获得更快的速度
 
   #################### 下载
   - DOMAIN,router.bittorrent.com # tracker
@@ -42,3 +40,7 @@ payload:
   #################### 科研网站，不允许代理访问
   - DOMAIN,ncbi.nlm.nih.gov
   - DOMAIN-SUFFIX,crossref.org
+
+  #################### AI中转站
+  - DOMAIN-SUFFIX,zipimg.cn # Breeze的API中转站，直连可以获得更快的速度
+  - DOMAIN-SUFFIX,303580.xyz # Breeze的API中转站，直连可以获得更快的速度
