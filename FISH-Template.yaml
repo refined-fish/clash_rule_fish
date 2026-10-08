@@ -224,9 +224,9 @@ proxy-providers:
 # =============================================
 # 模板-不同代理组
 template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, 🖐️手动切换]
-template-proxies-proxy: &template-proxies-proxy [🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
-template-proxies-direct: &template-proxies-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能]
-template-proxies-ai: &template-proxies-ai [🇺🇲美国智能, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
+template-proxies-proxy: &template-proxies-proxy [🪜默认代理, 🖐️手动切换, 🤖AI节点, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
+template-proxies-direct: &template-proxies-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI节点, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能]
+template-proxies-ai: &template-proxies-ai [🤖AI节点, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
 
 # 模板-Smart策略组-引入全部节点
 template-smart: &template-smart
@@ -288,6 +288,7 @@ FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|S
 FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
 FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
 FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(5倍|5x)).*$"
+FilterNoAI: &FilterNoAI "^(?=.*(?i)(美国三网))(?!.*(5倍|5x)).*$"
 
 proxy-groups:
   - name: 🤖国外AI
@@ -349,6 +350,11 @@ proxy-groups:
   - name: 🪜默认代理
     <<: *template-fallback
     proxies: *template-proxies-all
+
+  - name: 🤖AI节点
+    <<: *template-smart
+    filter: *FilterUS
+    exclude-filter: *FilterNoAI
 
   - name: 🇭🇰香港智能
     <<: *template-smart
