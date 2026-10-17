@@ -420,6 +420,11 @@ rule-providers:
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🔐PT-Web-FISH.yaml
     path: ./providers/rule/rule-provider_🔐PT-Web-FISH.yaml
 
+  🇺🇲Proxy-US-FISH:
+    <<: *template-rule-providers
+    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🇺🇲Proxy-US-FISH.yaml
+    path: ./providers/rule/rule-provider_🇺🇲Proxy-US-FISH.yaml
+
 # =============================================
 #                  路由规则
 # =============================================
@@ -432,6 +437,7 @@ rules:
   - RULE-SET,🪜Proxy-FISH,🧱GFW # FISH自定义代理
   - RULE-SET,⬇️Download-FISH,⬇️需代理的下载 # FISH自定义需代理的下载
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
+  - RULE-SET,🇺🇲Proxy-US-FISH,🇺🇲美国智能 # FISH自定义美国代理
 
   ## 代理规则块，按照使用频率/包含关系排序
   # telegram相关

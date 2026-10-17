@@ -42,5 +42,4 @@ payload:
   - DOMAIN-SUFFIX,crossref.org
 
   #################### AI中转站
-  - DOMAIN-SUFFIX,zipimg.cn # Breeze的API中转站，直连可以获得更快的速度
-  - DOMAIN-SUFFIX,303580.xyz # Breeze的API中转站，直连可以获得更快的速度
+  - DOMAIN,ai.303580.xyz # Breeze的API中转站CF加速域名，直连可以获得更快的速度
