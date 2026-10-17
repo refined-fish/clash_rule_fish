@@ -33,6 +33,7 @@ payload:
   - DOMAIN,stun.syncthing.net
   - DOMAIN,stun.hot-chilli.net
   - DOMAIN,stun.fitauto.ru
+  - DOMAIN,stun.225284.xyz # easytier的STUN服务器域名
 
   #################### 🚫Porn-FISH
   #- DOMAIN,hanime1.me # 代理访问会导致无法加载，直连访问正常
