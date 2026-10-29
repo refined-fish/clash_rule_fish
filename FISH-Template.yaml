@@ -91,6 +91,12 @@ etag-support: true # 资源下载的 ETag 支持，使重复资源不会重复�
 #  - dhcp://wan # 硬路由的wan口网卡名一般为wan
 #  - 223.5.5.5 # 阿里主DNS
 
+# Bootstrap 引导 DNS（必须为纯无加密 IP，避免解析 DNS 服务器域名时发生死锁）
+bootstrap-dns: &bootstrap-dns
+  - 223.5.5.5
+  - 119.29.29.29
+  - 180.184.1.1
+
 # 加密的DNS，必须可以规避劫持，避免被解析为0.0.0.0等污染结果，但是不是国外DNS并不重要
 secure-dns: &secure-dns
   - https://223.5.5.5/dns-query # 阿里主DNS，支持H3，不强制开启防止部分地区不支持h3
@@ -101,7 +107,7 @@ secure-dns: &secure-dns
 dns:
   enable: true # 启用dns模块，否则采用系统DNS
   cache-algorithm: arc # DNS缓存算法，lru（默认）性能开销低，被访问到就提前，超出容量则踢出队尾，适合固定访问有限网站；arc策略则是智能匹配，偶然查询的陌生网站不会踢掉经常访问的网站，但是性能开销更大，适合性能宽裕设备
-  prefer-h3: true # DoH若支持，则优先使用HTTP/3
+  prefer-h3: false # DoH若支持，则优先使用HTTP/3（国内运营商UDP 443易丢包引发解析假死，建议设为false使用TCP/DoH）
   listen: "[::]:1053" # DNS监听端口，支持udp,tcp
   ipv6: true # 是否解析ipv6地址，否则返回空结果
   enhanced-mode: fake-ip # DNS处理模式：redir-host/fake-ip，fake-ip更快但可能引入问题（缓存fakeip后无法故障切换）
@@ -125,7 +131,7 @@ dns:
   use-hosts: true # 查询配置文件中的 hosts，默认true
   use-system-hosts: true # 查询系统的 hosts，默认true
   respect-rules: false # DNS请求遵循rule规则代理，需先配置好 proxy-server-nameserver，否则出现鸡蛋问题，强烈不建议和perfer-h3一起使用，用处不大
-  default-nameserver: *secure-dns # 用于解析DNS服务器的域名，可以加密但必须为IP
+  default-nameserver: *bootstrap-dns # 用于解析DNS服务器的域名，引导DNS必须为纯IP
   nameserver-policy: # 优先级高于nameserver，匹配完成之后再去匹配nameserver和fallback
     #- "geosite:category-ads-all": rcode://success # 匹配广告域名，返回空结果，有误杀概率
   proxy-server-nameserver: *secure-dns # 用于解析代理节点的域名，不填则遵循namepolicy，nameserver和fallback
@@ -149,7 +155,7 @@ sniffer: # 嗅探，获取SNI中的域名，使mihomo能够反解未经自己DNS
   enable: true # 启用sniffer，mihomo的DNS不在第一级时必须启用，在第一级时可以覆盖少量不带域名的请求
 #  force-dns-mapping: true # 对redir-host类型识别的流量进行强制嗅探，fakeip模式下可以不用开
 #  parse-pure-ip: true # 对所有未获取到域名的流量进行强制嗅探
-  override-destination: true # 是否使用嗅探结果作为实际访问，默认为 true，解决多CDN优选问题
+  override-destination: false # 是否使用嗅探结果作为实际访问，默认为 true，解决多CDN优选问题（此处设为false以保留本地hosts和各类CDN优选IP）
   sniff: # 需要嗅探的协议类型，仅支持 HTTP/TLS/QUIC
     TLS: # TLS协议
       ports: # 端口白名单，只针对下列端口嗅探
@@ -226,24 +232,34 @@ proxy-providers:
 template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, 🖐️手动切换]
 template-proxies-proxy: &template-proxies-proxy [🪜默认代理, 🖐️手动切换, 🤖AI节点, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
 template-proxies-direct: &template-proxies-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI节点, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能]
-template-proxies-ai: &template-proxies-ai [🤖AI节点, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
+template-proxies-ai: &template-proxies-ai [🤖AI节点, 🇸🇬狮城智能, 🇨🇳台湾智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🪜默认代理, 🖐️手动切换, DIRECT]
 
 # 模板-Smart策略组-引入全部节点
 template-smart: &template-smart
   type: smart
   url: https://www.gstatic.com/generate_204
-  interval: 60 # 健康检查间隔
-  tolerance: 150 # 延迟容忍度，单位ms
+  interval: 180 # 健康检查间隔，单位秒（调优为180s平稳省流）
+  tolerance: 35 # 延迟容忍度，单位ms（从原先迟钝的150ms调至35ms，让优质低延迟节点敏锐胜出）
   lazy: true # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
-  timeout: 5000 # 健康检查超时，单位ms
-  max-failed-times: 5 # 失败次数，超过则执行一次强制健康检查
+  timeout: 2500 # 健康检查超时，单位ms（从5000ms降低至2500ms，加速故障识别）
+  max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查（从5次降至2次，减少卡顿时间）
   empty-fallback: COMPATIBLE # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
   strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
   include-all: true # 引入所有代理集合，出站代理节点
-  policy-priority: "优:1.2;中:1.0;差:0.8" # 策略优先级配置> 1：提高优先级；< 1：降低优先级，默认权重为1，多个用分号间隔
-  uselightgbm: true # 启用 LightGBM 模型预测
+  policy-priority: "优:0.75;中:1.0;差:1.35" # 策略优先级配置：得分=RTT*权重因子，< 1：降低延迟权重（提高优先级）；> 1：增加延迟权重（降低优先级），默认权重为1，多个用分号间隔
+  uselightgbm: true # 启用 LightGBM 模型预测（结合正向加权与紧凑容差，发挥多维特征智能优选）
   sample-rate: 1 # 数据采样率（0-1），具体作用暂时未知
   #prefer-asn: true # 节点自动选择时，强制优先查询并基于节点的 ASN（自治系统编号）来进行决策，会导致本地解析，出现DNS泄露
+
+# 模板-敏感服务Fallback策略组（用于AI服务，主备模式，保证会话IP绝对恒定不漂移）
+template-fallback-ai: &template-fallback-ai
+  type: fallback
+  url: https://api.openai.com/cdn-cgi/trace
+  interval: 300 # 健康检查间隔
+  timeout: 3000 # 健康检查超时，单位ms
+  max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查
+  empty-fallback: COMPATIBLE # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
+  include-all: true # 引入所有代理集合，出站代理节点
 
 # 模板-fallback策略组
 template-fallback: &template-fallback
@@ -285,8 +301,8 @@ FilterHK: &FilterHK "^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(5倍|5x)).*$"
 FilterSG: &FilterSG "^(?=.*(?i)(坡|狮城|🇸🇬|SG|Sing|SIN|XSP))(?!.*(5倍|5x)).*$"
 FilterJP: &FilterJP "^(?=.*(?i)(日|东京|大阪|埼玉|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(尼日利亚|5倍|5x)).*$"
 FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|South))(?!.*(5倍|5x)).*$"
-FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
-FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
+FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
+FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
 FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(5倍|5x)).*$"
 FilterNoAI: &FilterNoAI "^(?=.*(?i)(美国三网|三毛\\|美国堪萨斯|三毛\\|美国洛杉矶-3))(?!.*(5倍|5x)).*$"
 
@@ -304,8 +320,8 @@ proxy-groups:
   - name: 🐟漏网之鱼
     <<: *template-select-direct
 
-  - name: ⬇️需代理的下载
-    <<: *template-select-proxy
+  #- name: ⬇️需代理的下载 # 考虑此分类体验不佳已停用，流量回归GFW/默认代理，规则集保留供后续复核
+  #  <<: *template-select-proxy
 
   - name: 🧱GFW
     <<: *template-select-proxy
@@ -322,8 +338,8 @@ proxy-groups:
   - name: 🪽巴哈姆特
     type: select
     proxies:
+      - 🇨🇳台湾智能 # 动画疯首选台湾，避免版权缺失与香港无法播放
       - 🇭🇰香港智能
-      - 🇨🇳台湾智能
       - DIRECT
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/巴哈姆特.png
 
@@ -340,7 +356,11 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft.png
 
   - name: 💊PT网站
-    <<: *template-select-proxy
+    type: select
+    proxies:
+      - 🖐️手动切换 # PT管理后台首选手选固定单一节点，严禁挂在自动跳变组，防止封号
+      - 🪜默认代理
+      - DIRECT
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   - name: 🖐️手动切换
@@ -352,9 +372,9 @@ proxy-groups:
     proxies: *template-proxies-all
 
   - name: 🤖AI节点
-    <<: *template-smart
+    <<: *template-fallback-ai # 关键改造：改用主备模式，只要主节点存活绝不换IP，消除Cloudflare盾死循环与报错
     filter: *FilterUS
-    exclude-filter: *FilterNoAI
+    #exclude-filter: *FilterNoAI # 排除不可用的AI节点，使用fallback后一般无需手动打地鼠排除
 
   - name: 🇭🇰香港智能
     <<: *template-smart
@@ -435,7 +455,7 @@ rules:
 
   # FISH自定义规则块
   - RULE-SET,🪜Proxy-FISH,🧱GFW # FISH自定义代理
-  - RULE-SET,⬇️Download-FISH,⬇️需代理的下载 # FISH自定义需代理的下载
+  - RULE-SET,⬇️Download-FISH,🧱GFW # FISH自定义需代理的下载（原⬇️需代理的下载已合并至GFW代理流，优先保证下载速度与体验，规则集保留供后续复核）
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
   - RULE-SET,🇺🇲Proxy-US-FISH,🇺🇲美国智能 # FISH自定义美国代理
 
