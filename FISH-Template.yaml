@@ -348,7 +348,7 @@ proxy-groups:
     <<: *template-fallback
     proxies: *template-proxies-all
 
-  - name: 🤖AI节点
+  - name: 🤖AI故转
     <<: *template-fallback # 关键改造：改用主备模式，只要主节点存活绝不换IP，消除Cloudflare盾死循环与报错
     include-all: true # 引入所有代理集合，出站代理节点
     filter: *FilterUS
