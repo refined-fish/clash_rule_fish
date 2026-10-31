@@ -223,10 +223,10 @@ proxy-providers:
 #                   代理组
 # =============================================
 # 模板-不同代理组
-template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, 🖐️手动切换]
-template-proxies-proxy: &template-proxies-proxy [🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
-template-proxies-direct: &template-proxies-direct [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能]
-template-proxies-ai: &template-proxies-ai [🤖AI故转, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇬🇧英国智能, 🇰🇷韩国智能, DIRECT]
+template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能, 🖐️手动切换]
+template-proxies-proxyfirst: &template-proxies-proxyfirst [🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能, DIRECT]
+template-proxies-directfirst: &template-proxies-directfirst [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能]
+template-proxies-aifirst: &template-proxies-aifirst [🤖AI故转, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能, DIRECT]
 
 # 模板-Smart策略组-引入全部节点
 template-smart-all: &template-smart-all
@@ -237,7 +237,7 @@ template-smart-all: &template-smart-all
   lazy: true # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
   timeout: 2500 # 健康检查超时，单位ms（从5000ms降低至2500ms，加速故障识别）
   max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查（从5次降至2次，减少卡顿时间）
-  empty-fallback: COMPATIBLE # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
+  empty-fallback: REJECT # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
   strategy: sticky-sessions # 负载均衡策略round-robin轮询，sticky-sessions粘性会话（默认）
   #policy-priority: "优:0.75;中:1.0;差:1.35" # 策略优先级配置：得分=RTT*权重因子，< 1：降低延迟权重（提高优先级）；> 1：增加延迟权重（降低优先级），默认权重为1，多个用分号间隔
   uselightgbm: true # 启用 LightGBM 模型预测（结合正向加权与紧凑容差，发挥多维特征智能优选）
@@ -254,7 +254,19 @@ template-fallback: &template-fallback
   lazy: true # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查
-  empty-fallback: COMPATIBLE # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
+  empty-fallback: REJECT # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
+
+# 模板-fallback策略组-未引入节点
+template-fallback-all: &template-fallback-all
+  type: fallback
+  url: https://www.gstatic.com/generate_204
+  interval: 60 # 健康检查间隔
+  tolerance: 150 # 延迟容忍度，单位ms
+  lazy: true # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
+  timeout: 5000 # 健康检查超时，单位ms
+  max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查
+  empty-fallback: REJECT # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
+  include-all: true
 
 # 模板-urltest策略组-未引入节点
 template-urltest: &template-urltest
@@ -265,18 +277,18 @@ template-urltest: &template-urltest
   lazy: true # 未选中当前组时不进行测试，会导致面板中不手动测试看不见延迟
   timeout: 5000 # 健康检查超时，单位ms
   max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查
-  empty-fallback: COMPATIBLE # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
+  empty-fallback: REJECT # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
 
 # 模板-select策略组-分别引入节点
-template-select-direct: &template-select-direct
+template-select-directfirst: &template-select-directfirst
   type: select
-  proxies: *template-proxies-direct
-template-select-proxy: &template-select-proxy
+  proxies: *template-proxies-directfirst
+template-select-proxyfirst: &template-select-proxyfirst
   type: select
-  proxies: *template-proxies-proxy
-template-select-ai: &template-select-ai
+  proxies: *template-proxies-proxyfirst
+template-select-aifirst: &template-select-aifirst
   type: select
-  proxies: *template-proxies-ai
+  proxies: *template-proxies-aifirst
 
 # 模板-节点筛选规则
 FilterLow: &FilterLow "\\[0\\.\\d+\\]|0\\.\\d+([倍xX])"
@@ -292,28 +304,28 @@ FilterNoAI: &FilterNoAI "^(?=.*(?i)(美国三网|三毛\\|美国堪萨斯|三毛
 
 proxy-groups:
   - name: 🤖国外AI
-    <<: *template-select-ai
+    <<: *template-select-aifirst
 
   - name: ✦谷歌AI
-    <<: *template-select-ai
+    <<: *template-select-aifirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Gemini.png
 
   - name: 🌐默认直连
-    <<: *template-select-direct
+    <<: *template-select-directfirst
 
   - name: 🐟漏网之鱼
-    <<: *template-select-direct
+    <<: *template-select-directfirst
 
   - name: 🧱GFW
-    <<: *template-select-proxy
+    <<: *template-select-proxyfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/GFW.png
 
   - name: ✈️Telegram
-    <<: *template-select-proxy
+    <<: *template-select-proxyfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Telegram.png
 
   - name: 📹Youtube
-    <<: *template-select-proxy
+    <<: *template-select-proxyfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Youtube.png
 
   - name: 🪽巴哈姆特
@@ -325,19 +337,19 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/巴哈姆特.png
 
   - name: ⚙️Steam
-    <<: *template-select-direct
+    <<: *template-select-directfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Steam.png
 
   - name: ☁️微软云盘
-    <<: *template-select-direct
+    <<: *template-select-directfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/onedrive.png
 
   - name: Ⓜ️微软服务
-    <<: *template-select-direct
+    <<: *template-select-directfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/Microsoft.png
 
   - name: 💊PT网站
-    <<: *template-select-proxy
+    <<: *template-select-proxyfirst
     icon: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Icons/PT.png
 
   - name: 🖐️手动切换
@@ -349,8 +361,7 @@ proxy-groups:
     proxies: *template-proxies-all
 
   - name: 🤖AI故转
-    <<: *template-fallback # 关键改造：改用主备模式，只要主节点存活绝不换IP，消除Cloudflare盾死循环与报错
-    include-all: true # 引入所有代理集合，出站代理节点
+    <<: *template-fallback-all # 关键改造：改用主备模式，只要主节点存活绝不换IP，消除Cloudflare盾死循环与报错
     filter: *FilterUS
     exclude-filter: *FilterNoAI # 排除不可用的AI节点，使用fallback后一般无需手动打地鼠排除
 
@@ -379,9 +390,9 @@ proxy-groups:
     filter: *FilterUS
     exclude-filter: *FilterHigh
 
-  - name: 🇬🇧英国智能
-    <<: *template-smart-all
-    filter: *FilterUK
+  - name: 🇺🇲美国故转
+    <<: *template-fallback-all
+    filter: *FilterUS
     exclude-filter: *FilterHigh
 
   - name: 🇰🇷韩国智能
