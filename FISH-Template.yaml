@@ -223,10 +223,10 @@ proxy-providers:
 #                   代理组
 # =============================================
 # 模板-不同代理组
-template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能, 🖐️手动切换]
-template-proxies-proxyfirst: &template-proxies-proxyfirst [🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能, DIRECT]
-template-proxies-directfirst: &template-proxies-directfirst [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能]
-template-proxies-aifirst: &template-proxies-aifirst [🤖AI故转, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲美国故转, 🇰🇷韩国智能, DIRECT]
+template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, 🖐️手动切换]
+template-proxies-proxyfirst: &template-proxies-proxyfirst [🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, DIRECT]
+template-proxies-directfirst: &template-proxies-directfirst [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能]
+template-proxies-aifirst: &template-proxies-aifirst [🤖AI故转, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, DIRECT]
 
 # 模板-Smart策略组-引入全部节点
 template-smart-all: &template-smart-all
@@ -390,7 +390,7 @@ proxy-groups:
     filter: *FilterUS
     exclude-filter: *FilterHigh
 
-  - name: 🇺🇲美国故转
+  - name: 🇺🇲⚠️美国故转
     <<: *template-fallback-all
     filter: *FilterUS
     exclude-filter: *FilterHigh
@@ -429,10 +429,10 @@ rule-providers:
     url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🔐PT-Web-FISH.yaml
     path: ./providers/rule/rule-provider_🔐PT-Web-FISH.yaml
 
-  🇺🇲Proxy-US-FISH:
+  🇺🇲FallBack-US-FISH:
     <<: *template-rule-providers
-    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🇺🇲Proxy-US-FISH.yaml
-    path: ./providers/rule/rule-provider_🇺🇲Proxy-US-FISH.yaml
+    url: https://raw.githubusercontent.com/refined-fish/clash_rule_fish/refs/heads/main/Ruleset/🇺🇲FallBack-US-FISH.yaml
+    path: ./providers/rule/rule-provider_🇺🇲FallBack-US-FISH.yaml
 
 # =============================================
 #                  路由规则
@@ -446,7 +446,7 @@ rules:
   - RULE-SET,🪜Proxy-FISH,🧱GFW # FISH自定义代理
   - RULE-SET,⬇️Download-FISH,🧱GFW # FISH自定义需代理的下载
   - RULE-SET,🌐Direct-FISH,🌐默认直连 # FISH自定义直连
-  - RULE-SET,🇺🇲Proxy-US-FISH,🇺🇲美国智能 # FISH自定义美国代理
+  - RULE-SET,🇺🇲FallBack-US-FISH,🇺🇲⚠️美国故转 # FISH自定义美国代理
 
   ## 代理规则块，按照使用频率/包含关系排序
   # telegram相关
