@@ -1,2 +1,3 @@
 payload:
   - DOMAIN,libwrt.303580.xyz # Breeze的API中转站直连域名，服务器在美国
+  - DOMAIN,ai.lcodex.cc # 钧澈中转站，服务器在美国
