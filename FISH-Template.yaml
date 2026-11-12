@@ -223,10 +223,15 @@ proxy-providers:
 #                   代理组
 # =============================================
 # 模板-不同代理组
-template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, 🖐️手动切换]
-template-proxies-proxyfirst: &template-proxies-proxyfirst [🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, DIRECT]
-template-proxies-directfirst: &template-proxies-directfirst [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能]
-template-proxies-aifirst: &template-proxies-aifirst [🤖AI故转, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇨🇳台湾智能, 🇸🇬狮城智能, 🇯🇵日本智能, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, DIRECT]
+template-proxies-all: &template-proxies-all [🇭🇰香港智能, 🇭🇰⚠️香港故转, 🇨🇳台湾智能, 🇨🇳⚠️台湾故转, 🇸🇬狮城智能, 🇸🇬⚠️狮城故转, 🇯🇵日本智能, 🇯🇵⚠️日本故转, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, 🇰🇷⚠️韩国故转, 🖐️手动切换]
+
+template-proxies-fallback: &template-proxies-fallback [🇭🇰⚠️香港故转, 🇨🇳⚠️台湾故转, 🇸🇬⚠️狮城故转, 🇯🇵⚠️日本故转, 🇺🇲⚠️美国故转, 🇰🇷⚠️韩国故转, 🖐️手动切换]
+
+template-proxies-proxyfirst: &template-proxies-proxyfirst [🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇭🇰⚠️香港故转, 🇨🇳台湾智能, 🇨🇳⚠️台湾故转, 🇸🇬狮城智能, 🇸🇬⚠️狮城故转, 🇯🇵日本智能, 🇯🇵⚠️日本故转, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, 🇰🇷⚠️韩国故转, DIRECT]
+
+template-proxies-directfirst: &template-proxies-directfirst [DIRECT, 🪜默认代理, 🖐️手动切换, 🤖AI故转, 🇭🇰香港智能, 🇭🇰⚠️香港故转, 🇨🇳台湾智能, 🇨🇳⚠️台湾故转, 🇸🇬狮城智能, 🇸🇬⚠️狮城故转, 🇯🇵日本智能, 🇯🇵⚠️日本故转, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, 🇰🇷⚠️韩国故转]
+
+template-proxies-aifirst: &template-proxies-aifirst [🤖AI故转, 🪜默认代理, 🖐️手动切换, 🇭🇰香港智能, 🇭🇰⚠️香港故转, 🇨🇳台湾智能, 🇨🇳⚠️台湾故转, 🇸🇬狮城智能, 🇸🇬⚠️狮城故转, 🇯🇵日本智能, 🇯🇵⚠️日本故转, 🇺🇲美国智能, 🇺🇲⚠️美国故转, 🇰🇷韩国智能, 🇰🇷⚠️韩国故转, DIRECT]
 
 # 模板-Smart策略组-引入全部节点
 template-smart-all: &template-smart-all
@@ -358,7 +363,7 @@ proxy-groups:
 
   - name: 🪜默认代理
     <<: *template-fallback
-    proxies: *template-proxies-all
+    proxies: *template-proxies-fallback
 
   - name: 🤖AI故转
     <<: *template-fallback-all # 关键改造：改用主备模式，只要主节点存活绝不换IP，消除Cloudflare盾死循环与报错
@@ -370,8 +375,18 @@ proxy-groups:
     filter: *FilterHK
     exclude-filter: *FilterHigh
 
+  - name: 🇭🇰⚠️香港故转
+    <<: *template-fallback-all
+    filter: *FilterHK
+    exclude-filter: *FilterHigh
+
   - name: 🇨🇳台湾智能
     <<: *template-smart-all
+    filter: *FilterTW
+    exclude-filter: *FilterHigh
+
+  - name: 🇨🇳⚠️台湾故转
+    <<: *template-fallback-all
     filter: *FilterTW
     exclude-filter: *FilterHigh
 
@@ -380,8 +395,18 @@ proxy-groups:
     filter: *FilterSG
     exclude-filter: *FilterHigh
 
+  - name: 🇸🇬⚠️狮城故转
+    <<: *template-fallback-all
+    filter: *FilterSG
+    exclude-filter: *FilterHigh
+
   - name: 🇯🇵日本智能
     <<: *template-smart-all
+    filter: *FilterJP
+    exclude-filter: *FilterHigh
+
+  - name: 🇯🇵⚠️日本故转
+    <<: *template-fallback-all
     filter: *FilterJP
     exclude-filter: *FilterHigh
 
@@ -397,6 +422,11 @@ proxy-groups:
 
   - name: 🇰🇷韩国智能
     <<: *template-smart-all
+    filter: *FilterKR
+    exclude-filter: *FilterHigh
+
+  - name: 🇰🇷⚠️韩国故转
+    <<: *template-fallback-all
     filter: *FilterKR
     exclude-filter: *FilterHigh
 
