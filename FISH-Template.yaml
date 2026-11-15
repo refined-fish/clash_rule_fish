@@ -298,14 +298,14 @@ template-select-aifirst: &template-select-aifirst
 # 模板-节点筛选规则
 FilterLow: &FilterLow "\\[0\\.\\d+\\]|0\\.\\d+([倍xX])"
 FilterHigh: &FilterHigh "\\[(2\\.[0-9]*[1-9]\\d*|[3-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)\\]|(2\\.[0-9]*[1-9]\\d*|[3-9](\\.\\d+)?|[1-9]\\d+(\\.\\d+)?)([倍xX])"
-FilterHK: &FilterHK "^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(5倍|5x)).*$"
+FilterHK: &FilterHK "^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(5倍|5x|三毛\\|2x专线-香港-[123])).*$"
 FilterSG: &FilterSG "^(?=.*(?i)(坡|狮城|🇸🇬|SG|Sing|SIN|XSP))(?!.*(5倍|5x)).*$"
 FilterJP: &FilterJP "^(?=.*(?i)(日|东京|大阪|埼玉|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(尼日利亚|5倍|5x)).*$"
 FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|South))(?!.*(5倍|5x)).*$"
 FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
 FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
 FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(5倍|5x)).*$"
-FilterNoAI: &FilterNoAI "^(?=.*(?i)(一元|美国三网|三毛\\|美国堪萨斯|三毛\\|美国洛杉矶-3))(?!.*(5倍|5x)).*$"
+FilterAI_NotGood: &FilterAI_NotGood "^(?=.*(?i)(一元|美国三网|三毛\\|美国堪萨斯|三毛\\|美国洛杉矶-3))(?!.*(5倍|5x)).*$"
 
 proxy-groups:
   - name: 🤖国外AI
@@ -368,7 +368,7 @@ proxy-groups:
   - name: 🤖AI故转
     <<: *template-fallback-all # 关键改造：改用主备模式，只要主节点存活绝不换IP，消除Cloudflare盾死循环与报错
     filter: *FilterUS
-    exclude-filter: *FilterNoAI # 排除不可用的AI节点，使用fallback后一般无需手动打地鼠排除
+    exclude-filter: *FilterAI_NotGood # 排除不可用的AI节点，使用fallback后一般无需手动打地鼠排除
 
   - name: 🇭🇰香港智能
     <<: *template-smart-all
