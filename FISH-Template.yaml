@@ -261,7 +261,7 @@ template-fallback: &template-fallback
   max-failed-times: 2 # 失败次数，超过则执行一次强制健康检查
   empty-fallback: REJECT # 当组为空时的回退proxy，默认为COMPATIBLE等效DIRECT
 
-# 模板-fallback策略组-未引入节点
+# 模板-fallback策略组-引入全部节点
 template-fallback-all: &template-fallback-all
   type: fallback
   url: https://www.gstatic.com/generate_204
@@ -305,7 +305,7 @@ FilterKR: &FilterKR "^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|S
 FilterUS: &FilterUS "^(?=.*(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇺🇸|US|USA|JFK|SJC|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|United States))(?!.*(5倍|5x)).*$"
 FilterTW: &FilterTW "^(?=.*(?i)(台|新北|彰化|🇹🇼|TW|tai|TPE|TSA|KHH|Taiwan))(?!.*(5倍|5x)).*$"
 FilterUK: &FilterUK "^(?=.*(?i)(英|英国|UK|大不列颠|伦敦|Kingdom))(?!.*(5倍|5x)).*$"
-FilterAI_NotGood: &FilterAI_NotGood "^(?=.*(?i)(一元|美国三网|三毛\\|美国堪萨斯|三毛\\|美国洛杉矶-3))(?!.*(5倍|5x)).*$"
+FilterAI_NotGood: &FilterAI_NotGood "^(?=.*(?i)(一元|美国三网|三毛\\|美国堪萨斯|三毛\\|美国洛杉矶-3|美国B1))(?!.*(5倍|5x)).*$"
 
 proxy-groups:
   - name: 🤖国外AI
